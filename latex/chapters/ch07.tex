@@ -1,0 +1,566 @@
+\chapter{ブランチ — 並行開発の技法}
+
+\section{この章で学ぶこと}
+
+ここまでの章では、1本の流れの上でファイルを編集し、コミットし、プッシュする方法を学びました。しかし実際の開発では、「新しい機能を追加しながら、同時にバグを修正する」「本番環境で動いているコードには触れずに、実験的な変更を試す」といった場面が頻繁に発生します。
+
+このような並行作業を可能にするのが\textbf{ブランチ（branch）}です。ブランチは、Gitの中でも最も重要な機能の1つであり、現代のソフトウェア開発のワークフローを支える根幹の仕組みです。
+
+この章では、以下のことを学びます。
+
+\begin{itemize}
+  \item ブランチの正体 — Gitの内部でブランチがどのように実装されているか
+  \item ブランチの基本操作 — 作成、切り替え、削除、名前変更
+  \item ブランチの命名規則 — チームで統一するためのルール
+  \item マージ（merge） — ブランチの変更を統合する2つの方式
+  \item リベース（rebase） — 履歴を整理するための強力な操作
+  \item ブランチ戦略 — チームの規模やプロジェクトの性質に応じた運用方針
+\end{itemize}
+
+ブランチの操作自体はシンプルですが、その背景にある考え方を理解しているかどうかで、チーム開発での立ち回りが大きく変わります。
+
+\section{ブランチとは何か}
+
+\subsection{ポインタとしてのブランチ}
+
+多くの入門書では、ブランチを「開発の枝分かれ」と説明します。この説明は概念としては正しいのですが、Gitの内部実装を知ると、ブランチの本質がより明確になります。
+
+Gitにおけるブランチは、\textbf{特定のコミットを指し示すポインタ（参照）}に過ぎません。ブランチの実体は \cmd{.git/refs/heads/} ディレクトリにある小さなテキストファイルで、その中にはコミットのハッシュ値（40文字の英数字）が1行だけ書かれています。
+
+たとえば \cmd{main} ブランチの実体は \cmd{.git/refs/heads/main} というファイルで、その中身は次のようなものです。
+
+\begin{lstlisting}[language={}]
+a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
+\end{lstlisting}
+
+これは、\cmd{main} ブランチが指しているコミットのハッシュ値です。新しいコミットを作ると、このポインタが最新のコミットに自動的に移動します。つまり、ブランチを作るという操作は「コミットを丸ごとコピーする」のではなく、「新しいポインタを1つ作る」だけなのです。これが、Gitのブランチ作成が一瞬で完了する理由です。
+
+\begin{lstlisting}[language={}]
+main:    A → B → C          ← mainブランチはコミットCを指している
+                  ↑
+                  main（ポインタ）
+\end{lstlisting}
+
+ここで新しいブランチ \cmd{feature} を作ると、同じコミットCを指す別のポインタが追加されるだけです。
+
+\begin{lstlisting}[language={}]
+main:    A → B → C          ← mainもfeatureもコミットCを指している
+                  ↑
+                  main, feature（2つのポインタ）
+\end{lstlisting}
+
+\cmd{feature} ブランチに切り替えてコミットを重ねると、\cmd{feature} のポインタだけが前に進みます。
+
+\begin{lstlisting}[language={}]
+main:    A → B → C              ← mainはCのまま
+                  \
+feature:           D → E        ← featureはEを指している
+\end{lstlisting}
+
+\subsection{HEADとは何か}
+
+ブランチのポインタに加えて、もう1つ重要なポインタがあります。それが \textbf{HEAD} です。HEADは「今、自分がどのブランチで作業しているか」を示すポインタです。\cmd{git switch main} を実行するとHEADがmainを指し、\cmd{git switch feature} を実行するとHEADがfeatureを指します。
+
+つまり、\cmd{git commit} を実行したとき、HEADが指しているブランチのポインタが前に進むのです。
+
+\subsection{なぜブランチが必要なのか}
+
+ブランチの必要性を、具体的なシナリオで考えてみましょう。
+
+\textbf{シナリオ1: 機能開発中にバグ報告が入った}
+
+あなたは新しい検索機能を開発中です。半分ほど実装が終わったところで、「本番環境でログインできなくなっている」という緊急の報告が入りました。ブランチがなければ、中途半端な検索機能のコードが含まれた状態でバグ修正をするか、検索機能のコードを手動で元に戻してからバグ修正をするか、どちらにしても大変な作業になります。
+
+ブランチがあれば、検索機能は \cmd{feature/search} ブランチに残したまま、\cmd{main} ブランチに切り替えて \cmd{hotfix/login-bug} ブランチを作り、バグだけを修正できます。修正が終わったら \cmd{main} にマージしてデプロイし、その後 \cmd{feature/search} に戻って検索機能の開発を再開する、という流れが自然に行えます。
+
+\textbf{シナリオ2: 複数人での同時開発}
+
+チームの3人がそれぞれ異なる機能を担当しています。全員が \cmd{main} ブランチで直接作業すると、一人がプッシュするたびに他の2人は \cmd{git pull} でコンフリクトを解決しなければなりません。各自が専用のブランチで作業し、完成したらプルリクエストを通じてマージする、というワークフローなら、お互いの作業に干渉せずに開発を進められます。
+
+\textbf{シナリオ3: 実験的な変更を試したい}
+
+「このライブラリを使えばパフォーマンスが改善するかもしれない」という仮説を検証したいとき、ブランチを作って実験できます。うまくいけばマージし、ダメなら単にブランチを削除するだけです。\cmd{main} ブランチの安定性は一切損なわれません。
+
+\section{ブランチの基本操作}
+
+\subsection{ブランチの一覧表示}
+
+まず、現在存在するブランチを確認する方法です。
+
+\begin{lstlisting}[language=bash]
+# ローカルブランチの一覧を表示する
+git branch
+# * main              ← アスタリスク（*）が付いているのが現在のブランチ
+#   feature/login
+#   fix/typo
+
+# リモートブランチも含めて表示する
+git branch -a
+# * main
+#   feature/login
+#   remotes/origin/main
+#   remotes/origin/develop
+
+# リモートブランチのみ表示する
+git branch -r
+
+# 各ブランチの最新コミット情報も合わせて表示する
+git branch -v
+# * main          a1b2c3d feat: Add dark mode
+#   feature/login d4e5f6g feat: Implement login
+\end{lstlisting}
+
+\cmd{git branch -a} で表示される \cmd{remotes/origin/main} は「リモート追跡ブランチ」と呼ばれ、最後に \cmd{fetch} または \cmd{pull} した時点でのリモートブランチの状態を記憶しています。
+
+\subsection{ブランチの作成}
+
+\begin{lstlisting}[language=bash]
+# ブランチを作成する（作成するだけで、切り替えはしない）
+git branch feature/new-feature
+
+# ブランチを作成して、同時に切り替える
+git switch -c feature/new-feature
+
+# 従来の書き方（同じ動作）
+git checkout -b feature/new-feature
+
+# 特定のコミットを起点としてブランチを作成する
+git switch -c hotfix/urgent abc1234
+
+# リモートブランチを元にローカルブランチを作成する
+git switch -c feature/api origin/feature/api
+\end{lstlisting}
+
+\cmd{-c} は \cmd{--create} の省略形です。「create（作成）してswitch（切り替え）する」と覚えると、オプションの意味がわかりやすいでしょう。
+
+\subsection{ブランチの切り替え（switch vs checkout）}
+
+\begin{lstlisting}[language=bash]
+# 新しい書き方（推奨）
+git switch main
+
+# 従来の書き方
+git checkout main
+
+# 直前にいたブランチに戻る（ハイフンが「前の場所」を意味する）
+git switch -
+\end{lstlisting}
+
+\subsubsection{switch と checkout の歴史的経緯}
+
+Git 2.23（2019年リリース）以前は、ブランチの切り替えには \cmd{git checkout} コマンドが使われていました。しかし \cmd{checkout} は、ブランチの切り替えだけでなく、ファイルの変更を元に戻す操作にも使えるコマンドでした。
+
+\begin{lstlisting}[language=bash]
+# checkout の2つの意味（紛らわしい）
+git checkout feature    # ブランチの切り替え
+git checkout -- file.py # ファイルの変更を元に戻す
+\end{lstlisting}
+
+この設計は「1つのコマンドが2つの異なる役割を持つ」という点で混乱の原因になっていました。そこでGit 2.23で、ブランチ操作専用の \cmd{git switch} と、ファイル復元専用の \cmd{git restore} が新設されました。
+
+\begin{lstlisting}[language=bash]
+# 新しいコマンドによる役割の分離（わかりやすい）
+git switch feature      # ブランチの切り替え
+git restore file.py     # ファイルの変更を元に戻す
+\end{lstlisting}
+
+\cmd{checkout} も引き続き使用可能ですが、新しいプロジェクトでは \cmd{switch} と \cmd{restore} を使うことが推奨されています。
+
+\subsection{ブランチの削除}
+
+\begin{lstlisting}[language=bash]
+# マージ済みのブランチを削除する
+git branch -d feature/completed
+
+# 強制削除（マージされていなくても削除する）
+git branch -D feature/abandoned
+
+# リモートブランチを削除する
+git push origin --delete feature/old-branch
+
+# ローカルに残っている、削除されたリモートブランチの参照をクリーンアップする
+git fetch --prune
+\end{lstlisting}
+
+\cmd{-d}（小文字）は安全な削除です。そのブランチの変更がまだどこにもマージされていない場合、Gitが警告を出して削除を拒否します。これは、うっかり作業中のブランチを消してしまうのを防ぐ安全機構です。本当に不要なブランチを削除したい場合は \cmd{-D}（大文字）で強制削除します。
+
+\cmd{git fetch --prune} は、チームメンバーがGitHub上で削除したブランチの参照がローカルに残っている場合に、それをクリーンアップするコマンドです。定期的に実行すると、\cmd{git branch -a} の表示がすっきりします。
+
+\subsection{ブランチ名の変更}
+
+\begin{lstlisting}[language=bash]
+# 現在のブランチの名前を変更する
+git branch -m new-name
+
+# 指定したブランチの名前を変更する
+git branch -m old-name new-name
+\end{lstlisting}
+
+\cmd{-m} は \cmd{--move} の省略形です。UNIXの \cmd{mv} コマンド（ファイルの移動・名前変更）と同じ発想です。
+
+\section{ブランチの命名規則}
+
+ブランチ名は自由に付けることができますが、チーム開発では命名規則を統一しておくことが重要です。ブランチ名を見ただけで「これは何のためのブランチか」がわかるようにするのが目標です。
+
+\subsection{プレフィックスによる分類}
+
+最も広く使われている方法は、スラッシュ（\cmd{/}）区切りのプレフィックスを付ける方法です。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{llp{6cm}}
+\hline
+\textbf{プレフィックス} & \textbf{用途} & \textbf{例} \\
+\hline
+\cmd{feature/} & 新しい機能の開発 & \cmd{feature/user-auth}, \cmd{feature/dark-mode} \\
+\cmd{fix/} & バグの修正 & \cmd{fix/login-crash}, \cmd{fix/header-alignment} \\
+\cmd{hotfix/} & 本番環境の緊急修正 & \cmd{hotfix/security-patch} \\
+\cmd{release/} & リリース準備のための調整 & \cmd{release/v2.0}, \cmd{release/2024-q1} \\
+\cmd{docs/} & ドキュメントの追加・更新 & \cmd{docs/api-reference} \\
+\cmd{refactor/} & 機能変更を伴わないコードの改善 & \cmd{refactor/database-layer} \\
+\cmd{test/} & テストの追加・改善 & \cmd{test/unit-coverage} \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{命名のベストプラクティス}
+
+プレフィックスに加えて、以下のルールを守るとブランチ名が読みやすくなります。
+
+\begin{itemize}
+  \item \textbf{小文字とハイフン}を使う: \cmd{feature/add-user-auth}（\cmd{feature/AddUserAuth} ではなく）
+  \item \textbf{簡潔だが具体的}に: \cmd{feature/auth} は曖昧、\cmd{feature/user-password-reset} は明確
+  \item \textbf{イシュー番号を含める}のも良い方法: \cmd{feature/42-add-search}（イシュー\#42に対応）
+  \item \textbf{スラッシュは1段階だけ}にする: \cmd{feature/auth} は良いが \cmd{feature/auth/login/form} は深すぎる
+\end{itemize}
+
+チームでの統一が最も重要です。どのルールを採用するかよりも、全員が同じルールに従うことに意味があります。プロジェクトの初期段階でルールを決め、READMEや開発ガイドに明文化しておきましょう。
+
+\section{マージ（merge）}
+
+マージは、あるブランチの変更を別のブランチに統合する操作です。たとえば、\cmd{feature/login} ブランチで開発したログイン機能を \cmd{main} ブランチに取り込む場合にマージを行います。
+
+Gitのマージには、状況に応じて2つの方式が自動的に選択されます。
+
+\subsection{Fast-forwardマージ}
+
+Fast-forward（早送り）マージは、最もシンプルなマージです。分岐後に \cmd{main} ブランチに新しいコミットが追加されていない場合に発生します。
+
+\begin{lstlisting}[language={}]
+マージ前:
+main:     A → B → C
+                    \
+feature:             D → E     ← featureブランチはmainの先にある
+
+マージ後 (git merge feature):
+main:     A → B → C → D → E   ← mainのポインタがEまで前に進むだけ
+\end{lstlisting}
+
+この場合、Gitがやることは非常にシンプルです。\cmd{main} のポインタを \cmd{feature} が指しているコミットまで「早送り」するだけです。新しいコミットは作成されません。
+
+\begin{lstlisting}[language=bash]
+# mainブランチに切り替える
+git switch main
+
+# featureブランチをマージする
+git merge feature/login
+# → "Fast-forward" と表示される
+\end{lstlisting}
+
+Fast-forwardマージは履歴が直線的でわかりやすくなりますが、「いつブランチが作られてマージされたか」という情報は残りません。それが問題になる場合は、\cmd{--no-ff} オプションを使って明示的にマージコミットを作成することもできます。
+
+\begin{lstlisting}[language=bash]
+# Fast-forwardが可能な場合でも、必ずマージコミットを作成する
+git merge --no-ff feature/login
+\end{lstlisting}
+
+\subsection{3-wayマージ}
+
+分岐後に \cmd{main} ブランチにも新しいコミットがある場合、Fast-forwardはできません。この場合、Gitは\textbf{3-wayマージ}を行います。「3-way」と呼ばれるのは、以下の3つの状態を比較してマージ結果を決定するからです。
+
+\begin{enumerate}
+  \item 共通の祖先（分岐点）のコミット
+  \item 現在のブランチ（main）の最新コミット
+  \item マージするブランチ（feature）の最新コミット
+\end{enumerate}
+
+\begin{lstlisting}[language={}]
+マージ前:
+main:     A → B → C → F         ← mainにも新しいコミットFがある
+                  \
+feature:           D → E
+
+マージ後 (git merge feature):
+main:     A → B → C → F → G     ← Gはマージコミット（FとEの両方を親に持つ）
+                  \       /
+feature:           D → E
+\end{lstlisting}
+
+マージコミット G は、2つの親コミット（FとE）を持つ特別なコミットです。このマージコミットがあることで、「feature ブランチがこの地点で main に統合された」という情報が履歴に残ります。
+
+\begin{lstlisting}[language=bash]
+git switch main
+git merge feature/login
+# → "Merge made by the 'ort' strategy." と表示される
+\end{lstlisting}
+
+3-wayマージでは、両方のブランチで同じ箇所が変更されている場合に\textbf{コンフリクト（衝突）}が発生することがあります。コンフリクトの解決方法は第8章で詳しく解説します。
+
+\subsection{マージの取り消し}
+
+マージ操作を取り消したい場合の対処法です。
+
+\begin{lstlisting}[language=bash]
+# マージ中にコンフリクトが発生し、マージ自体を中止したい場合
+git merge --abort
+
+# マージが完了してコミットされた後に取り消したい場合
+# -m 1 は「最初の親（mainブランチ側）の状態に戻す」を意味する
+git revert -m 1 HEAD
+\end{lstlisting}
+
+\cmd{git merge --abort} はマージ操作を完全になかったことにし、マージ前の状態に戻します。コンフリクトが複雑で手に負えない場合に使います。
+
+\cmd{git revert -m 1 HEAD} は、マージコミットを打ち消す新しいコミットを作成します。マージを取り消しつつ、「取り消した」という事実を履歴に残すのが特徴です。
+
+\section{リベース（rebase）}
+
+\subsection{リベースとは何をしているのか}
+
+リベース（rebase）は「ブランチの分岐点（base）を移動させる（re-base）」操作です。マージとは異なり、コミット履歴を書き換えて直線的な歴史を作ります。
+
+具体的に何が起きているか見てみましょう。
+
+\begin{lstlisting}[language={}]
+リベース前:
+main:     A → B → C → F
+                  \
+feature:           D → E     ← featureはCから分岐している
+
+リベース後 (feature上で git rebase main):
+main:     A → B → C → F
+                       \
+feature:                D' → E'   ← 分岐点がFに移動した
+\end{lstlisting}
+
+リベースにおいて重要な点は、D' と E' は元の D と E と同じ変更内容を持っていますが、\textbf{異なるコミット}（異なるハッシュ値を持つ）だということです。なぜなら、親コミットが変わっているため、Gitは変更内容を新しい起点に「貼り直す」ことで新しいコミットを作り直しているのです。
+
+これはちょうど、積み木を組み替えるようなものです。D と E という積み木を、C の上からいったん外して、F の上に積み直す。積み木の形（変更内容）は同じですが、位置（親コミット）が変わるため、新しい積み木（コミット）として扱われるのです。
+
+\begin{lstlisting}[language=bash]
+# featureブランチにいる状態でリベースを実行する
+git switch feature/login
+git rebase main
+
+# コンフリクトが発生した場合
+# 1. ファイルを編集してコンフリクトを解決する
+# 2. 解決したファイルをステージングする
+git add resolved-file.py
+# 3. リベースを続行する
+git rebase --continue
+
+# リベースを中止して元に戻したい場合
+git rebase --abort
+\end{lstlisting}
+
+リベース中のコンフリクト解決は、マージのコンフリクト解決と基本的に同じですが、リベースでは各コミットを1つずつ貼り直すため、複数回コンフリクトを解決する必要がある場合があります。
+
+\subsection{merge vs rebase の判断基準}
+
+マージとリベースはどちらもブランチの変更を統合する操作ですが、結果として得られる履歴の形が異なります。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lp{5cm}p{5cm}}
+\hline
+\textbf{観点} & \textbf{merge} & \textbf{rebase} \\
+\hline
+\textbf{履歴の形} & 分岐と合流が残る（ネットワーク型） & 直線的な履歴になる \\
+\textbf{既存コミット} & 変更しない（安全） & 書き換える（注意が必要） \\
+\textbf{コンフリクト解決} & 一度で済む & コミットごとに発生しうる \\
+\textbf{マージの事実} & マージコミットとして記録される & 記録されない \\
+\textbf{主な用途} & ブランチをmainに統合する（PR） & 作業ブランチをmainの最新に追従させる \\
+\hline
+\end{tabular}
+\end{table}
+
+多くのチームでは、以下のような使い分けをしています。
+
+\begin{itemize}
+  \item \textbf{プルリクエストのマージ}: マージを使う（GitHub上で行う）
+  \item \textbf{作業ブランチの更新}: リベースを使う（mainの最新変更を自分のブランチに取り込む）
+\end{itemize}
+
+\subsection{「push済みにはrebaseしない」ルール}
+
+リベースには1つの絶対的なルールがあります。\textbf{既にプッシュして他の人と共有しているブランチにはリベースしない}ことです。
+
+なぜでしょうか。リベースはコミットを作り直す操作です。つまり、リベース後のコミットは元のコミットとは異なるハッシュ値を持ちます。あなたがリベースした後にプッシュすると、リモートにあるコミットとは別物のコミットが送られることになります。他のメンバーがリベース前のコミットを元に作業している場合、彼らのブランチとの整合性が取れなくなり、非常に面倒な事態を引き起こします。
+
+\begin{lstlisting}[language={}]
+安全にリベースできるケース:
+- 自分だけが使っているローカルブランチ
+- まだプッシュしていないコミット
+
+リベースしてはいけないケース:
+- 既にプッシュしたブランチ（他の人が参照している可能性がある）
+- main や develop などの共有ブランチ
+\end{lstlisting}
+
+迷ったら、マージを使いましょう。マージは既存のコミットを変更しないため、常に安全です。
+
+\section{ブランチ戦略}
+
+ブランチ戦略とは、「チームとしてブランチをどのように作り、どのように管理し、どのタイミングでマージするか」という運用方針のことです。プロジェクトの規模やリリースの頻度に応じて、適切な戦略を選ぶことが重要です。
+
+\subsection{GitHub Flow — シンプルで始めやすい}
+
+GitHub Flowは、GitHubが提唱するシンプルなブランチ戦略で、多くのWebアプリケーション開発で採用されています。ルールは非常に明快です。
+
+\begin{lstlisting}[language={}]
+main ─────────────────────────────────────→ （常にデプロイ可能な状態）
+       \           /    \            /
+        feature-A ─      feature-B ─
+\end{lstlisting}
+
+\textbf{ルール:}
+
+\begin{enumerate}
+  \item \cmd{main} ブランチは常にデプロイ可能な状態を維持する
+  \item 新しい作業を始めるときは、\cmd{main} から説明的な名前のブランチを作成する
+  \item ブランチにコミットをプッシュし、プルリクエストを作成する
+  \item チームメンバーがコードレビューを行う
+  \item レビューが承認されたら、\cmd{main} にマージする
+  \item マージ後、速やかにデプロイする
+\end{enumerate}
+
+GitHub Flowの最大の利点はそのシンプルさです。ルールが少ないため、チーム全員が理解しやすく、運用の負担が小さい。個人開発や小規模チームには特に適しています。
+
+\subsection{Git Flow — 大規模プロジェクト向けの体系的な戦略}
+
+Git Flowは、Vincent Driessen氏が2010年に提唱した、より体系的なブランチ戦略です。リリースサイクルが明確に定義されているプロジェクト（モバイルアプリ、デスクトップソフトウェアなど）に適しています。
+
+\begin{lstlisting}[language={}]
+main    ──────●──────────────●──────→   （リリース済みコードのみ）
+              ↑              ↑
+release ──────┤   release/v2 ┤          （リリース準備）
+              ↑              ↑
+develop ──────●──────────────●──────→   （開発の中心）
+          \       /    \        /
+           feat-A       feat-B          （個別の機能開発）
+\end{lstlisting}
+
+\textbf{ブランチの構成:}
+
+\begin{itemize}
+  \item \textbf{main}: リリース済みのコードだけが含まれる。各コミットにはバージョンタグが付く
+  \item \textbf{develop}: 開発の中心となるブランチ。次のリリースに向けた変更が集約される
+  \item \textbf{feature/}: 個別の機能開発。\cmd{develop} から分岐し、\cmd{develop} にマージする
+  \item \textbf{release/}: リリース準備のためのブランチ。バージョン番号の更新やバグ修正を行う
+  \item \textbf{hotfix/}: 本番環境の緊急修正。\cmd{main} から分岐し、\cmd{main} と \cmd{develop} の両方にマージする
+\end{itemize}
+
+Git Flowはルールが多く運用コストが高いため、継続的デプロイを行うWebサービスには向きません。しかし、複数のバージョンを同時にサポートする必要があるソフトウェアには、その体系的な管理が大きな価値を発揮します。
+
+\subsection{Trunk-based Development — 高速なイテレーション}
+
+Trunk-based Development（トランクベース開発）は、Google や Facebook などの大規模テック企業で採用されている戦略です。「trunk（幹）」とは \cmd{main} ブランチのことを指します。
+
+\begin{lstlisting}[language={}]
+main ────●────●────●────●────→  （頻繁に小さな変更がマージされる）
+         ↑    ↑    ↑    ↑
+    短命ブランチ（数時間〜1-2日で完了）
+\end{lstlisting}
+
+\textbf{特徴:}
+
+\begin{itemize}
+  \item ブランチは極めて短命（数時間から長くても1〜2日）で \cmd{main} にマージする
+  \item 大きな機能は\textbf{フィーチャーフラグ}（機能の有効/無効をコードで切り替える仕組み）で制御し、未完成でもマージする
+  \item \cmd{main} は常にデプロイ可能な状態を維持する
+  \item CI/CDパイプラインによる自動テストが必須
+\end{itemize}
+
+この戦略の核心は「長命なブランチを作らない」ことにあります。ブランチが長く存在するほど \cmd{main} との差分が大きくなり、マージ時のコンフリクトリスクが高まります。短命なブランチでこまめにマージすることで、このリスクを最小化します。
+
+\subsection{戦略の選び方}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{llp{5cm}}
+\hline
+\textbf{戦略} & \textbf{適した状況} & \textbf{チーム規模} \\
+\hline
+\textbf{GitHub Flow} & Webサービス、個人開発、小規模チーム & 1〜10人 \\
+\textbf{Git Flow} & リリースサイクルが明確な製品、複数バージョンのサポート & 5〜50人 \\
+\textbf{Trunk-based} & 継続的デプロイ、高い自動テストカバレッジがある環境 & 10人以上 \\
+\hline
+\end{tabular}
+\end{table}
+
+迷ったら、まずGitHub Flowから始めることをお勧めします。シンプルな戦略で経験を積み、プロジェクトの成長に合わせてより複雑な戦略に移行すればよいのです。
+
+\section{実践：ブランチを使った開発の一連の流れ}
+
+ここまで学んだ内容を使って、GitHub Flowに基づく実際の開発フローを体験しましょう。ダークモード機能を追加する、という架空のタスクを題材にします。
+
+\begin{lstlisting}[language=bash]
+# ステップ1: mainブランチを最新の状態にする
+# 作業を始める前に、必ずmainの最新を取得する
+git switch main
+git pull
+
+# ステップ2: 機能ブランチを作成して切り替える
+git switch -c feature/dark-mode
+
+# ステップ3: 機能を実装する（ファイルの編集はエディタで行う）
+# ... CSSファイルにダークモードのスタイルを追加 ...
+# ... JavaScriptにトグルスイッチの機能を追加 ...
+
+# ステップ4: 状態を確認する
+git status
+
+# ステップ5: 変更をステージングしてコミットする
+git add src/styles/dark-mode.css
+git commit -m "feat: Add dark mode CSS styles"
+
+# ステップ6: さらに作業を続けてコミットする
+git add src/scripts/theme-toggle.js
+git commit -m "feat: Add dark mode toggle switch"
+
+# ステップ7: mainの最新変更を取り込む（コンフリクトの早期発見）
+# 他のメンバーがmainに変更をマージしている可能性があるため
+git fetch origin
+git rebase origin/main
+
+# ステップ8: リモートにプッシュする
+git push -u origin feature/dark-mode
+
+# ステップ9: プルリクエストを作成する（第10章で詳しく解説）
+gh pr create --title "feat: Add dark mode support" \
+  --body "ダークモードのCSSスタイルとトグルスイッチを追加"
+
+# ステップ10: レビューを受けてマージされた後、ブランチを掃除する
+git switch main
+git pull
+git branch -d feature/dark-mode
+\end{lstlisting}
+
+\screenshot{プルリクエスト作成後のGitHub画面}
+
+このフローのポイントは、ステップ7の \cmd{git fetch} + \cmd{git rebase} です。自分の作業ブランチを定期的に \cmd{main} の最新に追従させておくことで、プルリクエスト作成時のコンフリクトを最小限に抑えることができます。
+
+\section{まとめ}
+
+この章では、Gitのブランチ機能を包括的に学びました。
+
+\begin{itemize}
+  \item \textbf{ブランチの正体}: ブランチはコミットを指すポインタに過ぎない。そのためブランチの作成は一瞬で完了する
+  \item \textbf{基本操作}: \cmd{git switch -c} で作成と切り替え、\cmd{git branch -d} で削除。\cmd{switch} は \cmd{checkout} に代わる新しいコマンド
+  \item \textbf{命名規則}: \cmd{feature/}、\cmd{fix/}、\cmd{hotfix/} などのプレフィックスで目的を明示する。チーム内での統一が重要
+  \item \textbf{マージ}: Fast-forwardマージは分岐がない場合のシンプルな統合。3-wayマージは分岐がある場合にマージコミットを作成して統合する
+  \item \textbf{リベース}: ブランチの分岐点を移動させて直線的な履歴を作る。ただし、プッシュ済みのブランチには絶対にリベースしない
+  \item \textbf{ブランチ戦略}: GitHub Flow（シンプル）、Git Flow（体系的）、Trunk-based（高速）の3つの戦略があり、プロジェクトの特性に合わせて選択する
+\end{itemize}
+
+ブランチを使った開発では、異なるブランチで同じファイルの同じ箇所を変更した場合に「コンフリクト（衝突）」が発生します。次の章では、コンフリクトが発生する仕組みと、その解決方法を学びます。

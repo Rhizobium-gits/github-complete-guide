@@ -1,0 +1,451 @@
+\chapter{履歴の操作 — 過去を自在にたどる}
+
+\section{この章で学ぶこと}
+
+Gitを使う最大のメリットの一つは、「間違えても大丈夫」という安心感です。ファイルを誤って上書きしてしまった、コミットメッセージを間違えた、そもそもこの変更は不要だった——こうした「やり直したい」場面は、開発作業において日常的に発生します。Gitは、こうした場面に対応するための豊富な履歴操作コマンドを備えています。
+
+この章では、以下のコマンドと概念を学びます。
+
+\begin{itemize}
+  \item \cmd{git revert} — 過去のコミットを安全に打ち消す
+  \item \cmd{git reset} — コミットを巻き戻す（3つのモードの違い）
+  \item \cmd{git restore} — ファイル単位で変更を取り消す
+  \item \cmd{git stash} — 作業を一時退避して後で復元する
+  \item \cmd{git cherry-pick} — 特定のコミットだけを取り込む
+  \item \cmd{git reflog} — 「消えた」と思ったコミットを救出する
+  \item \cmd{git blame} — 各行の変更者を特定する
+\end{itemize}
+
+これらのコマンドを使いこなせるようになると、Gitが単なるバックアップツールではなく、過去を自在にたどり、操作できるタイムマシンのような存在であることを実感するでしょう。
+
+\section{なぜ履歴操作が必要か}
+
+\subsection{「間違えても大丈夫」という安心感}
+
+プログラミングにおいて、「何かを壊してしまうかもしれない」という恐怖は、大胆なリファクタリングや新しいアプローチの試行を躊躇させます。しかし、Gitの履歴操作を知っていれば、「いつでも元に戻せる」という安心感を持って作業に臨めます。
+
+たとえるなら、Gitの履歴操作は文書作成ソフトの「元に戻す（Undo）」機能の超強力版です。文書ソフトのUndoは、ソフトを閉じれば履歴は失われますが、Gitの履歴はリポジトリが存在する限り永続的に残ります。しかも、単純な「1つ戻す」だけでなく、「3つ前のコミットだけ取り消す」「あのブランチのあのコミットだけこちらに取り込む」といった、柔軟な操作が可能です。
+
+\subsection{安全な操作と危険な操作}
+
+履歴操作のコマンドは、大きく2つに分類できます。
+
+\textbf{安全な操作（履歴を書き換えない）}：\cmd{git revert} は、過去のコミットを打ち消す新しいコミットを作成するだけで、既存の履歴には一切手を加えません。チームで共有済みの履歴に対しても安心して使えます。
+
+\textbf{注意が必要な操作（履歴を書き換える）}：\cmd{git reset} は、HEADの位置を過去に戻すことで、コミットをなかったことにします。ローカルでのみ使う分には問題ありませんが、既にpush済みのコミットに対して使うと、チームメンバーの履歴と食い違いが生じるため、原則として避けるべきです。
+
+この「安全かどうか」の判断基準を理解しておくことが、履歴操作を正しく使いこなすための第一歩です。
+
+\section{git revert — コミットを安全に打ち消す}
+
+\subsection{revertの考え方}
+
+\cmd{git revert} は、指定したコミットで行われた変更を「逆方向に」適用する新しいコミットを作成するコマンドです。元のコミットは履歴にそのまま残りますが、その変更内容は実質的に取り消されます。
+
+\begin{lstlisting}[language={}]
+Before: A → B → C → D (HEAD)
+After:  A → B → C → D → D' (Dの変更を打ち消す新しいコミット)
+\end{lstlisting}
+
+この図を見ると、コミットDは履歴に残ったままで、新たにD'（Dを打ち消すコミット）が追加されていることがわかります。履歴を書き換えるのではなく、「上書き」するイメージです。
+
+\subsection{なぜrevertはpush済みでも安全なのか}
+
+\cmd{git revert} が安全である理由は、既存の履歴を一切変更しないからです。チームメンバーが既に手元に持っているコミット（A, B, C, D）はそのまま有効であり、新しいコミットD'が追加されるだけです。チームメンバーが \cmd{git pull} すると、D'が追加されて、結果的にDの変更が取り消された状態になります。履歴の整合性が保たれるため、チーム開発でも安心して使えるのです。
+
+\subsection{使い方}
+
+\begin{lstlisting}[language=bash]
+# 直前のコミットを打ち消す
+git revert HEAD
+
+# 特定のコミットを打ち消す（コミットハッシュを指定）
+git revert abc1234
+
+# コミットメッセージの編集をスキップ（自動生成メッセージをそのまま使う）
+git revert --no-edit abc1234
+
+# マージコミットを打ち消す（-m 1 は最初の親を「正」とする指定）
+git revert -m 1 abc1234
+\end{lstlisting}
+
+\cmd{git revert HEAD} を実行すると、テキストエディタが開いてコミットメッセージの入力を求められます。デフォルトで「Revert "元のコミットメッセージ"」というメッセージが用意されているので、そのまま保存して閉じれば完了です。\cmd{--no-edit} オプションをつけると、エディタを開かずにデフォルトメッセージでコミットが作成されます。
+
+マージコミットのrevertは少し特殊で、\cmd{-m 1} というオプションが必要です。これは「マージの2つの親のうち、1番目の親（通常はmainブランチ側）をベースとして、もう一方の変更を打ち消す」という意味です。マージコミットには2つの親があるため、どちらを基準に打ち消すかをGitに伝える必要があるのです。
+
+\section{git reset — コミットを巻き戻す}
+
+\subsection{resetの考え方}
+
+\cmd{git reset} は、HEADの位置（現在のブランチが指しているコミット）を過去に移動させるコマンドです。revertが「打ち消すコミットを追加する」のに対し、resetは「そもそもコミットしなかったことにする」操作です。
+
+\begin{lstlisting}[language={}]
+Before: A → B → C → D (HEAD)
+               ↑
+          ここに戻したい
+
+After:  A → B → C (HEAD)
+              （Dはなかったことに）
+\end{lstlisting}
+
+\subsection{3つのモード — アナロジーで理解する}
+
+\cmd{git reset} には3つのモードがあり、「どこまで巻き戻すか」が異なります。これを理解するために、原稿の執筆作業にたとえてみましょう。
+
+あなたは原稿を書き（ワーキングツリー）、校正済みの原稿を「提出トレイ」に入れ（ステージング）、最終的に印刷所に送った（コミット）とします。ここで「やり直したい」と思ったとき、3つの選択肢があります。
+
+\textbf{\cmd{--soft}：印刷所への送付だけ取り消す}
+
+原稿の内容はそのまま、校正済みトレイにも残っている。ただし「印刷所に送った」という事実だけが取り消される。つまり、コミットだけが取り消され、ステージングもファイルもそのまま残ります。「コミットメッセージを書き直したい」「複数のコミットを1つにまとめたい」といった場合に使います。
+
+\begin{lstlisting}[language=bash]
+git reset --soft HEAD~1
+\end{lstlisting}
+
+\textbf{\cmd{--mixed}（デフォルト）：印刷所への送付と、校正済みトレイからの取り出しを行う}
+
+原稿の内容はそのまま残っているが、「校正済み」のマークは外れる。つまり、コミットとステージングが取り消され、ファイルの変更内容だけがワーキングツリーに残ります。「addし直すファイルを選び直したい」場合に使います。
+
+\begin{lstlisting}[language=bash]
+git reset HEAD~1
+# --mixed はデフォルトなので省略可能
+\end{lstlisting}
+
+\textbf{\cmd{--hard}：すべてなかったことにする}
+
+原稿の内容自体を破棄し、前の版に完全に差し替える。コミット、ステージング、ファイルの変更内容のすべてが消えます。「この変更は全部不要だった」と判断した場合に使います。
+
+\begin{lstlisting}[language=bash]
+git reset --hard HEAD~1
+\end{lstlisting}
+
+\subsection{3つのモードの比較表}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lllll}
+\hline
+\textbf{モード} & \textbf{コミット} & \textbf{ステージ} & \textbf{ファイル内容} & \textbf{主な用途} \\
+\hline
+\cmd{--soft} & 取り消す & 残る & 残る & コミットをやり直したい \\
+\cmd{--mixed} & 取り消す & 取り消す & 残る & addからやり直したい \\
+\cmd{--hard} & 取り消す & 取り消す & 消える & 全て無かったことにしたい \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{HEAD\textasciitilde 1 の意味}
+
+\cmd{HEAD\textasciitilde 1} は「HEADの1つ前のコミット」を意味する表記法です。\cmd{\textasciitilde} の後の数字を変えることで、さらに過去のコミットを指定できます。
+
+\begin{itemize}
+  \item \cmd{HEAD\textasciitilde 1}（または \cmd{HEAD\textasciitilde}）：1つ前のコミット
+  \item \cmd{HEAD\textasciitilde 2}：2つ前のコミット
+  \item \cmd{HEAD\textasciitilde 3}：3つ前のコミット
+\end{itemize}
+
+コミットハッシュを直接指定することも可能です。
+
+\begin{lstlisting}[language=bash]
+# 特定のコミットまで巻き戻す
+git reset --hard abc1234
+\end{lstlisting}
+
+\subsection{resetの注意点}
+
+\cmd{git reset}、特に \cmd{--hard} モードは、変更内容が完全に失われる可能性があるコマンドです。以下の点を必ず守ってください。
+
+\begin{enumerate}
+  \item \textbf{push済みのコミットには原則使わない}：resetで履歴を書き換えた後にpushしようとすると、リモートとの整合性が崩れます。push済みのコミットを取り消したい場合は \cmd{git revert} を使ってください。
+  \item \textbf{\cmd{--hard} は慎重に使う}：ワーキングツリーの変更が完全に失われます。ただし、次の節で紹介する \cmd{git reflog} を使えば、\cmd{--hard} で消したコミットも救出できる場合があります。
+\end{enumerate}
+
+\section{git restore — ファイル単位の変更取り消し}
+
+\subsection{restoreの位置づけ}
+
+\cmd{git restore} は、Git 2.23で導入された比較的新しいコマンドです。それ以前は \cmd{git checkout} がブランチの切り替えとファイルの復元の両方を担っていたため紛らわしかったのですが、\cmd{git restore} はファイルの復元に特化しており、意図がより明確になっています。
+
+\subsection{ワーキングツリーの変更を取り消す}
+
+ファイルを編集したが、その変更を破棄して最後のコミット時点の状態に戻したい場合に使います。
+
+\begin{lstlisting}[language=bash]
+# 特定のファイルの変更を取り消す
+git restore README.md
+
+# 複数ファイルの変更を一度に取り消す
+git restore src/app.py src/utils.py
+
+# カレントディレクトリ以下のすべてのファイルの変更を取り消す
+git restore .
+\end{lstlisting}
+
+この操作はワーキングツリーの変更を破棄するため、未コミットの変更が失われます。実行前に本当に不要な変更かどうかを確認してください。
+
+\subsection{ステージングの取り消し}
+
+\cmd{git add} でステージに上げたが、やはりステージから外したい場合は \cmd{--staged} オプションを使います。
+
+\begin{lstlisting}[language=bash]
+# 特定のファイルをステージから外す（ファイルの変更内容は保持される）
+git restore --staged README.md
+
+# すべてのファイルをステージから外す
+git restore --staged .
+\end{lstlisting}
+
+ここで重要なのは、\cmd{--staged} はステージングを解除するだけであり、ファイル自体の変更内容には影響しないという点です。つまり、編集した内容はワーキングツリーにそのまま残ります。
+
+\subsection{特定のコミット時点の状態に戻す}
+
+\begin{lstlisting}[language=bash]
+# 特定のコミット時点のファイル内容を復元
+git restore --source=abc1234 README.md
+\end{lstlisting}
+
+\cmd{--source} オプションを使うと、任意のコミット時点のファイル内容をワーキングツリーに復元できます。「3つ前のコミットの時点のconfig.pyを確認したい」といった場面で便利です。
+
+\section{git stash — 作業の一時退避}
+
+\subsection{「引き出しにしまう」アナロジー}
+
+\cmd{git stash} は、現在の作業中の変更を一時的に「引き出し」にしまっておくコマンドです。机の上（ワーキングツリー）に広げていた書類をいったん引き出しにしまい、机をきれいにしてから別の作業を行い、終わったら引き出しから書類を取り出して元の作業に戻る——そんなイメージです。
+
+なぜこの機能が必要なのでしょうか。たとえば、新機能の開発中に緊急のバグ報告が入ったとします。バグ修正のためにブランチを切り替えたいのですが、現在の作業中の変更がコミットするにはまだ中途半端な状態です。かといって、変更を破棄するわけにもいきません。こうした「今の変更を保存しておいて、一旦別のことをしたい」という場面で、\cmd{git stash} が威力を発揮します。
+
+\subsection{基本的な使い方}
+
+\begin{lstlisting}[language=bash]
+# 現在の変更（ステージ済み＋未ステージ）を退避する
+git stash
+
+# メッセージ付きで退避する（後で何の変更か思い出しやすい）
+git stash save "WIP: login feature"
+
+# 未追跡ファイル（新規作成ファイル）も含めて退避する
+git stash -u
+\end{lstlisting}
+
+\cmd{git stash} を実行すると、ワーキングツリーとステージングエリアの変更がすべて退避され、最後のコミット時点のきれいな状態に戻ります。退避した内容はスタック（積み重ね）構造で管理されるため、複数回stashすることも可能です。
+
+\subsection{退避した内容の確認と復元}
+
+\begin{lstlisting}[language=bash]
+# 退避リストを表示する
+git stash list
+# stash@{0}: On feature/login: WIP: login feature
+# stash@{1}: On main: temporary change
+
+# 最新の退避を復元し、リストから削除する
+git stash pop
+
+# 最新の退避を復元するが、リストには残す
+git stash apply
+
+# 特定の退避を指定して復元する
+git stash apply stash@{1}
+
+# 退避した内容の差分を確認する
+git stash show -p stash@{0}
+\end{lstlisting}
+
+\cmd{pop} と \cmd{apply} の違いは、退避リストから削除するかどうかです。\cmd{pop} は復元と同時にリストから削除しますが、\cmd{apply} はリストに残します。「復元に成功したことを確認してから削除したい」場合は、\cmd{apply} で復元してから手動で \cmd{drop} する方法が安全です。
+
+\subsection{退避の削除}
+
+\begin{lstlisting}[language=bash]
+# 特定の退避を削除する
+git stash drop stash@{0}
+
+# すべての退避を削除する
+git stash clear
+\end{lstlisting}
+
+\subsection{典型的な使い方シナリオ}
+
+以下は、stashが活躍する典型的な場面です。
+
+\begin{lstlisting}[language=bash]
+# 1. 新機能を開発中...（まだコミットする段階ではない）
+git stash save "WIP: ユーザー認証のバリデーション実装中"
+
+# 2. 緊急のバグ修正に対応する
+git switch main
+git switch -c hotfix/urgent-fix
+# ... バグを修正する ...
+git commit -am "fix: Critical security bug in auth module"
+git push
+
+# 3. 元の作業に戻る
+git switch feature/login
+git stash pop
+# 退避していた変更が復元され、中断前の状態に戻れる
+\end{lstlisting}
+
+このように、stashを使えば作業の流れを中断しても、スムーズに再開できます。
+
+\section{git cherry-pick — 特定のコミットだけ取り込む}
+
+\subsection{cherry-pickとは}
+
+\cmd{git cherry-pick}（チェリーピック）は、その名のとおり「さくらんぼを摘む」ように、別のブランチから特定のコミットだけを選んで現在のブランチに取り込むコマンドです。ブランチ全体をマージするのではなく、必要なコミットだけをピンポイントで適用できます。
+
+\begin{lstlisting}[language={}]
+Before:
+main:    A → B → C
+feature: A → B → D → E → F
+
+After (cherry-pick E):
+main:    A → B → C → E'    ← Eの変更内容だけを取り込んだ新しいコミット
+feature: A → B → D → E → F ← featureブランチはそのまま
+\end{lstlisting}
+
+\subsection{どんな場面で使うのか}
+
+cherry-pickが役立つ典型的な場面をいくつか紹介します。
+
+\textbf{バグ修正の先行適用}：featureブランチでバグ修正を含む複数のコミットを行ったが、まだfeatureブランチ全体をマージする準備ができていない。しかし、バグ修正だけは先にmainに取り込みたい——こうした場面でcherry-pickが活躍します。
+
+\textbf{誤って別のブランチにコミットした場合の救済}：mainブランチにいるつもりで作業していたが、実はfeatureブランチにいたことに気づいた場合、正しいブランチに切り替えてcherry-pickで取り込み、元のブランチからはresetで取り消す、という手順で修正できます。
+
+\subsection{使い方}
+
+\begin{lstlisting}[language=bash]
+# 特定のコミットを現在のブランチに取り込む
+git cherry-pick abc1234
+
+# 複数のコミットを指定する
+git cherry-pick abc1234 def5678
+
+# 範囲指定（abc1234は含まず、def5678まで）
+git cherry-pick abc1234..def5678
+
+# コミットせずに変更内容だけをワーキングツリーに適用する
+git cherry-pick --no-commit abc1234
+\end{lstlisting}
+
+cherry-pickで取り込まれたコミットには新しいハッシュが付与されます。元のコミットとは内容は同じですが、異なるコミットとして扱われる点に注意してください。
+
+cherry-pick中にコンフリクトが発生した場合は、第8章で学んだ手順でコンフリクトを解決してから \cmd{git cherry-pick --continue} で続行するか、\cmd{git cherry-pick --abort} で中止できます。
+
+\section{git reflog — 「消えた」コミットを救出する}
+
+\subsection{reflogとは何か}
+
+\cmd{git reflog}（リフログ）は、HEADの移動履歴を記録している仕組みです。通常の \cmd{git log} はコミットの親子関係をたどって履歴を表示しますが、reflogはHEADが「どこからどこへ移動したか」を時系列で記録しています。
+
+この違いが重要になるのは、\cmd{git reset --hard} で「消してしまった」コミットを救出する場面です。resetでHEADを過去に巻き戻すと、それより先のコミットは \cmd{git log} には表示されなくなります。しかし、reflogにはHEADの移動記録が残っているため、「消えた」コミットのハッシュを見つけ出すことができるのです。
+
+\subsection{reflogの確認方法}
+
+\begin{lstlisting}[language=bash]
+git reflog
+# abc1234 HEAD@{0}: reset: moving to HEAD~3
+# def5678 HEAD@{1}: commit: Add feature X
+# ghi9012 HEAD@{2}: commit: Fix bug Y
+# jkl3456 HEAD@{3}: checkout: moving from main to feature/login
+\end{lstlisting}
+
+この出力を読み解くと、以下のことがわかります。
+
+\begin{itemize}
+  \item 最新の操作（\cmd{HEAD@\{0\}}）：HEAD\textasciitilde 3 にresetした
+  \item その前（\cmd{HEAD@\{1\}}）：「Add feature X」というコミットを行った
+  \item さらにその前（\cmd{HEAD@\{2\}}）：「Fix bug Y」というコミットを行った
+\end{itemize}
+
+\subsection{reset --hard からの復旧}
+
+たとえば、\cmd{git reset --hard HEAD\textasciitilde 3} を実行した後で「やっぱりあのコミットが必要だった！」と気づいた場合、reflogを使って救出できます。
+
+\begin{lstlisting}[language=bash]
+# 1. reflogで消えたコミットのハッシュを確認
+git reflog
+
+# 2. 消えたコミットに戻る
+git reset --hard def5678
+\end{lstlisting}
+
+あるいは、元のブランチの状態は変えずに、消えたコミットの内容だけを新しいブランチとして復元することもできます。
+
+\begin{lstlisting}[language=bash]
+# 消えたコミットから新しいブランチを作成
+git branch recover-branch def5678
+\end{lstlisting}
+
+\subsection{reflogの注意点}
+
+reflogについて知っておくべき重要な点が2つあります。
+
+\textbf{ローカル専用である}：reflogはローカルリポジトリにのみ存在し、リモートリポジトリには共有されません。つまり、\cmd{git clone} したばかりのリポジトリにはreflogの履歴はありません。
+
+\textbf{保持期間がある}：デフォルトでは、reflogのエントリは90日間保持された後に自動的に削除されます。つまり、3か月以上前の操作は追跡できない可能性があります。
+
+reflogは「最後の砦」として非常に心強い存在です。\cmd{git reset --hard} を使う際も、「最悪の場合はreflogから復旧できる」という安心感を持てます。ただし、reflogに頼りすぎるのではなく、まずは安全な操作（\cmd{git revert} など）を優先することを心がけましょう。
+
+\section{git blame — 各行の変更者を特定する}
+
+\subsection{blameの目的}
+
+\cmd{git blame} は、ファイルの各行が「誰によって」「いつ」「どのコミットで」最後に変更されたかを表示するコマンドです。「blame」という名前から「犯人捜し」のような印象を受けるかもしれませんが、実際にはコードの経緯を理解するための調査ツールとして使われます。
+
+たとえば、「この設定値はなぜ100になっているのだろう？」「このロジックは誰がいつ追加したのだろう？」といった疑問を解決するために、blameでコードの来歴を調べ、該当するコミットメッセージやプルリクエストを確認する、というのが典型的な使い方です。
+
+\subsection{使い方}
+
+\begin{lstlisting}[language=bash]
+# ファイルの各行の変更者を表示
+git blame README.md
+
+# 出力例:
+# abc1234 (Alice 2024-01-10 10:00:00 +0900  1) # My Project
+# def5678 (Bob   2024-01-15 14:30:00 +0900  2) Description here
+# abc1234 (Alice 2024-01-10 10:00:00 +0900  3)
+# ghi9012 (Carol 2024-02-01 09:15:00 +0900  4) ## Installation
+\end{lstlisting}
+
+出力の各列は、左から順に「コミットハッシュ」「変更者名」「変更日時」「行番号」「ファイルの内容」です。
+
+\begin{lstlisting}[language=bash]
+# 特定の行範囲だけを表示する（10行目から20行目まで）
+git blame -L 10,20 README.md
+
+# 特定のコミット時点での blame を表示する
+git blame abc1234 -- README.md
+\end{lstlisting}
+
+\cmd{-L} オプションは、大きなファイルで特定の箇所だけを調べたい場合に便利です。ファイル全体のblameは出力が膨大になるため、調べたい行範囲がわかっている場合は積極的に \cmd{-L} を使いましょう。
+
+\subsection{GitHub上でのblame}
+
+GitHubのWebインターフェースでもblame機能が利用できます。ファイルを表示した状態で「Blame」ボタンをクリックすると、各行の変更者とコミット情報が色分けして表示されます。さらに、コミットハッシュをクリックすると、そのコミットの全体像を確認できるため、コードの経緯を追跡するのに非常に便利です。
+
+\screenshot{GitHubのBlame表示画面}
+
+\section{まとめ}
+
+この章では、Gitの履歴を操作するための7つのコマンドを学びました。それぞれの用途と特徴を振り返りましょう。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{llp{6cm}}
+\hline
+\textbf{コマンド} & \textbf{用途} & \textbf{安全性} \\
+\hline
+\cmd{git revert} & コミットを打ち消す新しいコミットを作成 & push済みでも安全 \\
+\cmd{git reset} & HEADを過去に巻き戻す & \cmd{--hard} は変更が消える。push済みには使わない \\
+\cmd{git restore} & ファイル単位で変更を取り消す & ワーキングツリーの変更が消える場合あり \\
+\cmd{git stash} & 作業を一時退避する & 安全（退避は明示的に削除しない限り残る） \\
+\cmd{git cherry-pick} & 特定のコミットだけ取り込む & 安全（新しいコミットが作られる） \\
+\cmd{git reflog} & HEADの移動履歴を参照する & 参照のみなので安全 \\
+\cmd{git blame} & 各行の最終変更者を表示する & 参照のみなので安全 \\
+\hline
+\end{tabular}
+\end{table}
+
+「間違えても大丈夫」——これがGitを使う最大の安心感です。revertで安全に打ち消し、resetで巻き戻し、reflogで消えたコミットを救出する。これらのテクニックを知っていれば、どんな失敗も恐れることなく、大胆にコードを書き進めることができます。
+
+ただし、安全性のレベルはコマンドによって異なります。迷ったときは、まず安全な操作（\cmd{git revert}）を選び、必要に応じてより強力な操作（\cmd{git reset}）を使うという方針を心がけてください。
+
+次の章では、チーム開発の要であるプルリクエストについて学びます。コードレビューの文化を作り、チーム全体のコード品質を高めるための仕組みと運用方法を理解しましょう。

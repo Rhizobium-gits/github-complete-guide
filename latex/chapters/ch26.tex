@@ -1,0 +1,463 @@
+\chapter{GitHubアプリの比較 --- Web・Desktop・CLI・Mobile・IDE}
+
+\section{この章で学ぶこと}
+
+GitHubは単一のWebサイトではなく、さまざまな方法でアクセスし操作できるプラットフォームです。ブラウザでWebサイトを開く方法だけでなく、デスクトップアプリ、コマンドラインツール、スマートフォンアプリ、そしてVS CodeなどのIDEの拡張機能からもGitHubの機能を利用できます。
+
+初心者にとっては「どれを使えばいいのか」がわかりにくいかもしれません。結論から言えば、それぞれの方法には得意分野と不得意分野があり、状況に応じて使い分けるのがベストです。プロの開発者も、ひとつのツールだけに頼るのではなく、複数のツールを組み合わせて使っています。
+
+この章では、GitHubを操作する5つの方法を比較し、それぞれの特徴と向いている人を詳しく解説します。この章を読み終える頃には、自分に合ったツールの組み合わせが見つかるでしょう。
+
+\section{GitHubを操作する5つの方法の概観}
+
+まず、5つの方法の全体像を図で確認しましょう。いずれの方法も、最終的にはインターネット上のGitHubサーバーと通信してデータをやり取りするという点は共通しています。違いは、その「入り口」がどのようなインターフェースであるかです。
+
+\begin{lstlisting}[language={}]
+┌──────────────────────────────────────────────────────────────────┐
+│                       GitHub (クラウド上のサーバー)                  │
+│            リポジトリ・Issue・PR・Actions などのデータ                │
+└─────┬──────────┬──────────┬──────────┬──────────┬────────────────┘
+      ↕          ↕          ↕          ↕          ↕
+  ┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐  ┌──────────┐
+  │ Web  │  │Desk- │  │ CLI  │  │Mobile│  │   IDE    │
+  │ UI   │  │ top  │  │ (gh) │  │ App  │  │  拡張機能  │
+  └──────┘  └──────┘  └──────┘  └──────┘  └──────────┘
+  ブラウザ   専用アプリ  ターミナル  スマホ     VS Code等
+\end{lstlisting}
+
+それぞれの方法でできることを一覧にまとめると、以下のようになります。
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lllllll}
+\hline
+機能 & Web UI & Desktop & CLI (gh) & Mobile & IDE拡張 \\
+\hline
+コード閲覧 & ◎ & ○ & △ & ○ & ◎ \\
+コード編集 & ○ & ◎ & ○ & △ & ◎ \\
+コミット & ○ & ◎ & ◎ & -- & ◎ \\
+ブランチ操作 & ○ & ◎ & ◎ & △ & ◎ \\
+PR作成/レビュー & ◎ & ○ & ◎ & ○ & ◎ \\
+Issue管理 & ◎ & -- & ◎ & ◎ & △ \\
+Actions管理 & ◎ & -- & ◎ & ○ & △ \\
+差分の視覚的比較 & ◎ & ◎ & △ & △ & ◎ \\
+コンフリクト解決 & △ & ◎ & △ & -- & ◎ \\
+Settings管理 & ◎ & -- & ○ & -- & -- \\
+自動化/スクリプト & -- & -- & ◎ & -- & △ \\
+オフライン作業 & -- & ◎ & ◎ & -- & ◎ \\
+\hline
+\end{tabular}
+\end{table}
+
+この表を見ると、「全てが◎のツールはない」ことがわかります。だからこそ、複数のツールを組み合わせて使うことが大切なのです。それでは、各ツールを詳しく見ていきましょう。
+
+\section{GitHub Web UI}
+
+\subsection{できること（全機能）}
+
+GitHub Web UI は、ブラウザで \cmd{https://github.com} にアクセスして使うインターフェースです。GitHubの全ての機能にアクセスできる、最も包括的な操作手段です。
+
+Web UIでできることは多岐にわたります。リポジトリの作成・設定・削除、コードの閲覧と簡単な編集、Pull Requestの作成・レビュー・マージ、Issueの作成・管理・ラベル付け、GitHub Actionsのワークフロー設定と実行状況の監視、Organizationやチームの管理、セキュリティ設定、Marketplace（アプリの追加）、プロフィールの編集など、GitHubのあらゆる機能がWeb UIから操作できます。
+
+特に、\textbf{リポジトリのSettings画面やOrganizationの管理画面はWeb UIからしかアクセスできない}ため、どのツールをメインに使うとしても、Web UIを完全に使わないということはありません。
+
+\subsection{Web上でのコード編集}
+
+Web UIでは、3つの方法でコードを編集できます。
+
+\textbf{方法1: ファイルの直接編集。} リポジトリ内のファイルを開き、鉛筆アイコン（Edit this file）をクリックすると、ブラウザ上でファイルの内容を編集できます。編集後は「Commit changes」ボタンでコミットが作成されます。typoの修正やドキュメントの更新など、簡単な変更に適しています。
+
+\textbf{方法2: github.dev（ブラウザ版VS Code）。} リポジトリのページでキーボードの \cmd{.}（ピリオド）キーを押すと、ブラウザ上でVS Codeと同じインターフェースが起動します。複数ファイルの同時編集、検索・置換、拡張機能の一部が使えるため、方法1よりも快適に編集作業ができます。ただし、ターミナルは使えないため、ビルドやテストの実行はできません。
+
+\screenshot{github.devの画面}
+
+\textbf{方法3: GitHub Codespaces（クラウド開発環境）。} Codespacesは、クラウド上に完全な開発環境を構築するサービスです。ブラウザ上でVS Codeが動作し、ターミナル、拡張機能、デバッガ、言語ランタイムなど、ローカル環境と同等の開発体験が得られます。無料プランでは月60時間まで利用できます。
+
+\subsection{向いている人}
+
+\begin{itemize}
+  \item GitHubを始めたばかりの初心者（ソフトウェアのインストールが不要）
+  \item リポジトリの設定変更やIssue/PRの管理が中心の人
+  \item 他の人のリポジトリを閲覧・フォーク・コメントしたい人
+  \item ちょっとした編集だけを行いたい人
+\end{itemize}
+
+\section{GitHub Desktop}
+
+\subsection{インストール}
+
+GitHub Desktopは、GitHubが公式に提供するデスクトップアプリケーションです。https://desktop.github.com/ からダウンロードでき、macOSとWindowsに対応しています（Linux版は公式には提供されていません）。
+
+\screenshot{GitHub Desktopのメイン画面}
+
+\subsection{特徴（GUIでGit操作）}
+
+GitHub Desktopの最大の特徴は、\textbf{Gitコマンドを一切覚えなくてもGitの操作ができる}ことです。ファイルの変更をステージングするのも、コミットを作成するのも、ブランチを切り替えるのも、すべてボタンのクリックやドラッグ\&ドロップで行えます。
+
+コマンドラインに不慣れな人にとって、Gitの学習障壁を大幅に下げてくれるツールです。特に以下の点が初心者にとって助けになります。
+
+\begin{itemize}
+  \item \textbf{差分の視覚的表示}: ファイルの変更箇所が緑色（追加）と赤色（削除）で色分け表示される。コマンドラインの \cmd{git diff} よりもはるかに直感的に変更内容を把握できる
+  \item \textbf{コンフリクト解決のUI}: マージコンフリクトが発生したとき、GUIで「どちらの変更を採用するか」を選択できる
+  \item \textbf{ブランチの視覚的管理}: ブランチの切り替えはドロップダウンメニューから選ぶだけ。ブランチの作成もダイアログ一つで完了する
+  \item \textbf{履歴のビジュアル表示}: コミット履歴が時系列で一覧表示され、各コミットの変更内容をクリックひとつで確認できる
+\end{itemize}
+
+\subsection{画面の見方}
+
+GitHub Desktopの画面構成を理解しましょう。
+
+\begin{lstlisting}[language={}]
+┌────────────────────────────────────────────────────┐
+│  GitHub Desktop                                     │
+│                                                     │
+│  Current Repository: [my-project ▼]                 │
+│  Current Branch: [main ▼]                           │
+│                                                     │
+│  ┌──────────────────┐  ┌──────────────────────┐    │
+│  │ Changes (3)       │  │ History              │    │
+│  │                   │  │                      │    │
+│  │ ☑ README.md       │  │ abc1234 feat: 新機能   │    │
+│  │ ☑ src/app.py      │  │ def5678 fix: バグ修正  │    │
+│  │ ☐ test.py         │  │ ghi9012 docs: 更新    │    │
+│  │                   │  │                      │    │
+│  │ [Summary]         │  │                      │    │
+│  │ [Description]     │  │                      │    │
+│  │ [Commit to main]  │  │                      │    │
+│  └──────────────────┘  └──────────────────────┘    │
+│                                                     │
+│  [Push origin]  [Fetch origin]                      │
+└────────────────────────────────────────────────────┘
+\end{lstlisting}
+
+画面上部には現在のリポジトリとブランチが表示されます。左側の「Changes」タブには変更されたファイルの一覧が表示され、チェックボックスでステージするファイルを選択します。右側の「History」タブでは過去のコミット一覧を確認できます。画面下部のボタンでPush（アップロード）やFetch（ダウンロード）を行います。
+
+\subsection{他のGit GUIツールとの比較}
+
+GitHub Desktop以外にも、GUIでGitを操作できるツールがあります。
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\hline
+ツール & 料金 & 特徴 \\
+\hline
+\textbf{GitHub Desktop} & 無料 & シンプルで使いやすい。GitHub公式 \\
+\textbf{Sourcetree} & 無料 & 高機能。Atlassian製（Bitbucketとの連携が得意） \\
+\textbf{GitKraken} & 有料（\$4.95/月\textasciitilde） & 美しいUIと直感的な操作性。ブランチグラフが秀逸 \\
+\textbf{Fork} & 有料（\$49.99買い切り） & 高速で軽量。macOS/Windows対応 \\
+\textbf{Tower} & 有料（\$69/年\textasciitilde） & プロフェッショナル向け。高機能 \\
+\textbf{Sublime Merge} & 有料（\$99買い切り） & 高速検索と軽量動作が売り \\
+\hline
+\end{tabular}
+\end{table}
+
+初心者にはGitHub Desktopが最適です。無料で、GitHub との統合がスムーズで、機能がシンプルなため迷うことが少ないです。より高度な機能（複雑なリベース操作、高度なブランチグラフの表示など）が必要になったら、他のツールへの移行を検討するとよいでしょう。
+
+\subsection{向いている人}
+
+\begin{itemize}
+  \item \textbf{Git初心者}: コマンドを覚えずにGitを使い始めたい人
+  \item \textbf{ビジュアル派}: 差分やブランチを視覚的に確認したい人
+  \item \textbf{非エンジニア}: デザイナー、ライター、研究者など、コマンドラインに馴染みのない人
+\end{itemize}
+
+\section{GitHub CLI (gh)}
+
+\subsection{gitコマンドとghコマンドの違い}
+
+GitHub CLIを理解する上で最も重要なのは、\textbf{\cmd{git} コマンドと \cmd{gh} コマンドは全く別のツール}であるということです。名前が似ているため混同しやすいですが、役割が明確に異なります。
+
+\textbf{\cmd{git} コマンド}は、ローカルマシン上でのバージョン管理を行うツールです。ファイルのステージング（\cmd{git add}）、コミット（\cmd{git commit}）、ブランチの作成・マージ（\cmd{git branch}、\cmd{git merge}）、リモートとの通信（\cmd{git push}、\cmd{git pull}）など、Gitの基本操作を担当します。GitHubがなくても使えるツールです。
+
+\textbf{\cmd{gh} コマンド（GitHub CLI）}は、GitHubのWeb機能をコマンドラインから操作するためのツールです。リポジトリの作成（\cmd{gh repo create}）、PRの作成・マージ（\cmd{gh pr create}、\cmd{gh pr merge}）、Issueの管理（\cmd{gh issue create}）、GitHub Actionsの監視（\cmd{gh run list}）など、通常はGitHubのWebサイトで行う操作をターミナルから実行できます。
+
+\begin{lstlisting}[language=bash]
+# === git コマンド（ローカルのバージョン管理） ===
+git add .                    # ファイルをステージング
+git commit -m "メッセージ"    # コミットを作成
+git push                     # リモートにアップロード
+git branch feature           # ブランチを作成
+git merge feature            # ブランチをマージ
+
+# === gh コマンド（GitHubのWeb機能をCLIから操作） ===
+gh repo create               # GitHubにリポジトリを作成
+gh pr create                 # Pull Requestを作成
+gh pr merge                  # Pull Requestをマージ
+gh issue create              # Issueを作成
+gh run list                  # GitHub Actionsの実行一覧
+gh release create            # リリースを作成
+\end{lstlisting}
+
+両方のコマンドを組み合わせることで、ブラウザを一度も開くことなく、コーディングからPR作成・マージまでの全てのワークフローをターミナル内で完結させることができます。
+
+\subsection{インストール}
+
+\begin{lstlisting}[language=bash]
+# macOS（Homebrewを使用）
+brew install gh
+
+# Windows（wingetを使用）
+winget install --id GitHub.cli
+
+# Linux（Debian/Ubuntu）
+sudo apt install gh
+
+# インストール後、認証を行う
+gh auth login
+\end{lstlisting}
+
+\cmd{gh auth login} を実行すると、対話的に認証方式を選択するプロンプトが表示されます。ブラウザが開き、GitHubアカウントでログインすると認証が完了します。
+
+\subsection{よく使うコマンド集}
+
+\begin{lstlisting}[language=bash]
+# --- 認証 ---
+gh auth login                          # GitHubにログイン
+gh auth status                         # 認証状態を確認
+
+# --- リポジトリ ---
+gh repo create my-project --public     # 新しいリポジトリを作成
+gh repo clone owner/repo               # リポジトリをクローン
+gh repo view --web                     # ブラウザでリポジトリを開く
+gh repo list                           # 自分のリポジトリ一覧
+
+# --- Pull Request ---
+gh pr create --title "タイトル"         # PRを作成
+gh pr list                             # PRの一覧
+gh pr view 42                          # PR #42の詳細を表示
+gh pr checkout 42                      # PR #42をローカルにチェックアウト
+gh pr merge 42 --squash                # PR #42をスカッシュマージ
+gh pr diff 42                          # PR #42の差分を表示
+gh pr review 42 --approve              # PR #42を承認
+
+# --- Issue ---
+gh issue create                        # 対話的にIssueを作成
+gh issue list --assignee "@me"         # 自分にアサインされたIssue
+gh issue close 42                      # Issue #42をクローズ
+gh issue view 42                       # Issue #42の詳細を表示
+
+# --- GitHub Actions ---
+gh run list                            # ワークフロー実行の一覧
+gh run view RUN_ID --log               # ログを表示
+gh run rerun RUN_ID                    # 再実行
+gh run watch RUN_ID                    # リアルタイムで監視
+
+# --- リリース ---
+gh release create v1.0.0               # リリースを作成
+gh release list                        # リリース一覧
+\end{lstlisting}
+
+\subsection{エイリアス}
+
+よく使うコマンドには\textbf{エイリアス}（ショートカット）を設定できます。
+
+\begin{lstlisting}[language=bash]
+# エイリアスの設定
+gh alias set prc 'pr create'          # gh prc で gh pr create と同じ
+gh alias set prl 'pr list'            # gh prl で gh pr list と同じ
+gh alias set il 'issue list'          # gh il で gh issue list と同じ
+
+# エイリアスの一覧
+gh alias list
+
+# 使用例
+gh prc --title "新機能を追加"          # gh pr create --title "新機能を追加" と同じ
+\end{lstlisting}
+
+\subsection{向いている人}
+
+\begin{itemize}
+  \item \textbf{ターミナルで全てを完結させたい人}: ブラウザとターミナルを行き来するのが面倒な人
+  \item \textbf{操作を自動化・スクリプト化したい人}: \cmd{gh} コマンドはシェルスクリプトに組み込める
+  \item \textbf{効率重視のパワーユーザー}: キーボードだけで素早く操作したい人
+\end{itemize}
+
+\section{GitHub Mobile}
+
+\subsection{インストール}
+
+GitHub Mobileは、GitHubが公式に提供するスマートフォンアプリです。
+
+\begin{itemize}
+  \item \textbf{iOS}: App Store で「GitHub」を検索してインストール
+  \item \textbf{Android}: Google Play で「GitHub」を検索してインストール
+\end{itemize}
+
+\screenshot{GitHub Mobileのメイン画面}
+
+\subsection{できること（通知/Issue/PR/コード閲覧）}
+
+GitHub Mobileは「外出先でGitHubの状況を確認し、簡単な対応を行う」ことに特化したアプリです。
+
+\begin{itemize}
+  \item \textbf{プッシュ通知}: PRへのコメントやレビューリクエスト、Issueへのメンション、Actionsの失敗など、重要な通知をスマートフォンのプッシュ通知としてリアルタイムに受け取れる
+  \item \textbf{Issue/PRの確認とコメント}: Issue やPRの詳細を確認し、コメントを投稿できる。移動中にレビューコメントに返信したり、質問に答えたりするのに便利
+  \item \textbf{PRのマージ・承認}: PRをApprove（承認）したりマージしたりすることもできる。急ぎの対応が必要なときに、PCを開けなくてもスマートフォンから操作できる
+  \item \textbf{コードの閲覧}: リポジトリ内のファイルをスマートフォンで確認できる。シンタックスハイライトも適用される
+  \item \textbf{コントリビューション草の確認}: プロフィールのコントリビューショングラフ（草）を確認できる
+\end{itemize}
+
+\subsection{できないこと（編集/設定）}
+
+GitHub Mobileは閲覧と簡単な操作に特化しており、以下のことはできません。
+
+\begin{itemize}
+  \item コードの編集やコミットの作成
+  \item リポジトリの設定変更（ブランチ保護ルール、Webhook設定など）
+  \item GitHub Actionsのワークフローファイルの編集
+  \item Organizationの詳細な管理
+\end{itemize}
+
+これらの操作が必要な場合は、PCでWeb UIやCLIを使ってください。
+
+\subsection{向いている人}
+
+\begin{itemize}
+  \item \textbf{通知をすぐにチェックしたい人}: レビューリクエストやメンションにすぐ気づきたい人
+  \item \textbf{外出先でレビュー対応が必要な人}: 移動中にコメントへの返信や緊急のマージを行いたい人
+  \item \textbf{コントリビューションの草を毎日チェックしたい人}: 継続のモチベーション維持に
+\end{itemize}
+
+\section{IDE拡張機能}
+
+\subsection{VS Code標準Git機能の解説}
+
+VS Code（Visual Studio Code）には、拡張機能を追加しなくても最初からGit連携機能が組み込まれています。これはVS Codeの大きな強みです。
+
+\textbf{ソース管理パネル}（\cmd{Cmd+Shift+G} / \cmd{Ctrl+Shift+G}）は、Git操作のための統合的なインターフェースです。変更されたファイルの一覧表示、ファイルごとの差分確認、ステージング（\cmd{+} ボタン）、コミットメッセージの入力とコミット作成、Push/Pull/Syncなど、日常的なGit操作のほとんどをこのパネルから行えます。
+
+\textbf{ステータスバー}（画面最下部の青いバー）には、現在のブランチ名と同期状態が表示されます。ブランチ名をクリックするとブランチの切り替えや新規作成ができます。
+
+\textbf{差分表示}は、変更されたファイルをクリックすると左右分割で表示されます。左側が変更前、右側が変更後の状態で、追加された行は緑色、削除された行は赤色で表示されます。
+
+\textbf{エディタのガター}（行番号の左側の余白）には、変更のある行が色付きのバーで表示されます。緑は追加、青は変更、赤は削除を意味します。
+
+\screenshot{VS Codeのソース管理パネルと差分表示}
+
+\subsection{おすすめ拡張機能}
+
+VS Codeの標準機能に加えて、以下の拡張機能をインストールすると、Git/GitHub連携がさらに充実します。
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ll}
+\hline
+拡張機能 & 用途 \\
+\hline
+\textbf{GitHub Pull Requests and Issues} & VS Code内でPRの作成・レビュー・マージ、Issueの閲覧・作成ができる \\
+\textbf{GitLens} & 各行の最終変更者・日時を表示（インラインblame）、ファイルの変更履歴 \\
+\textbf{GitHub Copilot} & AIによるコード補完。コメントやコンテキストに基づいてコードを自動生成する \\
+\textbf{GitHub Copilot Chat} & AIとの対話形式でコーディングの相談やコード生成を行う \\
+\textbf{Git Graph} & ブランチの分岐・マージの履歴をグラフとして視覚的に表示する \\
+\textbf{GitHub Actions} & ワークフローの実行状態をVS Code内で確認できる \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Claude Code}
+
+Claude CodeはVS Codeの拡張機能としても、独立したCLIツールとしても使用できます。VS Code内のサイドパネルにClaude Codeのインターフェースが表示され、コードを書きながらAIに作業を依頼したり、相談したりできます。
+
+Claude Codeの特徴は、リポジトリの全体を理解した上で作業を行えることです。単にコードの補完をするだけでなく、ファイルの読み書き、テストの実行、Git操作（コミットやPR作成）まで対話的に行えます。
+
+\begin{lstlisting}[language={}]
+Claude Codeの操作イメージ:
+┌────────────────────────────────────────────┐
+│ VS Code                                    │
+│ ┌────────────────┐  ┌──────────────────┐   │
+│ │ エディタ        │  │ Claude Code      │   │
+│ │                │  │                  │   │
+│ │ def calc(x):   │  │ > このバグを直して  │   │
+│ │   return x * 2 │  │                  │   │
+│ │                │  │ 分析しました。     │   │
+│ │                │  │ x * 2 ではなく    │   │
+│ │                │  │ x ** 2 が正しい   │   │
+│ │                │  │ ですね。修正します。│   │
+│ └────────────────┘  └──────────────────┘   │
+└────────────────────────────────────────────┘
+\end{lstlisting}
+
+\subsection{JetBrains IDEのGit連携}
+
+IntelliJ IDEA、PyCharm、WebStorm、GoLandなどのJetBrains製IDEにも、Git/GitHub連携機能が標準搭載されています。
+
+\begin{itemize}
+  \item \textbf{VCSメニュー}: Git操作全般（コミット、プッシュ、プル、ブランチ操作など）がメニューから実行できる
+  \item \textbf{Gitツールウィンドウ}: コミットログ、ブランチ一覧、リモートリポジトリの状態を確認できる
+  \item \textbf{GitHub連携}: プラグイン不要でPRの作成・レビューが可能。GitHub上のリポジトリをIDEから直接クローンすることもできる
+  \item \textbf{3ペインマージツール}: コンフリクトが発生したとき、「自分の変更」「相手の変更」「マージ結果」の3つのペインを並べて、どの変更を採用するかをGUIで選択できる。これは全Git GUIツールの中でも最も優れたコンフリクト解決UIのひとつ
+\end{itemize}
+
+\subsection{向いている人}
+
+\begin{itemize}
+  \item \textbf{コーディングとGit操作を同じ画面で行いたい人}: エディタとターミナルを切り替える手間がなくなる
+  \item \textbf{PRレビューをコードの横で行いたい人}: コードを読みながらレビューコメントを書ける
+  \item \textbf{AI支援を活用したい人}: GitHub Copilot や Claude Code を使って開発効率を上げたい人
+\end{itemize}
+
+\section{どれを使うべきか}
+
+\subsection{初心者の場合}
+
+GitHubを始めたばかりの人には、以下のステップで段階的にツールを増やしていくことをおすすめします。
+
+\begin{lstlisting}[language={}]
+ステップ1: GitHub Web UI でアカウント作成、リポジトリの基本操作を学ぶ
+    ↓
+ステップ2: GitHub Desktop をインストールし、GUIでGitの概念（コミット、ブランチ）を体験する
+    ↓
+ステップ3: VS Code のソース管理パネルに移行し、コーディングとGit操作を統合する
+    ↓
+ステップ4: git コマンドと gh コマンドを覚え、ターミナルでの操作に慣れる
+\end{lstlisting}
+
+最初からコマンドラインを使おうとする必要はありません。GUIツールでGitの概念を「目で見て」理解してからコマンドラインに移行すると、各コマンドが何をしているのかを具体的にイメージできるため、学習がスムーズに進みます。
+
+\subsection{開発者の日常}
+
+プロの開発者がどのようにツールを使い分けているかの典型例を紹介します。
+
+\begin{lstlisting}[language={}]
+メインの作業:          VS Code（コード編集 + Git操作 + AI支援）
+PR/Issueの管理:        gh CLI（ターミナルで素早く操作）
+リポジトリの設定:       Web UI（Settingsは Web UIでしかアクセスできない）
+外出先での対応:         GitHub Mobile（通知確認、緊急のコメント返信）
+自動化スクリプト:       gh CLI（シェルスクリプトに組み込む）
+複雑なコンフリクト解決: VS Code or JetBrains IDE（GUIのマージツール）
+\end{lstlisting}
+
+ポイントは、「ひとつのツールに固執しない」ことです。それぞれのツールの強みを活かし、状況に応じて最適なツールを使い分けることが、効率的な開発ワークフローにつながります。
+
+\subsection{レベル別おすすめ組み合わせ}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\hline
+レベル & おすすめの組み合わせ & 理由 \\
+\hline
+\textbf{入門} & Web UI + GitHub Desktop & インストール最小限で始められる \\
+\textbf{初級} & VS Code + Web UI & コーディングとGit操作を統合できる \\
+\textbf{中級} & VS Code + gh CLI + Web UI & ターミナルからPR/Issue操作ができ、効率が上がる \\
+\textbf{上級} & ターミナル（git + gh）+ VS Code + Mobile & 全ての操作をキーボードで完結 \\
+\hline
+\end{tabular}
+\end{table}
+
+どのレベルでも\textbf{Web UIは常に使います}。これはリポジトリの設定やOrganizationの管理がWeb UIでしかできないためです。レベルが上がるにつれて、より多くのツールを使いこなすようになりますが、それは「以前のツールを捨てる」のではなく「使えるツールの選択肢が増える」ということです。
+
+\section{まとめ}
+
+この章では、GitHubを操作する5つの方法 -- Web UI、Desktop、CLI、Mobile、IDE拡張機能 -- を詳しく比較しました。
+
+\begin{itemize}
+  \item \textbf{GitHub Web UI}は全機能にアクセスできる包括的なインターフェースであり、github.devやCodespacesによるブラウザ上での開発も可能です。
+  \item \textbf{GitHub Desktop}はGUIでGit操作ができる初心者向けのツールであり、差分表示やコンフリクト解決を視覚的に行えます。他のGit GUIツール（Sourcetree、GitKraken、Fork等）も選択肢として存在します。
+  \item \textbf{GitHub CLI (gh)}はターミナルからGitHubのWeb機能を操作するツールであり、\cmd{git} コマンド（ローカル操作）と \cmd{gh} コマンド（GitHub操作）を組み合わせることで、ブラウザを開かずに全てのワークフローを完結できます。
+  \item \textbf{GitHub Mobile}は外出先での通知確認や簡単な操作に特化したスマートフォンアプリです。
+  \item \textbf{IDE拡張機能}はVS CodeやJetBrains IDEにGit/GitHub連携を統合し、コーディングとGit操作を同じ画面で行えるようにします。Claude CodeやGitHub CopilotなどのAI支援ツールとの連携も可能です。
+\end{itemize}
+
+最も重要なメッセージは、\textbf{「正解はひとつではない」}ということです。自分の作業スタイルやスキルレベルに合わせて、複数のツールを組み合わせて使い分けることが、GitHubを快適に使いこなすコツです。

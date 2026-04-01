@@ -1,0 +1,122 @@
+% GitHub Complete Guide - LaTeX Source
+% Using LiX textbook class
+% Compile with: lualatex main.tex (run twice for TOC)
+
+\documentclass{textbook}
+
+\lang      {japanese}
+\title     {GitHub完全ガイド}
+\subtitle  {はじめてのバージョン管理からチーム開発まで}
+\authors   {Rhizobium-gits}
+\license   {CC}{by-nc-sa}{4.0}
+\publisher {GitHub Complete Guide Project}
+\edition   {1}{2026}
+\dedicate  {すべての初学者へ}{プログラミングの世界への第一歩を踏み出すあなたに}
+\thank     {本書の作成にあたり、Claude Codeの支援に感謝します}
+\keywords  {GitHub, Git, version control, collaboration, open source}
+
+\note{本書は、GitとGitHubの全操作・全機能を日本語で網羅した完全リファレンスガイドです。プログラミングを始めたばかりの方から、チームで本格的に開発を始めたい方まで、これ1冊でGitHubの全てが分かることを目指しました。用語の意味から丁寧に解説し、なぜその操作が必要なのかという文脈を重視しています。}
+
+\blurb{「コードを書いたことはあるけれど、Gitって何？」という方から、チームで本格的に開発を始めたい方まで。本書を一冊読み通せば、GitとGitHubの全体像が手に取るように分かります。}
+
+% Japanese support
+\usepackage{luatexja}
+\usepackage{luatexja-fontspec}
+\setmainjfont{HiraginoSans-W3}[
+  BoldFont=HiraginoSans-W6,
+]
+
+% Code listings
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstdefinestyle{codestyle}{
+  backgroundcolor=\color{gray!8},
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  framerule=0.3pt,
+  rulecolor=\color{gray!40},
+  numbers=none,
+  tabsize=2,
+  showstringspaces=false,
+  captionpos=b,
+  aboveskip=8pt,
+  belowskip=8pt,
+}
+\lstset{style=codestyle}
+
+% Custom commands for the book
+\newcommand{\term}[1]{\textbf{#1}}
+\newcommand{\cmd}[1]{\texttt{#1}}
+\newcommand{\file}[1]{\texttt{#1}}
+\newcommand{\screenshot}[1]{\vspace{6pt}\noindent\fbox{\parbox{0.95\textwidth}{\centering\small\itshape スクリーンショット: #1}}\vspace{6pt}}
+
+\begin{document}
+
+\toc
+
+% ============================================================
+% Part 1: Foundations
+% ============================================================
+
+\input{chapters/ch01}
+\input{chapters/ch02}
+\input{chapters/ch03}
+\input{chapters/ch04}
+
+% ============================================================
+% Part 2: Git Basics
+% ============================================================
+
+\input{chapters/ch05}
+\input{chapters/ch06}
+\input{chapters/ch07}
+\input{chapters/ch08}
+\input{chapters/ch09}
+
+% ============================================================
+% Part 3: GitHub Features
+% ============================================================
+
+\input{chapters/ch10}
+\input{chapters/ch11}
+\input{chapters/ch12}
+\input{chapters/ch13}
+\input{chapters/ch14}
+
+% ============================================================
+% Part 4: Collaboration
+% ============================================================
+
+\input{chapters/ch15}
+\input{chapters/ch16}
+\input{chapters/ch17}
+\input{chapters/ch18}
+
+% ============================================================
+% Part 5: Advanced
+% ============================================================
+
+\input{chapters/ch19}
+\input{chapters/ch20}
+\input{chapters/ch21}
+\input{chapters/ch22}
+\input{chapters/ch23}
+\input{chapters/ch24}
+
+% ============================================================
+% Part 6: Deep Dive
+% ============================================================
+
+\input{chapters/ch25}
+\input{chapters/ch26}
+
+% ============================================================
+% Appendices
+% ============================================================
+
+\input{chapters/appendix_a}
+\input{chapters/appendix_b}
+
+\end{document}

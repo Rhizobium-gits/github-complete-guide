@@ -1,0 +1,560 @@
+\chapter{GitHubアカウント — 開発者としての第一歩}
+
+\section{この章で学ぶこと}
+
+本章では、GitHubにアカウントを作成し、プロフィールを整え、開発者としてのオンライン上の「顔」を作り上げていきます。GitHubのアカウントは、単なるログイン情報ではありません。それは、あなたのコードやプロジェクトへの貢献を蓄積していく「デジタルなポートフォリオ」であり、世界中の開発者とつながるための「名刺」でもあります。
+
+具体的には、以下の内容を学びます。
+
+\begin{itemize}
+  \item GitHubアカウントの\textbf{作成手順}と各入力項目の意味
+  \item 長く使い続けるための\textbf{ユーザー名の選び方}
+  \item アカウントを不正アクセスから守る\textbf{二段階認証（2FA）}の設定
+  \item 自分をアピールする\textbf{プロフィール}の整え方
+  \item 自分だけのページを作る\textbf{プロフィールREADME}の仕組み
+  \item 用途に応じた\textbf{料金プランの選び方}
+  \item 情報の洪水に溺れないための\textbf{通知設定のカスタマイズ}
+\end{itemize}
+
+GitHubは、世界で1億人を超える開発者が利用するプラットフォームです。アカウントの作成は、そのコミュニティへの参加証を手に入れるようなものだと考えてください。
+
+\section{アカウント作成の手順}
+
+GitHubのアカウント作成は無料で、数分で完了します。以下の手順に沿って進めましょう。
+
+\textbf{ステップ1：GitHubのサイトにアクセスする}
+
+ウェブブラウザで \textit{https://github.com} にアクセスします。トップページが表示されたら、画面右上の「\textbf{Sign up}」ボタンをクリックしてください。
+
+\screenshot{GitHubトップページの Sign up ボタン}
+
+\textbf{ステップ2：メールアドレスを入力する}
+
+最初に求められるのはメールアドレスです。このアドレスは、アカウントの認証やパスワードリセット、セキュリティ通知の受信に使われます。日常的に確認するメールアドレスを使用してください。
+
+ここで入力したメールアドレスは、後から変更したり、複数のアドレスを追加したりすることも可能です。ただし、最初に登録するアドレスが「プライマリメールアドレス」となり、GitHubからの重要な通知はこのアドレスに届きます。
+
+\textbf{ステップ3：パスワードを設定する}
+
+パスワードは、以下のいずれかの条件を満たす必要があります。
+
+\begin{itemize}
+  \item \textbf{15文字以上}（制約なし）
+  \item \textbf{8文字以上}で、数字と英小文字をそれぞれ1つ以上含む
+\end{itemize}
+
+セキュリティの観点から、15文字以上のパスフレーズ（たとえば複数の単語をつなげたもの）を使うことを強くおすすめします。「correct-horse-battery-staple」のような、ランダムな単語を組み合わせたパスフレーズは、短くて複雑なパスワードよりも覚えやすく、かつ破られにくいとされています。パスワードマネージャー（1Password、Bitwarden など）を使って生成・管理するのも良い方法です。
+
+\textbf{ステップ4：ユーザー名を選ぶ}
+
+ユーザー名は、GitHub上でのあなたの識別子です。\cmd{github.com/ユーザー名} があなたのプロフィールページのURLになります。ユーザー名の選び方については次の 3.3 節で詳しく解説しますが、ここでは「慎重に選ぶ価値がある」ということだけ覚えておいてください。
+
+\textbf{ステップ5：メール配信の設定}
+
+GitHubからの製品アップデートやお知らせをメールで受け取るかどうかを選択します。これは後からでも変更できるので、気軽に選んでください。
+
+\textbf{ステップ6：CAPTCHAの認証}
+
+ロボットではないことを証明するためのパズルが表示されます。画面の指示に従って操作してください。
+
+\textbf{ステップ7：メール認証を完了する}
+
+「Create account」ボタンを押すと、入力したメールアドレスに認証コードが送信されます。メールを確認し、記載されている数字のコードをGitHubの画面に入力してください。メールが届かない場合は、迷惑メールフォルダを確認するか、数分待ってから再送信を試みてください。
+
+\screenshot{メール認証コード入力画面}
+
+\textbf{ステップ8：パーソナライゼーション（任意）}
+
+アカウント作成直後に、チームの規模や利用目的などに関する質問が表示されることがあります。これらは GitHub がサービス改善のために収集する情報であり、スキップしても問題ありません。
+
+以上でアカウントの作成は完了です。おめでとうございます。GitHubの世界へようこそ。
+
+\section{ユーザー名の選び方}
+
+GitHubのユーザー名は、あなたのオンラインアイデンティティの一部になります。軽い気持ちで決めてしまいがちですが、少し立ち止まって考える価値があります。
+
+\subsection{なぜユーザー名が重要なのか}
+
+ユーザー名は、以下のさまざまな場面であなたを代表します。
+
+\begin{itemize}
+  \item \textbf{プロフィールURL}：\cmd{github.com/ユーザー名} があなたのページになります
+  \item \textbf{リポジトリURL}：\cmd{github.com/ユーザー名/リポジトリ名} で公開されます
+  \item \textbf{コミット履歴}：他の人のリポジトリに貢献したとき、ユーザー名が記録されます
+  \item \textbf{Issue やプルリクエスト}：あなたの発言にはすべてユーザー名が表示されます
+  \item \textbf{\cmd{@ユーザー名} によるメンション}：他のユーザーがあなたに言及するときに使われます
+\end{itemize}
+
+つまり、ユーザー名はGitHub上でのあなたの「名前」そのものなのです。
+
+\subsection{選び方のヒント}
+
+\begin{itemize}
+  \item \textbf{短くて覚えやすいもの}：URLの一部になるため、あまりに長いユーザー名は扱いにくくなります。
+  \item \textbf{本名でもハンドルネームでもOK}：技術コミュニティでは、本名を使う人もハンドルネームを使う人もいます。どちらが良いかに正解はありません。
+  \item \textbf{プロフェッショナルさを意識する}：将来、就職活動やオープンソースへの貢献を考えているなら、あまりにカジュアルすぎるユーザー名は避けたほうが無難です。GitHubのプロフィールを「技術者としての履歴書」として見る採用担当者も少なくありません。
+  \item \textbf{使える文字}：英数字とハイフン（\cmd{-}）のみ使用可能です。アンダースコア（\cmd{\_}）は使えません。ハイフンで始めたり終わったりすることもできません。
+\end{itemize}
+
+\subsection{ユーザー名は後から変更できるか}
+
+はい、変更は可能です。Settings → Account → Change username から変更できます。ただし、変更にはいくつかの注意点があります。
+
+\begin{itemize}
+  \item 旧ユーザー名を含む\textbf{すべてのURLが変更}されます。他のサイトやドキュメントからリンクされている場合、それらは無効になります。
+  \item GitHubは一定期間、旧URLからのリダイレクトを提供しますが、永久ではありません。
+  \item 旧ユーザー名は\textbf{他のユーザーが取得できるようになります}。つまり、あなたの旧ユーザー名で別の人がアカウントを作成する可能性があります。
+\end{itemize}
+
+このように、ユーザー名の変更は可能ですがリスクも伴うため、最初の段階でよく考えて決めることをおすすめします。
+
+\section{二段階認証（2FA）— なぜ必要か}
+
+GitHubでは、2023年以降、すべてのアカウントに対して\textbf{二段階認証（Two-Factor Authentication, 2FA）が必須}となっています。これはセキュリティ上の要請であり、選択の余地はありません。しかし、「面倒な手続き」として捉えるのではなく、「自分のコードと活動を守るための盾」として前向きに設定しましょう。
+
+\subsection{二段階認証とは何か}
+
+通常のログインでは、ユーザー名とパスワードの2つの情報を入力します。二段階認証は、これに加えて「もう一つの認証手段」を要求する仕組みです。
+
+たとえるなら、銀行のATMを思い浮かべてください。キャッシュカード（持っているもの）と暗証番号（知っていること）の両方がなければ、お金を引き出せません。二段階認証もこれと同じで、パスワード（知っていること）とスマートフォンに表示される認証コード（持っているもの）の両方がなければ、ログインできないようにしています。
+
+仮にパスワードが漏洩した場合でも、攻撃者があなたのスマートフォンを持っていなければログインできないため、アカウントの安全性が大幅に高まります。
+
+\subsection{設定手順}
+
+\begin{enumerate}
+  \item GitHubにログインし、右上のアイコンをクリックして \textbf{Settings} を開きます
+  \item 左側のメニューから \textbf{Password and authentication} を選択します
+  \item 「Two-factor authentication」のセクションにある \textbf{Enable} ボタンをクリックします
+  \item 認証方法を選択します。\textbf{認証アプリ（Authenticator app）}の使用が推奨されています
+\end{enumerate}
+
+\screenshot{2FA設定画面}
+
+認証アプリを選択すると、QRコードが表示されます。このQRコードを認証アプリでスキャンすると、アプリにGitHubのエントリが追加され、30秒ごとに変わる6桁の認証コードが表示されるようになります。表示されたコードをGitHubの画面に入力して、設定を完了してください。
+
+\subsection{推奨認証アプリ}
+
+認証アプリにはさまざまな選択肢がありますが、代表的なものを紹介します。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{llp{8cm}}
+\hline
+\textbf{アプリ} & \textbf{対応OS} & \textbf{特徴} \\
+\hline
+\textbf{1Password} & macOS, Windows, iOS, Android & パスワード管理と二段階認証を一つのアプリで統合できます。有料ですが、セキュリティ管理の一元化という点で非常に優れています。 \\
+\textbf{Authy} & macOS, Windows, iOS, Android & 無料で、複数デバイス間の同期に対応しています。スマートフォンを買い替えた際にも移行が容易です。 \\
+\textbf{Google Authenticator} & iOS, Android & Googleが提供するシンプルな認証アプリです。必要最低限の機能に絞られており、使い方に迷うことがありません。 \\
+\textbf{Microsoft Authenticator} & iOS, Android & Microsoft製品（Azure, Microsoft 365 など）を使う環境で便利です。顔認証や指紋認証によるロック機能もあります。 \\
+\hline
+\end{tabular}
+\end{table}
+
+どのアプリを選んでも基本的な機能は同じです。すでにパスワードマネージャーを使っている場合は、そのアプリに認証コード機能が含まれていないか確認してみてください。
+
+\subsection{リカバリーコードの重要性}
+
+二段階認証を設定すると、\textbf{リカバリーコード}（復旧コード）が表示されます。これは、スマートフォンを紛失したり、認証アプリにアクセスできなくなったりした場合の「最後の砦」です。
+
+\textbf{リカバリーコードは必ず安全な場所に保管してください。} これを紛失すると、認証アプリが使えない状況でアカウントにアクセスする手段がなくなります。GitHubのサポートに問い合わせても、本人確認に時間がかかり、最悪の場合アカウントにアクセスできなくなる可能性もあります。
+
+保管場所の例を挙げます。
+
+\begin{itemize}
+  \item \textbf{パスワードマネージャーのセキュアノート}に保存する（おすすめ）
+  \item \textbf{印刷して金庫や鍵付きの引き出し}に保管する
+  \item \textbf{暗号化されたファイル}としてクラウドストレージに保存する
+\end{itemize}
+
+紙に書いてモニターに貼る、スマートフォンのメモ帳に平文で保存する、といった方法は避けてください。リカバリーコードはパスワードと同等の機密情報です。
+
+\section{プロフィール設定 — 基本情報}
+
+GitHubのプロフィールは、他の開発者があなたを知るための最初の窓口です。設定は任意ですが、プロフィールが充実しているアカウントは、コミュニティにおいて信頼感を与えやすくなります。
+
+\subsection{基本プロフィールの設定}
+
+Settings → \textbf{Public profile} で、以下の項目を設定できます。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{llp{7cm}}
+\hline
+\textbf{項目} & \textbf{説明} & \textbf{記入のヒント} \\
+\hline
+\textbf{Name} & 表示名。ユーザー名とは別に設定できます。 & 本名でもニックネームでもOK。 \\
+\textbf{Bio} & 自己紹介文。160文字以内です。 & 自分の専門分野や興味を簡潔に書きましょう。 \\
+\textbf{URL} & 個人サイトやブログのURLです。 & ポートフォリオサイトやブログがあればリンクしましょう。 \\
+\textbf{Twitter/X username} & X（旧Twitter）のアカウント名です。 & 技術発信を行っている場合は連携すると便利です。 \\
+\textbf{Company} & 所属する組織や企業名です。 & \cmd{@組織名} の形式で入力するとOrganizationにリンクされます。 \\
+\textbf{Location} & 所在地です。 & 「Tokyo, Japan」など。詳細な住所は書かないでください。 \\
+\textbf{Pronouns} & 代名詞（人称）です。 & he/him、she/her、they/them など。 \\
+\hline
+\end{tabular}
+\end{table}
+
+\screenshot{プロフィール設定画面}
+
+\subsection{プロフィール写真の設定}
+
+プロフィール写真は、GitHub上のあらゆる場所であなたのアイコンとして表示されます。コミット一覧、Issue、プルリクエストのコメントなど、活動の痕跡にはすべてこのアイコンが添えられます。
+
+設定は Settings → \textbf{Public profile} → \textbf{Profile picture} の「Edit」ボタンから行います。推奨されるサイズは正方形で、最低でも200×200ピクセルあると鮮明に表示されます。
+
+写真を設定しない場合、GitHubが自動生成する幾何学模様のアイコン（Identicon）が使われます。これは他のユーザーと視覚的に区別しにくいため、何でも構わないので写真やイラストを設定しておくことをおすすめします。自分の顔写真でなくても、イラストやロゴなど、あなたを識別できるものであれば十分です。
+
+\section{プロフィールREADME — 自分だけのページを作る}
+
+GitHubには、自分のプロフィールページをMarkdownで自由にカスタマイズできる「プロフィールREADME」という機能があります。\cmd{github.com/ユーザー名} にアクセスしたとき、リポジトリ一覧の上にこのREADMEの内容が表示されます。いわば、GitHubにおける自分の「ホームページ」を作れる機能です。
+
+\subsection{作り方}
+
+プロフィールREADMEを作るには、\textbf{自分のユーザー名と同じ名前のリポジトリ}を作成する必要があります。たとえば、ユーザー名が \cmd{tsubasa} であれば、\cmd{tsubasa} という名前のリポジトリを作成します。
+
+\begin{enumerate}
+  \item GitHubの画面右上の「\textbf{+}」ボタンから「\textbf{New repository}」を選択します
+  \item Repository name に\textbf{自分のユーザー名}をそのまま入力します
+  \item 入力すると「You found a secret! tsubasa/tsubasa is a special repository...」というメッセージが表示されます。これが表示されれば正しく設定できています
+  \item 「\textbf{Public}」を選択します（プロフィールREADMEはパブリックリポジトリでのみ機能します）
+  \item 「\textbf{Add a README file}」にチェックを入れます
+  \item 「\textbf{Create repository}」をクリックします
+\end{enumerate}
+
+作成後、このリポジトリ内の \cmd{README.md} を編集すれば、その内容がプロフィールページに反映されます。
+
+\screenshot{プロフィールREADMEが表示されたプロフィールページ}
+
+\subsection{書き方の例}
+
+Markdownの書式（見出し、箇条書き、リンクなど）を自由に使えます。以下は、よくあるパターンの一例です。
+
+\begin{lstlisting}[language={}]
+# Hi there
+
+## About Me
+- Bioinformatics researcher
+- Currently learning metagenomics
+- Python, R, Shell scripting
+- How to reach me: example@example.com
+
+## GitHub Stats
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=YOUR_USERNAME&show_icons=true&theme=default)
+
+## Top Languages
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=YOUR_USERNAME&layout=compact&theme=default)
+\end{lstlisting}
+
+\cmd{YOUR\_USERNAME} の部分を自分のユーザー名に置き換えてください。上記の「GitHub Stats」や「Top Languages」は、外部サービス（github-readme-stats）が自動生成する画像カードで、あなたのGitHubでの活動状況やよく使うプログラミング言語を視覚的に表示してくれます。
+
+\subsection{よく使われるバッジとウィジェット}
+
+プロフィールREADMEをさらに充実させるために、さまざまなバッジやウィジェットを埋め込むことができます。これらはMarkdownの画像記法を使って表示します。
+
+\begin{lstlisting}[language={}]
+<!-- GitHub Streak（連続貢献日数） -->
+![GitHub Streak](https://streak-stats.demolab.com/?user=YOUR_USERNAME&theme=default)
+
+<!-- 訪問者カウンター -->
+![Visitors](https://visitor-badge.laobi.icu/badge?page_id=YOUR_USERNAME)
+
+<!-- スキルバッジ -->
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![R](https://img.shields.io/badge/R-276DC3?style=for-the-badge&logo=r&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+\end{lstlisting}
+
+スキルバッジは \textit{https://shields.io/} で自由にカスタマイズでき、色やロゴ、スタイルを選ぶことができます。自分の得意な技術をバッジとして並べると、一目で技術スタックが伝わるプロフィールになります。
+
+ただし、バッジやウィジェットを詰め込みすぎると、かえって読みにくくなることもあります。伝えたい情報を絞り、シンプルで見やすいプロフィールを心がけましょう。
+
+\section{GitHubの料金プラン}
+
+GitHubには複数の料金プランがありますが、個人で学習や開発を始める段階では\textbf{Freeプラン}で十分です。ここでは各プランの概要を紹介しますので、将来的なニーズに応じて参考にしてください。
+
+\subsection{各プランの概要}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{llp{8cm}}
+\hline
+\textbf{プラン} & \textbf{料金} & \textbf{主な機能} \\
+\hline
+\textbf{Free} & 無料 & 無制限のパブリック・プライベートリポジトリ、GitHub Actions 月2,000分、GitHub Packages 500MB \\
+\textbf{Pro} & \$4/月 & Freeの全機能に加え、プライベートリポジトリでの高度な機能 \\
+\textbf{Team} & \$4/ユーザー/月 & 組織向けのチーム管理機能、コードオーナー、ドラフトPR \\
+\textbf{Enterprise} & \$21/ユーザー/月 & SAML SSO、詳細な監査ログ、高度なセキュリティ機能、専用サポート \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Freeプランで使えること}をもう少し具体的に見てみましょう。
+
+\begin{itemize}
+  \item パブリックリポジトリもプライベートリポジトリも\textbf{無制限}に作成できます
+  \item プライベートリポジトリでも\textbf{3人まで}のコラボレーターを招待できます
+  \item GitHub Actions（自動化機能）は\textbf{月2,000分}まで無料で利用できます
+  \item GitHub Pages（Webサイト公開機能）もパブリックリポジトリで利用可能です
+\end{itemize}
+
+個人学習や小規模なプロジェクトであれば、Freeプランの制約に引っかかることはまずありません。
+
+\subsection{GitHub Education（学生・教育者向け）}
+
+大学や高等教育機関に所属する学生であれば、\textbf{GitHub Education} プログラムを通じて、Pro相当の機能を無料で利用できます。さらに、「GitHub Student Developer Pack」として、GitHub以外の多くのサービス（JetBrains IDE、Namecheap ドメイン、DigitalOcean クレジットなど）の特典も付属します。
+
+申請手順は以下のとおりです。
+
+\begin{enumerate}
+  \item \textit{https://education.github.com} にアクセスします
+  \item 「\textbf{Get benefits}」または「\textbf{Join Global Campus}」をクリックします
+  \item 学校のメールアドレスを使用するか、学生証の写真をアップロードします
+  \item 審査が行われ、承認されると特典が適用されます
+\end{enumerate}
+
+審査には数日かかることがありますが、有効な学生証や在学証明があれば、ほとんどの場合承認されます。学生の方は、ぜひ活用してください。
+
+\section{通知設定のカスタマイズ}
+
+GitHubを使い始めると、さまざまな通知が届くようになります。自分が参加しているリポジトリのIssueにコメントがついたとき、プルリクエストにレビューが付いたとき、自分がメンションされたときなど、活動に応じて通知が発生します。
+
+通知は便利な反面、設定を適切にしないと情報の洪水に飲まれてしまいます。メールの受信ボックスがGitHubの通知で埋め尽くされるのは、多くの開発者が経験する「あるある」です。ここでは、快適に作業を続けるための通知設定を紹介します。
+
+\subsection{通知設定の画面}
+
+Settings → \textbf{Notifications} で、通知に関する詳細な設定ができます。主な設定項目は以下のとおりです。
+
+\textbf{Default notifications email}：通知メールの送信先アドレスを選択します。複数のメールアドレスを登録している場合は、通知を受け取りたいアドレスを指定できます。
+
+\textbf{Automatically watch repositories}：新しくリポジトリの権限を得たとき（作成したとき、アクセス権を付与されたとき）に、自動的にそのリポジトリを「Watching（監視）」状態にするかどうかの設定です。Watchingにすると、そのリポジトリのすべての活動が通知されます。
+
+\textbf{Subscriptions}：現在購読中のIssueやプルリクエストを管理できます。不要な通知が来ている場合は、ここで購読を解除できます。
+
+\subsection{おすすめの設定}
+
+初期設定では通知が多すぎることがあるため、以下のように調整することをおすすめします。
+
+\begin{itemize}
+  \item \textbf{Web notifications}（GitHub上での通知）：\textbf{有効}のままにしておきます。画面上部のベルアイコンに通知が表示されるだけなので、邪魔になりません。
+  \item \textbf{Email notifications}：必要なものだけに絞ります。すべての活動に対してメールが来ると、重要な通知が埋もれてしまいます。「自分がメンションされたとき」や「レビューをリクエストされたとき」だけメールを受け取るように設定するのがバランスが良いでしょう。
+  \item \textbf{Automatically watch repositories}：\textbf{無効}にすることを強くおすすめします。多くのリポジトリに関わるようになると、この設定が有効のままだとあっという間に通知が爆発的に増えます。本当に監視したいリポジトリだけを手動でWatchingに設定する方が、ノイズを抑えられます。
+\end{itemize}
+
+\screenshot{通知設定画面}
+
+通知の管理は、GitHubを快適に使い続けるための重要なスキルです。最初から完璧な設定を目指す必要はありません。使い続ける中で「この通知は不要だな」「この通知はメールでも欲しいな」と感じたら、その都度調整していきましょう。
+
+\section{Achievements（実績バッジ）— GitHubが認める功績}
+
+\subsection{Achievementsとは}
+
+GitHubには、プラットフォーム上での活動に応じて自動的に付与される\textbf{Achievements（アチーブメント、実績バッジ）}という仕組みがあります。これはゲームの「実績解除」に似た機能で、特定の条件を満たすとプロフィールページにバッジが表示されます。
+
+Achievementsは2022年6月にパブリックベータとして導入され、現在も進化を続けています。プロフィールページの左側カラムに表示され、他のユーザーがあなたのページを訪れたときに、あなたのGitHub上での活動の幅と深さを一目で伝えることができます。
+
+\screenshot{プロフィールページのAchievementsバッジ表示エリア}
+
+\subsection{Achievementsの表示設定}
+
+Achievementsの表示は、Settings → Public profile で制御できます。すべてのバッジを表示することも、特定のバッジだけを選んで表示することも、すべてを非表示にすることもできます。
+
+\subsection{現在獲得できるAchievements一覧}
+
+以下は、現在アクティブなAchievementsの一覧です。多くのAchievementsには\textbf{ティア（段階）}が設けられており、条件を多く達成するほど上位のバッジにグレードアップします。
+
+\subsubsection{Pull Shark（プルシャーク）}
+
+Pull Sharkは、\textbf{マージされたPull Requestの数}に基づいて付与されるバッジです。GitHubにおける最も基本的な貢献活動であるPR作成を評価するものであり、多くの開発者が最初に獲得するAchievementのひとつです。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{ティア} & \textbf{条件} \\
+\hline
+デフォルト & マージされたPRを2件達成 \\
+ブロンズ & マージされたPRを16件達成 \\
+シルバー & マージされたPRを128件達成 \\
+ゴールド & マージされたPRを1,024件達成 \\
+\hline
+\end{tabular}
+\end{table}
+
+ゴールドのPull Sharkを獲得するには1,024件ものPRがマージされる必要があり、長期にわたって活発に開発を続けている証です。
+
+\subsubsection{Galaxy Brain（ギャラクシーブレイン）}
+
+Galaxy Brainは、\textbf{GitHubのDiscussions（ディスカッション）で回答が「Accepted Answer（採用された回答）」として選ばれた回数}に基づいて付与されます。技術的な質問に的確に回答し、コミュニティを助けた証です。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{ティア} & \textbf{条件} \\
+\hline
+デフォルト & 2件の回答が採用 \\
+ブロンズ & 8件の回答が採用 \\
+シルバー & 16件の回答が採用 \\
+ゴールド & 32件の回答が採用 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Starstruck（スターストラック）}
+
+Starstruckは、\textbf{自分が作成したリポジトリが獲得したスター（Star）の数}に基づいて付与されます。スターとは、他のユーザーがリポジトリを「気に入った」「後で見返したい」と思ったときに付けるブックマークのようなものです。多くのスターを集めるということは、多くの人に価値を認められたプロジェクトを作ったことを意味します。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{ティア} & \textbf{条件} \\
+\hline
+デフォルト & 16スター \\
+ブロンズ & 128スター \\
+シルバー & 512スター \\
+ゴールド & 4,096スター \\
+\hline
+\end{tabular}
+\end{table}
+
+ゴールドのStarstruckは、世界的に注目されるOSSプロジェクトの作者であることを示す非常に名誉あるバッジです。
+
+\subsubsection{Pair Extraordinaire（ペア・エクストラオーディネール）}
+
+Pair Extraordinaireは、\textbf{マージされたPull Requestにおいて共同著者（co-author）としてコミットに記名された回数}に基づいて付与されます。ペアプログラミングやチーム開発において、他のメンバーと協力してコードを書いたことを示します。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{ティア} & \textbf{条件} \\
+\hline
+デフォルト & 1件 \\
+ブロンズ & 10件 \\
+シルバー & 24件 \\
+ゴールド & 48件 \\
+\hline
+\end{tabular}
+\end{table}
+
+コミットメッセージに \cmd{Co-authored-by: Name <email>} のトレーラーを付けることで、共同著者として記録されます。
+
+\subsubsection{YOLO（ヨロ）}
+
+YOLOは、\textbf{レビューなしでPull Requestをマージした}ときに付与されるバッジです。"You Only Live Once"（人生は一度きり）の略で、「レビューなしでマージするなんて大胆だね」というユーモアが込められています。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{ティア} & \textbf{条件} \\
+\hline
+デフォルトのみ & レビューなしでPRを1件マージ \\
+\hline
+\end{tabular}
+\end{table}
+
+ティアはデフォルトの1段階のみです。このバッジは少し皮肉を込めた「不名誉」な実績ともいえますが、個人プロジェクトでは珍しくない操作です。
+
+\subsubsection{Quickdraw（クイックドロー）}
+
+Quickdrawは、\textbf{IssueまたはPull Requestを開いてから5分以内にクローズした}ときに付与されます。素早い判断力を評価するバッジです。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{ティア} & \textbf{条件} \\
+\hline
+デフォルトのみ & 5分以内にIssue/PRをクローズ \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Public Sponsor（パブリックスポンサー）}
+
+Public Sponsorは、\textbf{GitHub Sponsorsを通じてオープンソースの開発者やプロジェクトに金銭的な支援を行った}ときに付与されます。コードを書くだけでなく、OSSの持続可能性に貢献する姿勢を示すバッジです。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{ティア} & \textbf{条件} \\
+\hline
+デフォルトのみ & GitHub Sponsorsで1回以上のスポンサー \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{引退したAchievements（もう獲得できないバッジ）}
+
+以下のバッジは特定の歴史的イベントに関連しており、現在は新たに獲得することはできません。すでに獲得したユーザーのプロフィールには引き続き表示されます。
+
+\textbf{Arctic Code Vault Contributor（北極コード保管庫コントリビューター）}は、2020年にGitHubが実施した「GitHub Archive Program」に貢献したユーザーに付与されました。このプログラムでは、世界中のオープンソースコードのスナップショットが北極圏のスバールバル諸島にある保管庫にフィルムとして保存されました。対象リポジトリに2020年2月2日時点でコントリビューションがあったユーザーがこのバッジを獲得しています。
+
+\textbf{Mars 2020 Contributor（火星2020コントリビューター）}は、NASAの火星探査ヘリコプター「Ingenuity」のミッションに関連するリポジトリに貢献したユーザーに付与されました。GitHub上でホストされていたオープンソースプロジェクトのコードが実際に火星で使われたという、歴史的な出来事を記念するバッジです。
+
+\subsection{Highlights（ハイライト）}
+
+Achievementsとは別に、\textbf{Highlights}と呼ばれる特別なバッジもプロフィールに表示されることがあります。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{バッジ} & \textbf{条件} \\
+\hline
+\textbf{Pro} & GitHub Proプランを利用中 \\
+\textbf{Developer Program Member} & GitHub Developer Programに登録 \\
+\textbf{Security Bug Bounty Hunter} & GitHubのセキュリティバグバウンティに参加 \\
+\textbf{GitHub Campus Expert} & GitHub Campus Programのエキスパートに認定 \\
+\textbf{Security Advisory Credit} & GitHub Advisory Databaseにセキュリティアドバイザリが採用 \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{コントリビューショングラフ（草）— 活動の可視化}
+
+\subsection{「草」とは何か}
+
+GitHubのプロフィールページには、過去1年間の活動量を緑色の濃淡で示す\textbf{コントリビューショングラフ}が表示されます。日本の開発者コミュニティでは、緑色のマスが芝生のように見えることから、これを「草」と呼ぶ文化があります。「草を生やす」とは、GitHubで活動してグラフを緑色にすることを意味します。
+
+\screenshot{コントリビューショングラフの表示例}
+
+\subsection{コントリビューションとしてカウントされる活動}
+
+以下の活動がコントリビューションとしてカウントされ、グラフの色に反映されます。
+
+\begin{itemize}
+  \item \textbf{コミット}: デフォルトブランチまたは \cmd{gh-pages} ブランチへのコミット
+  \item \textbf{Issue}: 新しいIssueの作成
+  \item \textbf{Pull Request}: 新しいPRの作成
+  \item \textbf{Pull Requestレビュー}: PRへのレビュー投稿
+\end{itemize}
+
+注意点として、\textbf{Forkしたリポジトリへのコミットはカウントされません}（Forkから元のリポジトリへのPRがマージされた場合は除く）。また、コミットに設定されているメールアドレスがGitHubアカウントに紐づいていない場合もカウントされません。第2章で設定したメールアドレスが正しく設定されているか確認しましょう。
+
+\subsection{コントリビューションの見せ方}
+
+プロフィールページのContributions セクションでは、コントリビューションの表示方法を切り替えることができます。デフォルトでは「Contribution activity」が表示されますが、設定によりプライベートリポジトリへのコントリビューションも含めるかどうかを選択できます。
+
+Settings → Public profile → \textbf{Contributions \& Activity} セクションで、「Private contributions」の表示をオンにすると、プライベートリポジトリでの活動もグラフに反映されます（ただし、どのリポジトリで活動したかは公開されません。カウント数のみが反映されます）。
+
+\section{まとめ}
+
+本章では、GitHubにアカウントを作成し、開発者としてのオンラインプレゼンスを整えました。振り返ってみましょう。
+
+\begin{itemize}
+  \item \textbf{アカウントの作成}：メールアドレス、パスワード、ユーザー名を入力し、メール認証を完了してアカウントを作成しました
+  \item \textbf{ユーザー名の選び方}：URLの一部になり、変更にはリスクが伴うため、慎重に選ぶことの重要性を学びました
+  \item \textbf{二段階認証（2FA）}：パスワードだけでなく認証アプリのコードも必要にすることで、アカウントのセキュリティを大幅に強化しました。リカバリーコードの安全な保管も忘れてはなりません
+  \item \textbf{プロフィール設定}：名前、自己紹介、写真などを設定し、他の開発者から信頼されるプロフィールを整えました
+  \item \textbf{プロフィールREADME}：自分のユーザー名と同じ名前のリポジトリを作り、プロフィールページをカスタマイズする方法を学びました
+  \item \textbf{料金プラン}：個人利用ならFreeプランで十分であること、学生にはGitHub Educationという強力な支援があることを確認しました
+  \item \textbf{通知設定}：情報の洪水に溺れないよう、通知を適切にカスタマイズする方法を学びました
+  \item \textbf{Achievements}：Pull Shark、Galaxy Brain、Starstruckなどの実績バッジの仕組みと獲得条件を学びました
+  \item \textbf{コントリビューショングラフ}：「草」と呼ばれる活動可視化の仕組みと、カウント対象の活動を確認しました
+\end{itemize}
+
+アカウントとプロフィールが整ったところで、次はいよいよ自分のパソコンとGitHubを「つなぐ」作業に入ります。パソコンからGitHubにコードを送ったり、GitHubからコードを取得したりするためには、安全な接続方法を設定する必要があります。

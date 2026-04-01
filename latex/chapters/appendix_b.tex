@@ -1,0 +1,279 @@
+\chapter{用語集}
+
+\section*{この付録の使い方}
+\addcontentsline{toc}{section}{この付録の使い方}
+
+本書に登場するGit・GitHub関連の用語をアルファベット順に収録しています。本文を読んでいて知らない言葉に出会ったとき、あるいは用語の正確な意味を確認したいときにお使いください。各用語には、日本語の読みと、本書で解説している章への参照を記載しています。
+
+\section*{A}
+\addcontentsline{toc}{section}{A}
+
+\subsection*{Add（アド）}
+ファイルの変更をステージングエリアに追加する操作。\cmd{git add} コマンドで実行する。ステージングエリアに追加されたファイルだけが、次のコミットに含まれる。「コミットに入れる候補を選ぶ」作業だと考えるとわかりやすい。→ 第6章
+
+\subsection*{Amend（アメンド）}
+直前のコミットを修正する操作。\cmd{git commit --amend} で実行する。コミットメッセージの修正や、追加し忘れたファイルを含めるために使う。ただし、既にpush済みのコミットに対して使うと履歴の不整合が生じるため、ローカルのコミットに対してのみ使うのが原則。→ 第6章
+
+\subsection*{Artifact（アーティファクト）}
+GitHub Actionsのワークフロー実行中に生成・保存されるファイルのこと。テスト結果のレポートやビルドされたバイナリなどが該当する。ワークフロー間でデータを受け渡すためにも使われる。→ 第12章
+
+\subsection*{Assignee（アサイニー）}
+IssueやPull Requestの「担当者」として割り当てられた人。誰がその作業に責任を持っているのかを明示するために使う。→ 第11章
+
+\section*{B}
+\addcontentsline{toc}{section}{B}
+
+\subsection*{Base branch（ベースブランチ）}
+Pull Requestにおいて、変更のマージ先となるブランチ。多くの場合は \cmd{main} や \cmd{develop} がこれに当たる。PRの作成画面では「base」として表示される。→ 第10章
+
+\subsection*{Blame（ブレイム）}
+ファイルの各行について、いつ・誰が・どのコミットで最後に変更したかを表示する機能。\cmd{git blame} コマンドで実行する。「犯人探し」と訳されることもあるが、実際にはコードの経緯を追跡するための正当な開発ツール。→ 第9章
+
+\subsection*{Blob（ブロブ）}
+Git内部でファイルの内容を表すオブジェクト。"Binary Large Object"の略。GitHub上のURLで \cmd{/blob/} はファイルの表示を意味する（例: \cmd{github.com/owner/repo/blob/main/README.md}）。→ 第19章
+
+\subsection*{Branch（ブランチ）}
+開発の流れを分岐させる仕組み。内部的には特定のコミットを指し示す軽量なポインタに過ぎないが、概念的には「独立した作業ライン」を表す。mainブランチに影響を与えずに新機能の開発やバグ修正を進められる。→ 第7章
+
+\section*{C}
+\addcontentsline{toc}{section}{C}
+
+\subsection*{Cherry-pick（チェリーピック）}
+特定のコミットだけを現在のブランチに取り込む操作。\cmd{git cherry-pick コミットID} で実行する。別のブランチで行われた有用な変更を、ブランチ全体をマージせずに部分的に取り込みたいときに使う。→ 第9章
+
+\subsection*{CI/CD（シーアイ/シーディー）}
+Continuous Integration（継続的統合）/ Continuous Deployment（継続的デプロイ）の略。コードの変更がリポジトリにpushされるたびに、自動でテストを実行し（CI）、テストが通れば自動で本番環境にデプロイする（CD）一連の仕組み。→ 第12章
+
+\subsection*{Clone（クローン）}
+リモートリポジトリの完全なコピーをローカルに作成する操作。\cmd{git clone} で実行する。ファイルだけでなく、全てのコミット履歴・ブランチ情報も含めてダウンロードされる。→ 第5章
+
+\subsection*{CODEOWNERS（コードオーナーズ）}
+リポジトリ内のファイルやディレクトリの「所有者」（レビュー責任者）を定義するファイル。\cmd{.github/CODEOWNERS} に配置する。PRが作成されたとき、変更されたファイルの所有者が自動的にレビュアーとして追加される。→ 第16章
+
+\subsection*{Collaborator（コラボレーター）}
+リポジトリに対するwrite（書き込み）権限を付与された共同作業者。リポジトリのSettingsから招待できる。→ 第5章
+
+\subsection*{Commit（コミット）}
+ファイルの変更を履歴に記録する操作、およびその記録自体を指す。著者・日時・変更内容・コミットメッセージ・一意のハッシュ値で構成される。ゲームの「セーブポイント」に例えられることが多い。→ 第6章
+
+\subsection*{Conflict（コンフリクト）}
+2つのブランチで同じファイルの同じ箇所が異なる変更をされたとき、Gitが自動マージできずに人間の判断を求める状態。エラーではなく、正常な開発プロセスの一部。→ 第8章
+
+\subsection*{Contributor（コントリビューター）}
+プロジェクトに何らかの貢献をした人。コードの提出、Issue報告、ドキュメント改善、翻訳など、貢献の形は多岐にわたる。→ 第15章
+
+\section*{D}
+\addcontentsline{toc}{section}{D}
+
+\subsection*{Dependabot（ディペンダボット）}
+GitHubが提供する、依存パッケージの脆弱性を自動検出し、更新用のPull Requestを自動生成してくれるボット。→ 第22章
+
+\subsection*{Deploy（デプロイ）}
+アプリケーションやサービスを本番環境に配置し、ユーザーが利用可能な状態にすること。GitHub Actionsを使って自動化されることが多い。→ 第12章
+
+\subsection*{Diff（ディフ）}
+2つの状態（ファイル、コミット、ブランチ）の間の差分。追加された行は緑色、削除された行は赤色で表示されるのが一般的。→ 第6章
+
+\subsection*{Draft PR（ドラフトPR）}
+まだレビュー準備が整っていないことを示すPull Request。マージボタンが無効化され、レビュアーに「まだ見なくていいよ」というシグナルを送る。→ 第10章
+
+\section*{F}
+\addcontentsline{toc}{section}{F}
+
+\subsection*{Fast-forward（ファストフォワード）}
+マージの一種で、新しいマージコミットを作らずに、ブランチのポインタを前方に進めるだけで済むマージ方式。分岐先のブランチが分岐元から一直線に進んでいる場合にのみ可能。→ 第7章
+
+\subsection*{Fetch（フェッチ）}
+リモートリポジトリの最新情報をローカルにダウンロードする操作。ただしローカルの作業ファイルには変更を加えない。「情報だけ取り寄せて、反映はまだしない」という安全な操作。→ 第6章
+
+\subsection*{Fork（フォーク）}
+GitHub上で他のユーザーのリポジトリを自分のアカウントにコピーする操作。Git自体の機能ではなく、GitHubが提供するWebサービスの機能。オープンソースへの貢献の第一歩。→ 第15章
+
+\section*{G}
+\addcontentsline{toc}{section}{G}
+
+\subsection*{Git（ギット）}
+2005年にLinus Torvaldsが開発した分散型バージョン管理システム。世界の開発者の95\%以上が使用する事実上の標準。→ 第1章
+
+\subsection*{GitHub（ギットハブ）}
+Gitリポジトリのホスティングサービスおよび開発プラットフォーム。2008年設立、2018年にMicrosoftが買収。2025年現在、1億5,000万人以上の開発者が利用。→ 第1章
+
+\subsection*{GitHub Actions（ギットハブアクションズ）}
+GitHubに組み込まれたCI/CDプラットフォーム。YAMLファイルでワークフローを定義し、pushやPR作成などのイベントをトリガーにテスト・ビルド・デプロイを自動化する。→ 第12章
+
+\subsection*{GitHub Pages（ギットハブページズ）}
+GitHubリポジトリから直接、静的Webサイトを無料でホスティングできるサービス。ポートフォリオやプロジェクトドキュメントの公開に広く使われる。→ 第13章
+
+\subsection*{.gitignore（ギットイグノア）}
+Gitに追跡させたくないファイルやフォルダのパターンを記述するファイル。ビルド成果物、一時ファイル、秘密情報（.env）などを無視対象にする。→ 第5章
+
+\subsection*{GPG（ジーピージー）}
+GNU Privacy Guard。暗号化と電子署名のためのソフトウェア。Gitでは、コミットが本当にその人物によるものであることを暗号的に証明するために使われる。署名されたコミットはGitHub上で「Verified」バッジが表示される。→ 第4章
+
+\section*{H}
+\addcontentsline{toc}{section}{H}
+
+\subsection*{Hash（ハッシュ）}
+コミットを一意に識別するための文字列。SHA-1アルゴリズムで生成される40文字の16進数（例: \cmd{a1b2c3d4e5f6...}）。同じ内容からは必ず同じハッシュ値が生成されるため、データの完全性を保証する仕組みでもある。→ 第1章
+
+\subsection*{HEAD（ヘッド）}
+現在チェックアウトしているブランチの最新コミットを指すポインタ。\cmd{HEAD\textasciitilde1} は「HEADの1つ前のコミット」を意味する。→ 第7章
+
+\subsection*{Hook（フック）}
+特定のGitイベント（コミットの前後など）で自動的に実行されるスクリプト。\cmd{.git/hooks/} ディレクトリに配置する。コード品質チェックやコミットメッセージの検証などに使われる。→ 第5章
+
+\section*{I}
+\addcontentsline{toc}{section}{I}
+
+\subsection*{Index（インデックス）}
+ステージングエリアの別名。次のコミットに含める変更が一時的に保管される場所。→ 第6章
+
+\subsection*{Issue（イシュー）}
+GitHubが提供するチケット管理システム。バグ報告、機能要望、タスク管理、議論など、プロジェクトに関するあらゆる「やるべきこと」を管理する。→ 第11章
+
+\section*{L}
+\addcontentsline{toc}{section}{L}
+
+\subsection*{Label（ラベル）}
+IssueやPull Requestに付ける色付きのカテゴリタグ。\cmd{bug}、\cmd{enhancement}、\cmd{priority:high} など。Issueのフィルタリングや分類に使う。→ 第11章
+
+\subsection*{LFS（エルエフエス）}
+Git Large File Storage。大きなファイル（画像、動画、データセットなど）を効率的に管理するためのGit拡張機能。ファイル本体の代わりにポインタをGitで管理し、実体は別サーバーに保管する。→ 第19章
+
+\subsection*{License（ライセンス）}
+ソフトウェアの利用・改変・再配布の条件を定めた法的文書。MIT、Apache 2.0、GPL v3などが代表的。GitHubではリポジトリ作成時にテンプレートから選択できる。→ 第20章
+
+\section*{M}
+\addcontentsline{toc}{section}{M}
+
+\subsection*{Main（メイン）}
+リポジトリのデフォルト（既定）ブランチの名前。2020年以前は \cmd{master} が主流だったが、現在は \cmd{main} が業界標準。→ 第2章
+
+\subsection*{Markdown（マークダウン）}
+テキストに簡単な記号を使って書式を付けられる軽量マークアップ言語。GitHubでは GitHub Flavored Markdown（GFM）という拡張版が使われ、テーブル、タスクリスト、コードブロック、Mermaid図などに対応している。→ 第20章
+
+\subsection*{Merge（マージ）}
+あるブランチの変更を別のブランチに統合する操作。Fast-forwardマージと3-wayマージ（マージコミットが作られる）の2種類がある。→ 第7章
+
+\subsection*{Milestone（マイルストーン）}
+IssueをリリースやSprintなどの大きな目標でグループ化する機能。含まれるIssueの完了率がパーセンテージで表示される。→ 第11章
+
+\section*{O}
+\addcontentsline{toc}{section}{O}
+
+\subsection*{Open Source（オープンソース）}
+ソースコードが公開されており、誰でも自由に閲覧・利用・改変・再配布できるソフトウェア。Linux、Python、Git自体もオープンソース。→ 第1章
+
+\subsection*{Organization（オーガニゼーション）}
+GitHubにおける「組織」アカウント。チーム単位でリポジトリを管理し、メンバーの権限を細かく制御できる。→ 第16章
+
+\subsection*{Origin（オリジン）}
+\cmd{git clone} でリポジトリを取得したとき、クローン元のリモートリポジトリに自動的に付けられる名前。Gitの慣習であり、設定で変更も可能だが、ほぼ全てのプロジェクトでこの名前が使われる。→ 第5章
+
+\section*{P}
+\addcontentsline{toc}{section}{P}
+
+\subsection*{PAT（パット）}
+Personal Access Token。GitHubへのHTTPS認証に使用するトークン。パスワードの代わりとして使う。有効期限やスコープ（権限範囲）を設定できる。→ 第4章
+
+\subsection*{PR / Pull Request（プルリクエスト）}
+ブランチの変更をメインブランチに取り込むことを「提案」する機能。コードレビューの場としても機能し、チーム開発の中核を担う。GitHubが洗練した仕組みで、Git自体にはない概念。→ 第10章
+
+\subsection*{Pull（プル）}
+リモートリポジトリの変更をローカルに取り込む操作。内部的には \cmd{git fetch}（情報取得）+ \cmd{git merge}（統合）を連続で実行している。→ 第6章
+
+\subsection*{Push（プッシュ）}
+ローカルのコミットをリモートリポジトリに送信する操作。pushすることで、他の開発者やGitHub上から変更が見えるようになる。→ 第6章
+
+\section*{R}
+\addcontentsline{toc}{section}{R}
+
+\subsection*{Raw（ロー）}
+GitHubでファイルの「生データ」を取得するためのURL形式。\cmd{raw.githubusercontent.com} 経由でアクセスし、HTMLレンダリングなしのファイル内容をそのまま取得できる。→ 第19章
+
+\subsection*{Rebase（リベース）}
+ブランチの分岐点を移動させ、コミット履歴を直線的に整理する操作。コミットが「作り直される」ため、push済みのブランチに対しては原則として使わない。→ 第7章
+
+\subsection*{Reflog（リフログ）}
+HEADの移動履歴を記録するGitの内部ログ。\cmd{git reset --hard} で消えたように見えるコミットも、reflogを辿れば復元できる場合がある。ローカル専用で、デフォルトでは90日間保持される。→ 第9章
+
+\subsection*{Release（リリース）}
+タグに加えてリリースノート（変更履歴）やバイナリファイルを添付できるGitHubの機能。ソフトウェアのバージョンを正式に公開する際に使う。→ 第14章
+
+\subsection*{Remote（リモート）}
+ネットワーク上にある別のリポジトリへの参照。\cmd{origin}（自分のリポジトリ）や \cmd{upstream}（Fork元のリポジトリ）がよく使われる名前。→ 第5章
+
+\subsection*{Repository（リポジトリ）}
+プロジェクトのファイル群とその全変更履歴を保存する場所。「repo」と略されることが多い。ローカルリポジトリ（自分のPC）とリモートリポジトリ（GitHub等）がある。→ 第5章
+
+\subsection*{Reset（リセット）}
+コミットやステージングを取り消す操作。\cmd{--soft}（コミットのみ取り消し）、\cmd{--mixed}（コミット+ステージ取り消し）、\cmd{--hard}（全て取り消し）の3モードがある。→ 第9章
+
+\subsection*{Revert（リバート）}
+指定したコミットの変更を打ち消す新しいコミットを作成する操作。履歴を書き換えないため、push済みのコミットにも安全に使える。→ 第9章
+
+\subsection*{Review（レビュー）}
+Pull Requestの変更内容を確認し、フィードバックを提供するプロセス。Comment（コメント）、Approve（承認）、Request changes（修正要求）の3種類がある。→ 第17章
+
+\subsection*{Runner（ランナー）}
+GitHub Actionsのワークフローを実行するサーバー（仮想マシン）。GitHubが提供するホステッドランナー（ubuntu-latest等）と、自前で用意するセルフホステッドランナーがある。→ 第12章
+
+\section*{S}
+\addcontentsline{toc}{section}{S}
+
+\subsection*{Secret（シークレット）}
+GitHub Actionsのワークフローで使用する秘密情報（APIキー、パスワードなど）。暗号化されて保管され、ログに出力されないよう保護されている。→ 第12章、第22章
+
+\subsection*{SHA（エスエイチエー）}
+Secure Hash Algorithm。Gitがコミットやファイル内容を一意に識別するために使用するハッシュアルゴリズム。→ 第1章
+
+\subsection*{SSH（エスエスエイチ）}
+Secure Shell。暗号化された通信プロトコル。GitHubとの認証に公開鍵暗号方式で使用される。パスワード不要で安全な接続を実現する。→ 第4章
+
+\subsection*{Squash（スカッシュ）}
+複数のコミットを1つにまとめる操作。Pull Requestのマージ時に「Squash and merge」を選択すると、ブランチ内の全コミットが1つのコミットに集約されてマージされる。→ 第10章
+
+\subsection*{Stage / Staging（ステージ / ステージング）}
+コミットに含めるファイルの変更を選択・準備する操作およびその領域。「ステージングエリア」は「インデックス」とも呼ばれる。→ 第6章
+
+\subsection*{Stash（スタッシュ）}
+未コミットの変更を一時的に退避させる機能。作業途中で別のブランチに切り替える必要が生じたときなどに使う。→ 第9章
+
+\subsection*{Submodule（サブモジュール）}
+Gitリポジトリの内部に、別のGitリポジトリを埋め込む機能。共有ライブラリや共通コンポーネントを複数のプロジェクトで参照するために使う。→ 第19章
+
+\section*{T}
+\addcontentsline{toc}{section}{T}
+
+\subsection*{Tag（タグ）}
+特定のコミットに付ける名前。主にバージョン番号（\cmd{v1.0.0}）を付けるために使われる。軽量タグ（ポインタのみ）と注釈付きタグ（メッセージ・署名付き）の2種類がある。→ 第14章
+
+\subsection*{Tree（ツリー）}
+Git内部でディレクトリ構造を表すオブジェクト。GitHub上のURLで \cmd{/tree/} はフォルダの表示を意味する。→ 第19章
+
+\section*{U}
+\addcontentsline{toc}{section}{U}
+
+\subsection*{Upstream（アップストリーム）}
+文脈によって2つの意味がある。(1) Fork元のリモートリポジトリを指すリモート名として使う（\cmd{git remote add upstream URL}）。(2) ローカルブランチが追跡しているリモートブランチを指す（\cmd{git push -u} で設定する「上流ブランチ」）。→ 第5章、第15章
+
+\section*{V}
+\addcontentsline{toc}{section}{V}
+
+\subsection*{Verified（ベリファイド）}
+GPG署名されたコミットに表示される緑色のバッジ。そのコミットが記載されている作者本人によるものであることを暗号的に証明している。→ 第4章
+
+\section*{W}
+\addcontentsline{toc}{section}{W}
+
+\subsection*{Webhook（ウェブフック）}
+特定のイベント（push、PR作成など）が発生した際に、GitHubから外部のURLへHTTPリクエストを自動送信する仕組み。外部サービスとの連携に使う。→ 第23章
+
+\subsection*{Wiki（ウィキ）}
+リポジトリに付属するドキュメントページ群。Markdownで記述でき、通常のGitリポジトリとしてクローン・編集も可能。長いドキュメントの整理に適している。→ 第20章
+
+\subsection*{Workflow（ワークフロー）}
+GitHub Actionsにおける自動化処理の定義。\cmd{.github/workflows/} ディレクトリにYAML形式のファイルとして配置する。→ 第12章
+
+\subsection*{Working Directory / Working Tree（ワーキングディレクトリ / ワーキングツリー）}
+実際にファイルを編集する作業場所。リポジトリ内の \cmd{.git} フォルダを除いたすべてのファイル群。ステージングエリアに追加されるまで、ここでの変更はGitに記録されない。→ 第6章

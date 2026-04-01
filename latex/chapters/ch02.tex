@@ -1,0 +1,399 @@
+\chapter{環境構築 — Gitを自分のパソコンに導入する}
+
+\section{この章で学ぶこと}
+
+本章では、Gitを自分のパソコンにインストールし、使い始めるための準備を整えます。Gitは優れたバージョン管理システムですが、ただインストールするだけでは十分ではありません。自分の名前やメールアドレスを登録する「初期設定」を行い、エディタやターミナルといった周辺ツールも整えて初めて、快適な開発環境が完成します。
+
+具体的には、以下の内容を扱います。
+
+\begin{itemize}
+  \item macOS・Windows・Linuxそれぞれでの\textbf{Gitのインストール方法}
+  \item インストールが成功したかどうかの\textbf{確認方法}
+  \item コミットに記録される\textbf{名前とメールアドレスの設定}とその意味
+  \item プライバシーを守るための\textbf{noreplyメールアドレス}の活用
+  \item 日々の作業を快適にする\textbf{推奨設定}の数々
+  \item 設定ファイルの\textbf{階層構造}と優先順位の仕組み
+  \item \textbf{VS Code}やターミナルなど、Git操作に必要な周辺ツールの準備
+\end{itemize}
+
+この章を終えれば、いつでもGitを使い始められる状態になっているはずです。焦らず一つずつ進めていきましょう。
+
+\section{Gitのインストール}
+
+Gitはオープンソースのソフトウェアであり、macOS・Windows・Linuxのいずれの環境でも無料で利用できます。ただし、インストールの方法はOSによって異なります。ここでは、各OSごとに推奨される方法を紹介します。
+
+\subsection{macOSの場合}
+
+macOSでGitを導入するには、主に2つの方法があります。
+
+\textbf{方法1：Xcode Command Line Tools（推奨）}
+
+macOSには、Apple が提供する開発者向けツール群「Xcode Command Line Tools」があり、この中にGitが含まれています。多くのmacOSユーザーにとって、これが最も手軽な方法です。ターミナルを開いて次のコマンドを実行してください。
+
+\begin{lstlisting}[language=bash]
+xcode-select --install
+\end{lstlisting}
+
+このコマンドを実行すると、画面にダイアログが表示されます。「インストール」をクリックし、利用規約に同意すれば、自動的にダウンロードとインストールが始まります。インストールには数分かかることがありますので、気長に待ちましょう。
+
+\screenshot{xcode-select インストールダイアログ}
+
+この方法の利点は、Gitだけでなく、\cmd{make} や \cmd{gcc} といったC言語のコンパイラなど、開発に必要な基本的なツールが一式揃う点にあります。将来的にプログラミングの幅を広げたいと考えている方にも適しています。
+
+\textbf{方法2：Homebrewを使う方法}
+
+Homebrew（ホームブリュー）は、macOS向けの非公式パッケージマネージャーです。「パッケージマネージャー」とは、ソフトウェアのインストール・更新・削除を一元管理してくれるツールのことです。スマートフォンでいえば「App Store」のような存在だと思ってください。
+
+Homebrewがすでにインストールされている場合は、次のコマンドだけでGitを導入できます。
+
+\begin{lstlisting}[language=bash]
+brew install git
+\end{lstlisting}
+
+Homebrewの利点は、Gitを常に最新バージョンに保ちやすいことです。Xcode Command Line Toolsに含まれるGitは、Appleのアップデートサイクルに依存するため、最新版より少し古いことがあります。Homebrewなら \cmd{brew upgrade git} で簡単に更新できます。
+
+Homebrewをまだインストールしていない場合は、\textit{https://brew.sh} にアクセスし、記載されているインストールコマンドをターミナルに貼り付けて実行してください。
+
+\subsection{Windowsの場合}
+
+WindowsにはGitが標準搭載されていないため、別途インストールする必要があります。
+
+\textbf{方法1：Git for Windows（推奨）}
+
+最もポピュラーな方法は、「Git for Windows」の公式インストーラーを使うことです。
+
+\begin{enumerate}
+  \item \textit{https://gitforwindows.org/} にアクセスします
+  \item 「Download」ボタンをクリックしてインストーラーをダウンロードします
+  \item ダウンロードしたファイルを実行します
+\end{enumerate}
+
+\screenshot{Git for Windows インストーラー}
+
+インストーラーはいくつかの設定画面を表示しますが、初心者の方は基本的にデフォルト（初期値）のまま進めて問題ありません。ただし、以下の3つの設定については意識しておくとよいでしょう。
+
+\begin{itemize}
+  \item \textbf{デフォルトエディタの選択}：コミットメッセージを書く際に使用するエディタです。Vim に馴染みがなければ、Visual Studio Code（後述）を選択することをおすすめします。Vim は強力なエディタですが、操作方法が独特で、初心者が最初に触れるには少しハードルが高いためです。
+  \item \textbf{PATH環境変数の設定}：「Git from the command line and also from 3rd-party software」を選択してください。これにより、コマンドプロンプトやPowerShellなど、Windows標準のターミナルからもGitを使えるようになります。
+  \item \textbf{改行コードの設定}：「Checkout Windows-style, commit Unix-style line endings」を選択してください。Windowsとそれ以外のOSでは改行コードが異なるため（Windowsは \cmd{CR+LF}、macOS/Linuxは \cmd{LF}）、この設定により共同作業時のトラブルを防げます。
+\end{itemize}
+
+Git for Windowsをインストールすると、「Git Bash」というターミナルも一緒にインストールされます。Git Bash は Linux風のコマンドを使える環境で、本書に掲載しているコマンドの多くはそのまま実行できます。
+
+\textbf{方法2：wingetを使う方法（Windows 10/11）}
+
+Windows 10以降には、Microsoft公式のパッケージマネージャー「winget」が搭載されています。PowerShellまたはコマンドプロンプトを開き、次のコマンドを実行します。
+
+\begin{lstlisting}[language={}]
+winget install --id Git.Git -e --source winget
+\end{lstlisting}
+
+\cmd{--id Git.Git} はインストールするソフトウェアのID、\cmd{-e} は「完全一致（exact match）」を意味し、\cmd{--source winget} はMicrosoft公式のリポジトリから取得することを指定しています。この方法は、コマンド一行で完結するため、手早く済ませたい方に向いています。
+
+\subsection{Linux（Ubuntu/Debian系）の場合}
+
+Ubuntu や Debian などの Debian系ディストリビューションでは、\cmd{apt} パッケージマネージャーを使います。
+
+\begin{lstlisting}[language=bash]
+sudo apt update
+sudo apt install git
+\end{lstlisting}
+
+\cmd{sudo apt update} はパッケージの一覧（カタログ）を最新化するコマンドです。これを先に実行しておかないと、古いバージョンのGitがインストールされてしまうことがあります。料理のレシピに例えれば、「まず冷蔵庫の中身を確認してから買い物に行く」ようなものです。
+
+\subsection{Linux（Fedora/RHEL系）の場合}
+
+Fedora や Red Hat Enterprise Linux（RHEL）系では、\cmd{dnf} を使います。
+
+\begin{lstlisting}[language=bash]
+sudo dnf install git
+\end{lstlisting}
+
+\cmd{dnf} は \cmd{apt} と同じくパッケージマネージャーですが、Red Hat系のディストリビューションで使われるものです。
+
+\section{インストールの確認}
+
+インストールが完了したら、Gitが正しく導入されたかを確認しましょう。ターミナル（macOS/Linux）またはコマンドプロンプト/PowerShell/Git Bash（Windows）を開いて、次のコマンドを実行します。
+
+\begin{lstlisting}[language=bash]
+git --version
+\end{lstlisting}
+
+成功していれば、次のようにバージョン番号が表示されます。
+
+\begin{lstlisting}[language={}]
+git version 2.44.0
+\end{lstlisting}
+
+バージョン番号は環境やインストール時期によって異なりますが、表示されていれば問題ありません。もし \cmd{command not found}（コマンドが見つかりません）というエラーが出た場合は、インストールがうまくいっていないか、ターミナルを再起動する必要がある可能性があります。Windowsの場合は、インストール後にターミナルを一度閉じて開き直してみてください。
+
+\screenshot{git --version の出力例}
+
+\section{初期設定の意味と方法}
+
+Gitを使い始める前に、必ず行わなければならない設定が2つあります。それは\textbf{ユーザー名}と\textbf{メールアドレス}の登録です。この設定を怠ると、コミット（変更の記録）を作成できません。
+
+\subsection{なぜ名前とメールアドレスが必要なのか}
+
+Gitは「誰が」「いつ」「何を」変更したかを記録するツールです。コミットのたびに、変更者の名前とメールアドレスがその記録に刻み込まれます。これは、チーム開発において「この変更は誰が行ったのか」を追跡するために不可欠な情報です。
+
+たとえば、あるファイルにバグが混入したとき、\cmd{git log} コマンドでコミット履歴を確認すれば、「このコミットは山田さんが3日前に行った」とわかります。名前やメールアドレスが設定されていなければ、こうした追跡ができなくなってしまいます。
+
+重要なのは、ここで設定する名前とメールアドレスは\textbf{認証情報ではない}という点です。つまり、この設定によって本人確認が行われるわけではありません。あくまで「コミットに付与するラベル」のようなものです。本人証明が必要な場合は、第4章で解説するGPG署名を使います。
+
+\subsection{設定コマンド}
+
+ターミナルで次のコマンドを実行します。
+
+\begin{lstlisting}[language=bash]
+git config --global user.name "あなたの名前"
+git config --global user.email "your-email@example.com"
+\end{lstlisting}
+
+\cmd{user.name} には、GitHubで使用しているユーザー名を設定するのが一般的です。もちろん本名でも構いません。日本語でも入力できますが、海外のツールやサービスとの互換性を考えると、英数字（ローマ字）を使うことをおすすめします。
+
+\cmd{user.email} には、GitHubアカウントに登録したメールアドレスを設定します。GitHubは、コミットに記録されたメールアドレスを使って、そのコミットをGitHub上のアカウントと紐づけます。もしここで別のメールアドレスを設定すると、GitHub上でコミットが自分のアカウントに関連付けられず、Contribution（貢献活動）のカウントにも反映されないことがあります。
+
+\subsection{\cmd{--global} と \cmd{--local} の違い}
+
+\cmd{--global} オプションは、「このパソコンのすべてのリポジトリに対してこの設定を適用する」という意味です。一度設定すれば、新しいリポジトリを作成するたびに設定し直す必要はありません。
+
+一方、\cmd{--local}（または \cmd{--global} を省略した場合）は、そのリポジトリだけに適用される設定です。たとえば、個人プロジェクトでは個人のメールアドレスを使い、会社のプロジェクトでは会社のメールアドレスを使いたい場合に便利です。
+
+\begin{lstlisting}[language=bash]
+# 特定のリポジトリでだけ会社のメールアドレスを使う
+cd /path/to/work/project
+git config user.email "tsubasa@company.com"
+\end{lstlisting}
+
+この仕組みについては、2.7節で設定ファイルの階層構造として詳しく解説します。
+
+\section{プライバシー保護：noreplyメールアドレス}
+
+前節で「GitHubに登録したメールアドレスをGitの設定に使いましょう」と書きました。しかし、ここで一つ注意すべきことがあります。公開リポジトリにコミットすると、そのコミットに記録されたメールアドレスは\textbf{世界中の誰でも閲覧できる}状態になるということです。
+
+これはプライバシーの観点から問題になり得ます。メールアドレスが公開されると、迷惑メール（スパム）の標的になったり、個人を特定する手がかりになったりする可能性があるためです。
+
+\subsection{GitHubの「noreplyメールアドレス」機能}
+
+この問題に対処するため、GitHubは各ユーザーに専用の「noreplyメールアドレス」を提供しています。これは \cmd{xxxxxxx+username@users.noreply.github.com} という形式のアドレスで、メールの受信はできませんが、GitHubがコミットをアカウントに紐づけるためには十分に機能します。
+
+設定手順は次のとおりです。
+
+\begin{enumerate}
+  \item GitHubにログインし、右上のアイコンから \textbf{Settings} を開きます
+  \item 左側メニューの \textbf{Emails} をクリックします
+  \item 「\textbf{Keep my email addresses private}」のチェックボックスをオンにします
+  \item その下に表示される \cmd{xxxxxxx+username@users.noreply.github.com} という形式のアドレスをコピーします
+\end{enumerate}
+
+\screenshot{GitHub Email設定画面でnoreplyアドレスが表示されている状態}
+
+次に、ターミナルでGitの設定を更新します。
+
+\begin{lstlisting}[language=bash]
+git config --global user.email "xxxxxxx+username@users.noreply.github.com"
+\end{lstlisting}
+
+\cmd{xxxxxxx} の部分はGitHubが自動的に割り当てる数字のIDで、ユーザーごとに異なります。必ず自分のSettings画面に表示されたアドレスをそのまま使ってください。
+
+さらに、同じ設定画面の「\textbf{Block command line pushes that expose my email}」にもチェックを入れておくと、万が一、個人のメールアドレスが含まれたコミットをプッシュしようとした際にGitHubが拒否してくれます。これは二重の安全策として有効です。
+
+\section{追加の推奨設定}
+
+Gitには非常に多くの設定項目がありますが、ここでは最初に設定しておくと日々の作業が快適になるものを厳選して紹介します。それぞれの設定について、「なぜこの設定が必要なのか」を理解してから設定することを心がけましょう。
+
+\subsection{デフォルトブランチ名の設定}
+
+\begin{lstlisting}[language=bash]
+git config --global init.defaultBranch main
+\end{lstlisting}
+
+\textbf{なぜ必要か：} \cmd{git init} で新しいリポジトリを作成するとき、最初のブランチ（枝）には自動的に名前が付けられます。古いバージョンのGitではこの名前が \cmd{master} でしたが、近年、業界全体で \cmd{main} に移行する動きが広がっています。GitHubも2020年以降、新規リポジトリのデフォルトブランチ名を \cmd{main} に変更しました。
+
+ローカル（自分のPC）で作成したリポジトリのデフォルトブランチ名が \cmd{master} のままだと、GitHubの \cmd{main} と食い違いが生じ、プッシュ時に混乱の原因になります。この設定を行うことで、ローカルとGitHubの両方で \cmd{main} に統一され、不要なトラブルを避けられます。
+
+\subsection{エディタの設定}
+
+\begin{lstlisting}[language=bash]
+git config --global core.editor "code --wait"
+\end{lstlisting}
+
+\textbf{なぜ必要か：} Gitは、コミットメッセージの入力やリベース操作など、いくつかの場面でテキストエディタを自動的に起動します。デフォルトでは多くの環境で Vim が使われますが、Vim の操作に慣れていない方にとっては「エディタが開いたけれど、文字を入力する方法がわからない」「エディタを閉じる方法がわからない」という事態に陥りがちです。
+
+\cmd{"code --wait"} は VS Code を起動し、ファイルが閉じられるまでGitが待機するという意味です。\cmd{--wait} がないと、VS Codeが起動した瞬間にGitが「エディタが終了した」と判断してしまい、空のコミットメッセージで処理が進んでしまいます。
+
+\subsection{.DS\_Store の無視（macOSのみ）}
+
+\begin{lstlisting}[language=bash]
+echo ".DS_Store" >> ~/.gitignore_global
+git config --global core.excludesfile ~/.gitignore_global
+\end{lstlisting}
+
+\textbf{なぜ必要か：} macOSの Finder は、フォルダを開くたびに \cmd{.DS\_Store} という隠しファイルを自動的に作成します。このファイルにはフォルダの表示設定（アイコンの配置やウィンドウサイズなど）が記録されており、macOS独自のものです。
+
+このファイルがGitの管理対象に入ってしまうと、リポジトリに不要なファイルが紛れ込み、WindowsやLinuxを使っているチームメンバーにとっては無意味な変更として表示されます。\cmd{\textasciitilde/.gitignore\_global} にこのファイル名を登録し、すべてのリポジトリで自動的に無視されるように設定しておきましょう。
+
+\subsection{カラー表示の有効化}
+
+\begin{lstlisting}[language=bash]
+git config --global color.ui auto
+\end{lstlisting}
+
+\textbf{なぜ必要か：} Gitの出力は、デフォルトではすべて同じ色（白または黒）で表示されることがあります。\cmd{color.ui auto} を設定すると、\cmd{git diff} で追加行が緑、削除行が赤で表示されるなど、情報が視覚的に区別しやすくなります。\cmd{auto} は「ターミナルがカラー表示に対応している場合にのみ色を付ける」という意味で、ファイルにリダイレクトする場合などには色コードが混入しません。
+
+\subsection{プッシュのデフォルト動作}
+
+\begin{lstlisting}[language=bash]
+git config --global push.default current
+\end{lstlisting}
+
+\textbf{なぜ必要か：} \cmd{git push} コマンドを実行したとき、「どのブランチをどこにプッシュするか」を明示しなかった場合の動作を指定します。\cmd{current} は「現在チェックアウトしているブランチと同じ名前のリモートブランチにプッシュする」という設定です。
+
+この設定がないと、Gitのバージョンによっては想定と異なるブランチにプッシュされたり、「どのブランチをプッシュするか指定してください」というエラーが出たりすることがあります。\cmd{current} にしておけば、\cmd{git push} だけで直感的にプッシュが完了します。
+
+\subsection{プル時のリベース設定}
+
+\begin{lstlisting}[language=bash]
+git config --global pull.rebase true
+\end{lstlisting}
+
+\textbf{なぜ必要か：} \cmd{git pull} はリモートの変更を取り込むコマンドですが、取り込み方には「マージ」と「リベース」の2つの方式があります。デフォルトの「マージ」方式では、自分の変更とリモートの変更を統合するたびに「マージコミット」という余分なコミットが作られ、履歴が複雑になりがちです。
+
+\cmd{pull.rebase true} を設定すると、リモートの変更を取り込む際に「リベース」方式が使われます。リベースは、自分のコミットをリモートの最新コミットの上に載せ直す操作で、コミット履歴が一直線に保たれます。これは後から履歴を読み返すときに大変わかりやすくなります。ただし、リベースの概念は第7章で詳しく解説しますので、今はひとまず「履歴をきれいに保つための設定」と理解しておいてください。
+
+\section{設定の確認と設定ファイルの階層}
+
+\subsection{現在の設定を確認する}
+
+ここまでの設定が正しく反映されているかを確認してみましょう。
+
+\begin{lstlisting}[language=bash]
+# すべての設定を一覧表示
+git config --list
+
+# 特定の設定項目だけを確認
+git config user.name
+git config user.email
+\end{lstlisting}
+
+\cmd{git config --list} は、現在有効なすべてのGit設定を表示します。設定項目が多い場合は画面がスクロールしますので、\cmd{q} キーを押して表示を終了できます。
+
+\subsection{設定ファイルの3つの階層}
+
+Gitの設定は、3つのレベルの設定ファイルに分かれています。これはちょうど「国の法律」「都道府県の条例」「市区町村のルール」のような関係です。より狭い範囲のルールが、より広い範囲のルールよりも優先されます。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{llll}
+\hline
+\textbf{レベル} & \textbf{オプション} & \textbf{ファイルの場所} & \textbf{適用範囲} \\
+\hline
+System & \cmd{--system} & \cmd{/etc/gitconfig} & そのPC上のすべてのユーザー \\
+Global & \cmd{--global} & \cmd{\textasciitilde/.gitconfig} & 現在のユーザーのすべてのリポジトリ \\
+Local & \cmd{--local} & \cmd{.git/config} & そのリポジトリのみ \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{優先順位は Local > Global > System} です。つまり、Globalで \cmd{user.email} を個人アドレスに設定していても、特定のリポジトリのLocalで会社のアドレスを設定すれば、そのリポジトリではLocal の設定が使われます。
+
+この階層構造を理解していれば、「普段は個人アドレスだけど、仕事のリポジトリだけは会社のアドレスを使う」といった使い分けが自在にできるようになります。
+
+設定ファイルの中身を直接編集したい場合は、次のコマンドでエディタを開けます。
+
+\begin{lstlisting}[language=bash]
+# Global設定ファイルをエディタで開く
+git config --global --edit
+\end{lstlisting}
+
+設定ファイルはINI形式のテキストファイルで、次のような構造になっています。
+
+\begin{lstlisting}[language={}]
+[user]
+    name = あなたの名前
+    email = your-email@example.com
+[init]
+    defaultBranch = main
+[core]
+    editor = code --wait
+\end{lstlisting}
+
+コマンドで設定するのも、このファイルを直接編集するのも、結果は同じです。最初はコマンドで設定し、慣れてきたらファイルを直接編集するほうが効率的な場合もあるでしょう。
+
+\section{エディタとターミナルの準備}
+
+Gitの操作はターミナル（コマンドライン）で行うのが基本ですが、現代の開発では、コードを書くためのエディタとターミナルが統合された環境を使うのが一般的です。ここでは、本書を通して使用するエディタとターミナルの準備について解説します。
+
+\subsection{Visual Studio Code（VS Code）の導入}
+
+本書では、エディタとして \textbf{Visual Studio Code}（通称 VS Code）を推奨しています。VS Code は Microsoft が開発した無料のコードエディタで、世界中の開発者に圧倒的に支持されています。Gitとの統合機能も優れており、コードの編集からGit操作まで、一つの画面で完結できます。
+
+\textbf{インストール手順：}
+
+\begin{enumerate}
+  \item \textit{https://code.visualstudio.com/} にアクセスします
+  \item OSに合ったインストーラーをダウンロードします
+  \item ダウンロードしたファイルを実行し、画面の指示に従ってインストールします
+\end{enumerate}
+
+\screenshot{VS Code公式サイトのダウンロードページ}
+
+\textbf{コマンドラインから VS Code を起動できるようにする：}
+
+VS Codeをインストールしたら、ターミナルから \cmd{code} コマンドで起動できるように設定しましょう。これは 2.6 節で紹介した \cmd{core.editor} の設定で必要になります。
+
+\begin{itemize}
+  \item \textbf{macOS}：VS Code を開き、\cmd{Cmd+Shift+P} でコマンドパレットを表示し、「Shell Command: Install 'code' command in PATH」を検索して実行します。
+  \item \textbf{Windows}：Git for Windows のインストール時に自動的に設定されていることが多いですが、されていない場合は VS Code のインストーラーを再実行し、「Add to PATH」のチェックボックスを有効にしてください。
+  \item \textbf{Linux}：パッケージマネージャー経由でインストールした場合は、自動的にPATHに追加されます。
+\end{itemize}
+
+\subsection{おすすめのVS Code拡張機能}
+
+VS Codeは「拡張機能（Extensions）」を追加することで、機能を自由に拡張できます。Git/GitHub関連でぜひ導入しておきたい拡張機能を紹介します。
+
+\begin{itemize}
+  \item \textbf{GitLens}：ファイル内の各行がいつ、誰によって変更されたかを表示してくれます。\cmd{git blame} の視覚的な拡張版のような存在で、コードの変更履歴を理解するのに非常に役立ちます。
+  \item \textbf{GitHub Pull Requests and Issues}：VS Codeの中からプルリクエストの作成・レビュー・マージやIssueの管理ができるようになります。わざわざブラウザに切り替えなくて済むため、作業効率が大きく向上します。
+  \item \textbf{GitHub Copilot}：AIがコードの補完や提案を行ってくれます。有料サービスですが、学生は GitHub Education で無料利用できます。
+\end{itemize}
+
+拡張機能のインストールは、VS Codeの左側メニューにある四角いアイコン（Extensions）をクリックし、検索バーに名前を入力して「Install」ボタンを押すだけです。
+
+\screenshot{VS Codeの拡張機能インストール画面}
+
+\subsection{ターミナルの選び方}
+
+Git操作はターミナル上でコマンドを入力して行います。各OSで使いやすいターミナルを選びましょう。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{llp{8cm}}
+\hline
+\textbf{OS} & \textbf{推奨ターミナル} & \textbf{特徴} \\
+\hline
+macOS & Terminal.app（標準）または iTerm2 & Terminal.appは最初から入っています。iTerm2は分割表示やカスタマイズ性に優れた高機能ターミナルです。 \\
+Windows & Windows Terminal + Git Bash & Windows TerminalはMicrosoft公式の高機能ターミナルで、タブ機能があります。Git for Windowsをインストールすると使えるGit BashをWindows Terminalのプロファイルに追加すると便利です。 \\
+Linux & 標準ターミナル & Ubuntuなら GNOME Terminal、Fedoraなら GNOME Console など、ディストリビューションに含まれるもので十分です。 \\
+\hline
+\end{tabular}
+\end{table}
+
+また、VS Code には\textbf{統合ターミナル}と呼ばれる機能があり、エディタの画面内でターミナルを開くことができます。\cmd{Ctrl+`}（バッククォート）を押すと表示されます。コードを編集しながらGitコマンドを実行できるため、非常に便利です。本書の操作では、この統合ターミナルを使っても、独立したターミナルアプリを使っても、どちらでも構いません。
+
+\section{まとめ}
+
+本章では、Gitを自分のパソコンにインストールし、使い始めるための一連の準備を行いました。振り返ってみましょう。
+
+\begin{itemize}
+  \item \textbf{Gitのインストール}：macOS では Xcode Command Line Tools または Homebrew、Windows では Git for Windows または winget、Linux では apt または dnf を使ってインストールしました。
+  \item \textbf{インストールの確認}：\cmd{git --version} コマンドでバージョン番号が表示されれば成功です。
+  \item \textbf{初期設定}：\cmd{user.name} と \cmd{user.email} を \cmd{--global} で設定しました。この情報はすべてのコミットに記録されます。
+  \item \textbf{プライバシー保護}：GitHubが提供するnoreplyメールアドレスを使うことで、個人のメールアドレスが公開されるのを防ぎました。
+  \item \textbf{推奨設定}：デフォルトブランチ名、エディタ、カラー表示などを設定し、日々の作業を快適にしました。
+  \item \textbf{設定の階層構造}：System < Global < Local の3段階で設定が管理され、より狭い範囲の設定が優先されることを学びました。
+  \item \textbf{ツールの準備}：VS Codeと推奨拡張機能をインストールし、ターミナル環境を整えました。
+\end{itemize}
+
+これで、Gitを使い始めるための土台が完成しました。次の章では、いよいよGitHubにアカウントを作成し、オンラインでの活動を始める準備をします。

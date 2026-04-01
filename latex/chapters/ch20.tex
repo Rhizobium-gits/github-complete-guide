@@ -1,0 +1,735 @@
+\chapter{READMEとドキュメント --- プロジェクトの顔を作る}
+
+\section{この章で学ぶこと}
+
+あなたがGitHubで面白そうなリポジトリを見つけたとき、最初に目にするのは何でしょうか。ファイル一覧の下に表示される、プロジェクトの説明文です。これが\textbf{README}と呼ばれるファイルの中身です。READMEはプロジェクトの「顔」であり、「玄関」であり、「名刺」でもあります。どんなに優れたコードでも、READMEがなければ誰にも使ってもらえません。
+
+この章では以下のことを学びます。
+
+\begin{itemize}
+  \item READMEの歴史と役割、GitHubにおける表示の仕組み
+  \item 良いREADMEの書き方とテンプレート
+  \item GitHub Flavored Markdown（GFM）の記法を網羅的に
+  \item 用途別のREADMEテンプレート（CLI、Web、ライブラリ、研究）
+  \item README作成のコツ --- 最初の3秒、バッジ、スクリーンショット
+  \item Wiki、LICENSE、CONTRIBUTING、CODE\_OF\_CONDUCTなどの関連ファイル
+  \item オープンソースライセンスの選び方
+\end{itemize}
+
+\section{READMEとは何か}
+
+\subsection{名前の由来 --- 1970年代からの伝統}
+
+READMEという名前は文字通り \textbf{"Read Me"（私を読んで）} という意味です。この慣習は1970年代のソフトウェア配布にまで遡ります。当時、ソフトウェアはテープやフロッピーディスクで配布されており、パッケージを開いた人が最初に読むべき説明書として、大文字で \cmd{README} と名付けたテキストファイルが同梱されていました。大文字にする理由は単純で、ファイル一覧がアルファベット順に表示されたとき、大文字のファイル名は小文字のファイル名よりも先に表示される（ASCIIコード順）ため、目立つからです。
+
+この伝統は半世紀を経た現在でも生き続けています。GitHubをはじめとするほぼ全てのコードホスティングサービスは、READMEファイルを特別扱いし、自動的にレンダリングして表示します。
+
+\subsection{GitHubでの役割 --- 自動表示の仕組み}
+
+GitHubでは、リポジトリのルートディレクトリに \cmd{README.md} ファイルがあると、ファイル一覧の下にその内容がHTMLに変換されて自動表示されます。つまり、リポジトリにアクセスした人が\textbf{スクロールせずに}最初に読める情報になります。
+
+\begin{lstlisting}[language={}]
+github.com/owner/repo にアクセスすると...
+
+┌──────────────────────────────────────────────┐
+│  owner / repo                     ⭐ Star    │
+│                                               │
+│  📁 src/                                      │
+│  📁 tests/                                    │
+│  📄 .gitignore                                │
+│  📄 LICENSE                                   │
+│  📄 README.md                                 │
+│                                               │
+│  ──────────────────────────────────────────── │
+│  ↓ README.md の中身がここに描画される ↓        │
+│                                               │
+│  # My Project                                 │
+│  This is an awesome project that...           │
+│  ## Installation                              │
+│  ...                                          │
+└──────────────────────────────────────────────┘
+\end{lstlisting}
+
+\screenshot{リポジトリトップページでREADMEが表示されている様子}
+
+\subsection{\cmd{.md} の意味 --- Markdown形式}
+
+ファイル名の \cmd{.md} は \textbf{Markdown（マークダウン）} 形式であることを示しています。Markdownは、プレーンテキストに簡単な記号を付けるだけで、見出し・リスト・リンク・画像・テーブルなどの書式を表現できる軽量マークアップ言語です。2004年にJohn GruberとAaron Swartzによって作られました。
+
+GitHubは \cmd{.md} ファイルを自動的にHTMLに変換して表示してくれます。\cmd{.txt} でもREADMEとして認識されますが、プレーンテキストのまま表示されるため、書式を活用できる \cmd{.md} を使うのが一般的です。
+
+\subsection{READMEが表示される場所一覧}
+
+READMEが自動表示されるのはリポジトリのトップページだけではありません。
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ll}
+\hline
+場所 & 表示されるREADME \\
+\hline
+リポジトリのトップページ & ルートの \cmd{README.md} \\
+サブディレクトリ & そのフォルダ内の \cmd{README.md}（あれば） \\
+ユーザープロフィール & \cmd{\{username\}/\{username\}} リポジトリの \cmd{README.md} \\
+Organization プロフィール & \cmd{.github} リポジトリの \cmd{profile/README.md} \\
+\hline
+\end{tabular}
+\end{table}
+
+特に注目すべきは、自分のユーザー名と同名のリポジトリを作ると、そのREADMEがプロフィールページに表示されるという機能です。自己紹介や技術スタック、統計情報などを掲載して、個性的なプロフィールページを作ることができます。
+
+\section{READMEの書き方}
+
+\subsection{最低限のREADME}
+
+READMEを書くのに完璧を目指す必要はありません。まずは最低限の情報を書くところから始めましょう。以下の3つの情報があれば、「READMEがない」状態とは雲泥の差です。
+
+\begin{lstlisting}[language={}]
+# プロジェクト名
+
+何をするプロジェクトかの1-2文の説明。
+
+## 使い方
+
+```bash
+pip install my-package
+my-command --input data.csv
+```
+
+## ライセンス
+
+MIT
+\end{lstlisting}
+
+たった10行ほどですが、「何のプロジェクトか」「どうやって使うか」「ライセンスは何か」という最も基本的な情報が伝わります。
+
+\subsection{標準的なREADMEの構成}
+
+プロジェクトが成長してきたら、以下のようなセクション構成を目指しましょう。この構成はオープンソースプロジェクトで広く採用されている「型」です。
+
+\begin{lstlisting}[language={}]
+# プロジェクト名
+
+![Build Status](https://img.shields.io/github/actions/workflow/status/owner/repo/ci.yml)
+![License](https://img.shields.io/github/license/owner/repo)
+
+プロジェクトの概要を1-2文で。何を解決するのか、何が特徴か。
+
+## 特徴
+
+- 機能1: 簡潔な説明
+- 機能2: 簡潔な説明
+- 機能3: 簡潔な説明
+
+## インストール
+
+```bash
+pip install my-package
+```
+
+## 使い方
+
+```python
+from my_package import MyClass
+
+obj = MyClass()
+result = obj.do_something()
+print(result)
+```
+
+## 設定
+
+| 環境変数 | 説明 | デフォルト |
+|---------|------|----------|
+| `API_KEY` | APIキー | なし（必須） |
+| `DEBUG` | デバッグモード | `false` |
+
+## 開発
+
+```bash
+git clone https://github.com/owner/repo.git
+cd repo
+pip install -e ".[dev]"
+pytest
+```
+
+## 貢献
+
+[CONTRIBUTING.md](CONTRIBUTING.md) を参照してください。
+
+## ライセンス
+
+MIT License - 詳細は [LICENSE](LICENSE) を参照。
+\end{lstlisting}
+
+この構成のポイントは、読者が上から順に読んでいくと、「概要 → 導入 → 使い方 → 詳細設定 → 開発参加」という自然な流れになっていることです。
+
+\section{Markdown記法}
+
+GitHub Flavored Markdown（GFM）は、標準的なMarkdownにGitHub独自の拡張を加えたものです。READMEだけでなく、Issue、Pull Request、Wikiなど、GitHub上のあらゆるテキスト入力欄で使えます。ここでは主要な記法をすべて紹介します。
+
+\subsection{見出し}
+
+\cmd{\#} の数で見出しレベルを指定します。READMEでは \cmd{\#}（h1）をプロジェクト名に使い、セクションには \cmd{\#\#}（h2）以下を使うのが一般的です。
+
+\begin{lstlisting}[language={}]
+# 見出し1（プロジェクト名に使う）
+## 見出し2（主要セクションに使う）
+### 見出し3（サブセクションに使う）
+#### 見出し4
+\end{lstlisting}
+
+\subsection{太字・斜体・取り消し線}
+
+\begin{lstlisting}[language={}]
+**太字（ボールド）** は重要な語句に使う
+*斜体（イタリック）* は英語の用語や強調に使う
+~~取り消し線~~ は古い情報の訂正に使う
+`インラインコード` はコマンド名やファイル名に使う
+\end{lstlisting}
+
+\subsection{リスト}
+
+\begin{lstlisting}[language={}]
+- 箇条書きリスト
+- 2つ目の項目
+  - インデントでネストできる
+  - さらにネスト
+
+1. 番号付きリスト
+2. 順序が重要なときに使う
+3. 手順の説明に適している
+\end{lstlisting}
+
+\subsection{リンクと画像}
+
+\begin{lstlisting}[language={}]
+[リンクテキスト](https://example.com)
+[別のリポジトリ](../other-repo)
+
+![画像の代替テキスト](docs/images/screenshot.png)
+\end{lstlisting}
+
+\subsection{テーブル}
+
+テーブルはデータの比較や設定項目の一覧に便利です。コロン（\cmd{:}）の位置で列の揃え方を指定できます。
+
+\begin{lstlisting}[language={}]
+| 左寄せ | 中央寄せ | 右寄せ |
+|:-------|:------:|-------:|
+| データ | データ  | データ |
+| 左に揃う | 中央に揃う | 右に揃う |
+\end{lstlisting}
+
+\subsection{コードブロック}
+
+コードブロックはバッククォート3つで囲みます。言語名を指定すると、シンタックスハイライトが適用されます。
+
+\begin{lstlisting}[language={}]
+```python
+def hello(name):
+    print(f"Hello, {name}!")
+```
+
+```bash
+npm install express
+node server.js
+```
+
+```diff
+- 削除された行（赤く表示される）
++ 追加された行（緑に表示される）
+```
+\end{lstlisting}
+
+\cmd{diff} 言語を指定すると、\cmd{-} で始まる行が赤、\cmd{+} で始まる行が緑で表示されます。変更点を説明するときに便利な記法です。
+
+\subsection{タスクリスト}
+
+\begin{lstlisting}[language={}]
+- [x] 完了したタスク
+- [ ] 未完了のタスク
+- [ ] もう一つの未完了タスク
+\end{lstlisting}
+
+IssueやPRの本文に書くと、チェックボックスとして表示され、クリックで完了/未完了を切り替えられます。進捗管理に非常に便利です。
+
+\subsection{折りたたみ（details/summary）}
+
+長い内容を折りたたんで、必要なときだけ展開できるようにする記法です。HTMLタグを使います。
+
+\begin{lstlisting}[language={}]
+<details>
+<summary>クリックで展開 --- 詳細なログ出力</summary>
+
+ここに折りたたまれた内容を書く。
+コードブロックやリストなども使える。
+
+```
+長いログ出力
+...
+```
+
+</details>
+\end{lstlisting}
+
+\screenshot{折りたたみの展開前と展開後}
+
+\subsection{注意・警告（Alerts）}
+
+GitHub独自の拡張で、注意事項や警告を目立つ形で表示できます。
+
+\begin{lstlisting}[language={}]
+> [!NOTE]
+> 補足情報。知っておくと便利だが必須ではない。
+
+> [!TIP]
+> ヒント。効率的な使い方のアドバイス。
+
+> [!IMPORTANT]
+> 重要。必ず理解しておくべき情報。
+
+> [!WARNING]
+> 警告。注意しないと問題が起きる可能性がある。
+
+> [!CAUTION]
+> 危険。データ損失やセキュリティリスクにつながる操作。
+\end{lstlisting}
+
+\subsection{Mermaid図}
+
+GitHubはMermaid記法をサポートしており、コードブロック内にテキストで書いた図をそのままレンダリングしてくれます。フローチャートやシーケンス図を画像として用意する必要がありません。
+
+\begin{lstlisting}[language={}]
+```mermaid
+graph LR
+    A[開発] --> B[テスト]
+    B --> C[レビュー]
+    C --> D[デプロイ]
+```
+
+```mermaid
+sequenceDiagram
+    Client->>Server: リクエスト
+    Server->>Database: クエリ
+    Database-->>Server: 結果
+    Server-->>Client: レスポンス
+```
+\end{lstlisting}
+
+\subsection{数式（LaTeX）}
+
+GitHubは LaTeX 形式の数式レンダリングもサポートしています。
+
+\begin{lstlisting}[language={}]
+インライン数式: $E = mc^2$
+
+ブロック数式:
+$$
+\frac{n!}{k!(n-k)!} = \binom{n}{k}
+$$
+\end{lstlisting}
+
+研究プロジェクトのREADMEや、アルゴリズムの説明に数式を使いたい場合に便利です。
+
+\section{ジャンル別READMEテンプレート}
+
+プロジェクトの種類によって、READMEに書くべき情報は異なります。ここでは4つの代表的なジャンルについて、それぞれのテンプレートを紹介します。
+
+\subsection{CLIツール}
+
+CLIツールのREADMEでは、インストール方法と具体的なコマンド例が最も重要です。ユーザーは「すぐに使いたい」ので、コピーアンドペーストで動く例を最初に示しましょう。
+
+\begin{lstlisting}[language={}]
+# my-cli-tool
+
+CSVファイルを各種フォーマットに変換するコマンドラインツール。
+
+## インストール
+
+```bash
+pip install my-cli-tool
+```
+
+## 使い方
+
+```bash
+# 基本的な使い方
+my-cli input.csv --output result.json
+
+# オプション一覧
+my-cli --help
+```
+
+## オプション
+
+| オプション | 短縮形 | 説明 | デフォルト |
+|-----------|-------|------|----------|
+| `--output` | `-o` | 出力ファイル | stdout |
+| `--format` | `-f` | 出力形式（json/yaml/xml） | json |
+| `--verbose` | `-v` | 詳細表示 | false |
+
+## 使用例
+
+```bash
+# CSVをJSONに変換
+my-cli data.csv -o data.json
+
+# パイプと組み合わせる
+cat data.csv | my-cli -f yaml > data.yml
+```
+\end{lstlisting}
+
+\subsection{Webアプリ / API}
+
+Webアプリではデモへのリンク、技術スタック、環境変数の一覧が重要です。
+
+\begin{lstlisting}[language={}]
+# My Web App
+
+チームのタスク管理を効率化するWebアプリケーション。
+
+## デモ
+
+https://my-app.example.com
+
+## 技術スタック
+
+- **Frontend**: React, TypeScript, Tailwind CSS
+- **Backend**: Node.js, Express
+- **Database**: PostgreSQL
+- **Infrastructure**: Docker, Vercel
+
+## セットアップ
+
+```bash
+git clone https://github.com/owner/repo.git
+cd repo
+npm install
+cp .env.example .env   # 環境変数を設定
+npm run dev
+```
+
+## 環境変数
+
+| 変数名 | 説明 | 必須 |
+|--------|------|------|
+| `DATABASE_URL` | DB接続文字列 | Yes |
+| `API_KEY` | 外部API用キー | Yes |
+| `PORT` | サーバーポート | No (default: 3000) |
+
+## APIエンドポイント
+
+| メソッド | パス | 説明 |
+|---------|------|------|
+| GET | `/api/users` | ユーザー一覧 |
+| POST | `/api/users` | ユーザー作成 |
+| GET | `/api/users/:id` | ユーザー詳細 |
+\end{lstlisting}
+
+\subsection{ライブラリ / パッケージ}
+
+ライブラリのREADMEでは、APIリファレンス（主要なクラスや関数の使い方）が重要です。
+
+\begin{lstlisting}[language={}]
+# my-library
+
+データ変換を簡潔に書けるPythonライブラリ。
+
+![PyPI](https://img.shields.io/pypi/v/my-library)
+![License](https://img.shields.io/github/license/owner/repo)
+
+## インストール
+
+```bash
+pip install my-library
+```
+
+## クイックスタート
+
+```python
+from my_library import Transformer
+
+t = Transformer(format="json")
+result = t.convert(data)
+print(result)
+```
+
+## APIリファレンス
+
+### `Transformer(format)`
+
+| パラメータ | 型 | 説明 |
+|-----------|-----|------|
+| `format` | str | 出力形式（"json", "yaml", "xml"） |
+
+### `Transformer.convert(data)`
+
+入力データを指定形式に変換して返す。
+
+| パラメータ | 型 | 説明 |
+|-----------|-----|------|
+| `data` | list / dict | 入力データ |
+| **戻り値** | str | 変換結果の文字列 |
+\end{lstlisting}
+
+\subsection{研究プロジェクト}
+
+研究プロジェクトのREADMEでは、論文へのリンク、実験の再現手順、結果の表、引用情報（BibTeX）が重要です。
+
+\begin{lstlisting}[language={}]
+# ShortTitle
+
+> Full Paper Title
+> Authors (Year). *Journal Name*.
+
+[論文](https://doi.org/xxx) | [プロジェクトページ](https://example.com)
+
+## 概要
+
+この研究では○○を○○する手法を提案した。
+
+## 環境構築
+
+```bash
+conda create -n myenv python=3.11
+conda activate myenv
+pip install -r requirements.txt
+```
+
+## データの準備
+
+1. [こちら](https://example.com/data)からデータをダウンロード
+2. `data/` ディレクトリに配置
+
+## 実験の再現
+
+```bash
+python train.py --config configs/experiment1.yaml
+python evaluate.py --checkpoint outputs/best_model.pt
+```
+
+## 結果
+
+| 手法 | Accuracy | F1 Score |
+|------|----------|----------|
+| Baseline | 85.2 | 83.1 |
+| **Ours** | **91.7** | **90.3** |
+
+## 引用
+
+```bibtex
+@article{author2024title,
+  title={Full Paper Title},
+  author={Author, A. and Author, B.},
+  journal={Journal Name},
+  year={2024}
+}
+```
+\end{lstlisting}
+
+\section{README作成のコツ}
+
+\subsection{最初の3秒で勝負が決まる}
+
+人がWebページに滞在するかどうかは、最初の数秒で決まると言われています。READMEも同じです。リポジトリを訪れた人は、最初の3秒で「自分にとって有用なプロジェクトかどうか」を判断します。
+
+プロジェクト名の直後に、1-2文の明確な説明を書きましょう。「何を」「なぜ」「どう」を簡潔に伝えます。
+
+\begin{lstlisting}[language={}]
+# fast-csv
+
+Node.js向けの高速CSVパーサー。標準のcsv-parseより5倍速い。
+\end{lstlisting}
+
+\subsection{コピーアンドペーストで動くコードを載せる}
+
+使い方のセクションに載せるコード例は、読者がそのままコピーして実行できるものにしましょう。「ここを適宜変更してください」という箇所が多いと、試す前に心が折れてしまいます。
+
+\subsection{スクリーンショットやGIFを使う}
+
+UIのあるプロジェクトでは、文章よりもスクリーンショット1枚の方が雄弁です。操作の流れを見せたい場合はGIFアニメーションが効果的です。
+
+GIF作成ツールの例:
+\begin{itemize}
+  \item \textbf{macOS}: Gifski、Kap
+  \item \textbf{Windows}: ScreenToGif
+  \item \textbf{CLI}: \cmd{ffmpeg -i video.mp4 -vf "fps=10,scale=800:-1" demo.gif}
+\end{itemize}
+
+\subsection{目次を付ける（長いREADMEの場合）}
+
+READMEが長くなったら、冒頭に目次を付けると読者が必要なセクションに直接ジャンプできます。
+
+\begin{lstlisting}[language={}]
+## 目次
+
+- [インストール](#インストール)
+- [使い方](#使い方)
+- [設定](#設定)
+- [貢献](#貢献)
+\end{lstlisting}
+
+GitHubはMarkdownの見出しに対して自動的にアンカーIDを生成するため、日本語の見出しでもリンクが機能します。
+
+\section{バッジの付け方}
+
+\subsection{shields.io --- 動的バッジ}
+
+READMEの冒頭にバッジを並べると、プロジェクトの状態が一目で分かり、プロフェッショナルな印象を与えます。\textbf{shields.io} は、GitHubのリポジトリ情報やCI/CDの状態などを元に動的なバッジ画像を生成してくれるサービスです。
+
+\begin{lstlisting}[language={}]
+<!-- ビルド状態 -->
+![Build](https://img.shields.io/github/actions/workflow/status/owner/repo/ci.yml?branch=main)
+
+<!-- ライセンス -->
+![License](https://img.shields.io/github/license/owner/repo)
+
+<!-- 最新リリースバージョン -->
+![Version](https://img.shields.io/github/v/release/owner/repo)
+
+<!-- 主要言語 -->
+![Language](https://img.shields.io/github/languages/top/owner/repo)
+
+<!-- スター数 -->
+![Stars](https://img.shields.io/github/stars/owner/repo)
+
+<!-- パッケージレジストリのバージョン -->
+![npm](https://img.shields.io/npm/v/package-name)
+![PyPI](https://img.shields.io/pypi/v/package-name)
+
+<!-- カスタムバッジ（色とメッセージを自由に設定） -->
+![Custom](https://img.shields.io/badge/label-message-blue)
+\end{lstlisting}
+
+バッジのURLは \cmd{https://img.shields.io/} で始まり、その後に種類やパラメータを指定します。shields.ioのWebサイトにアクセスすると、対話的にバッジを作成できます。
+
+\subsection{技術スタックバッジ}
+
+プロジェクトで使っている技術をバッジで表示すると、一目で技術スタックが分かります。\cmd{style=for-the-badge} を指定すると、大きめの角丸バッジになります。
+
+\begin{lstlisting}[language={}]
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+\end{lstlisting}
+
+ロゴ名は \textit{Simple Icons} で検索できます。色は各ブランドの公式カラーを使うのが一般的です。
+
+\section{Wiki}
+
+READMEはプロジェクトの「入口」ですが、詳細なドキュメントをすべてREADMEに書くと長くなりすぎます。そんなときは\textbf{Wiki}を活用しましょう。GitHubのWikiは、リポジトリに付属するドキュメント用のスペースで、複数ページのドキュメントを整理して書けます。
+
+\subsection{有効化}
+
+Wikiはリポジトリの設定から有効化します。
+
+\begin{enumerate}
+  \item リポジトリページ → \textbf{Settings}
+  \item 左メニュー → \textbf{General}
+  \item \textbf{Features} セクションの \textbf{Wikis} にチェックを入れる
+\end{enumerate}
+
+\screenshot{Wiki有効化の設定画面}
+
+\subsection{クローンと編集}
+
+WikiはGitリポジトリとしても扱えます。ブラウザ上で編集することもできますが、大量の編集をする場合はローカルにクローンして作業する方が効率的です。
+
+\begin{lstlisting}[language=bash]
+# Wikiリポジトリをクローン
+git clone https://github.com/owner/repo.wiki.git
+
+# 編集作業
+cd repo.wiki
+# Markdownファイルを作成・編集
+
+# 変更をプッシュ
+git add .
+git commit -m "Update documentation"
+git push
+\end{lstlisting}
+
+WikiのURLは通常のリポジトリURLの末尾に \cmd{.wiki} を付けたものです。Wiki内のページはMarkdownファイルとして管理されるため、Gitの機能（履歴、差分、ブランチなど）をすべて活用できます。
+
+\section{よく使うファイル}
+
+GitHubのリポジトリには、README以外にもいくつかの「お約束」のファイルがあります。これらのファイルを適切に配置すると、GitHubが自動的に認識し、適切な場所にリンクを表示してくれます。
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\hline
+ファイル & 配置場所 & 用途 \\
+\hline
+\cmd{README.md} & ルート & プロジェクトの説明 \\
+\cmd{LICENSE} & ルート & ライセンス（GitHubがバッジで表示） \\
+\cmd{CONTRIBUTING.md} & ルートまたは \cmd{.github/} & 貢献ガイドライン（Issue/PR作成時にリンク表示） \\
+\cmd{CODE\_OF\_CONDUCT.md} & ルートまたは \cmd{.github/} & 行動規範 \\
+\cmd{CHANGELOG.md} & ルート & バージョンごとの変更履歴 \\
+\cmd{SECURITY.md} & ルートまたは \cmd{.github/} & 脆弱性報告の方法 \\
+\cmd{.github/FUNDING.yml} & \cmd{.github/} & スポンサーボタンの設定 \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{CONTRIBUTING.md} を配置すると、新しいIssueやPull Requestを作成するときに「First time contributing? Read the contributing guidelines」というリンクがGitHubによって自動的に表示されます。コントリビューターに対して、コーディング規約やPRの出し方を事前に伝えることができます。
+
+\textbf{CODE\_OF\_CONDUCT.md} は行動規範です。コミュニティの参加者に対して、敬意を持ったコミュニケーションを求めるルールを定めます。GitHubはテンプレートも用意しています（リポジトリの「Insights」タブ → 「Community Standards」から追加可能）。
+
+\textbf{CHANGELOG.md} は「Keep a Changelog」（https://keepachangelog.com/）の形式で書くのが一般的です。バージョンごとに「Added（追加）」「Changed（変更）」「Fixed（修正）」「Removed（削除）」をまとめます。
+
+\textbf{SECURITY.md} はセキュリティ上の脆弱性を発見した人が、どこに報告すればよいかを案内するファイルです。公開のIssueではなく、非公開の連絡手段（メールなど）を案内するのが一般的です。詳しくは第22章で扱います。
+
+\textbf{.github/FUNDING.yml} を配置すると、リポジトリのトップページに「Sponsor」ボタンが表示されます。GitHub Sponsors、Open Collective、Patreonなどのリンクを設定できます。
+
+\section{ライセンスの選び方}
+
+オープンソースプロジェクトにとって、ライセンスは非常に重要です。ライセンスがないリポジトリは、たとえ公開されていても法的には「すべての権利が著者に留保されている」状態であり、他の人が安心してコードを使うことができません。
+
+以下に代表的なオープンソースライセンスを比較します。
+
+\begin{table}[h]
+\centering
+\begin{tabular}{llllll}
+\hline
+ライセンス & 商用利用 & 改変 & 配布 & ソース公開義務 & 特徴 \\
+\hline
+\textbf{MIT} & 可 & 可 & 可 & なし & 最もシンプル。制約が最も少ない \\
+\textbf{Apache 2.0} & 可 & 可 & 可 & なし & 特許権の明示的許諾を含む \\
+\textbf{GPL v3} & 可 & 可 & 可 & あり & 派生物も同じGPLで公開する義務 \\
+\textbf{BSD 2-Clause} & 可 & 可 & 可 & なし & MITとほぼ同等。歴史的に使われている \\
+\textbf{Unlicense} & 可 & 可 & 可 & なし & パブリックドメインに近い。制約ゼロ \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{判断基準}
+
+\textbf{とにかく自由に使ってほしい場合}: \textbf{MIT License} が最も一般的です。短くてシンプルで、「著作権表示を残してくれれば何に使ってもいいですよ」というライセンスです。迷ったらMITを選んでおけば間違いありません。
+
+\textbf{特許のリスクを考慮したい場合}: \textbf{Apache License 2.0} は特許権の許諾条項を含んでいるため、企業での利用時に特許訴訟のリスクを軽減できます。大規模なプロジェクトや企業主導のプロジェクトで採用されることが多いライセンスです。
+
+\textbf{派生物もオープンソースであり続けてほしい場合}: \textbf{GPL v3} は、コードを使って作られた派生物（改変版やそれを組み込んだソフトウェア）も同じGPLで公開する義務を課します。このため、企業がコードを取り込んでプロプライエタリなソフトウェアに使うことを防げます。LinuxカーネルやGNUソフトウェアがこのライセンスを採用しています。
+
+\textbf{完全に自由にしたい場合}: \textbf{Unlicense} はパブリックドメインに相当するもので、著作権表示すら不要です。ただし、国によってはパブリックドメインの概念が法的に認められていないため、Unlicenseはその問題を回避するための法的文書を含んでいます。
+
+GitHubでは、リポジトリ作成時にライセンスを選択するオプションがあります。後からでも「Add file」→ 「Create new file」でファイル名に \cmd{LICENSE} と入力すると、テンプレートを選択できるUIが表示されます。
+
+\screenshot{GitHubのライセンス選択UI}
+
+\section{まとめ}
+
+この章では、READMEとプロジェクトドキュメントについて包括的に学びました。
+
+\begin{itemize}
+  \item \textbf{README} は1970年代から続く伝統的なファイルで、GitHubではリポジトリのトップページに自動表示される「プロジェクトの顔」
+  \item \textbf{最低限のREADME} でも「プロジェクト名」「使い方」「ライセンス」の3つがあれば十分に有用
+  \item \textbf{Markdown記法} は見出し、リスト、テーブル、コードブロックに加え、タスクリスト、折りたたみ、注意/警告、Mermaid図、数式まで対応
+  \item \textbf{ジャンル別テンプレート} を参考に、CLIツール、Webアプリ、ライブラリ、研究プロジェクトそれぞれに適した構成でREADMEを書く
+  \item \textbf{バッジ} はshields.ioを使って動的に生成でき、プロジェクトの信頼感を高める
+  \item \textbf{Wiki} はREADMEに収まらない詳細ドキュメントを整理するためのスペース
+  \item \textbf{LICENSE、CONTRIBUTING、CODE\_OF\_CONDUCT、SECURITY} などの定番ファイルはGitHubが自動認識して適切にリンクしてくれる
+  \item \textbf{ライセンス選び} は迷ったらMIT。特許が気になるならApache 2.0、コピーレフトを求めるならGPL v3
+\end{itemize}
