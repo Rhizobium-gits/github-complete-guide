@@ -1,198 +1,430 @@
-# 付録A: Gitコマンド早見表
+# 付録A　Gitコマンド早見表
 
-## 設定
+## この付録の使い方
 
-```bash
-git config --global user.name "名前"          # ユーザー名
-git config --global user.email "email"        # メールアドレス
-git config --global init.defaultBranch main   # デフォルトブランチ
-git config --global core.editor "code --wait" # エディタ
-git config --list                             # 設定一覧
-```
+本書で解説してきたGitコマンドを、カテゴリ別に一覧で掲載しています。「あのコマンド、何だったかな」と思ったときに素早く引ける辞書としてお使いください。各コマンドの詳しい解説は、対応する章を参照してください。
 
-## リポジトリ作成・取得
+また、末尾には「やりたいこと」から逆引きできる表も用意しています。
 
-```bash
-git init                                  # 新規作成
-git clone URL                             # クローン
-git clone --depth 1 URL                   # 浅いクローン
-git clone -b branch URL                   # ブランチ指定クローン
-```
+---
 
-## 基本操作
+## A.1　初期設定（→ 第2章）
+
+Gitを使い始めるときに最初に行う設定です。`--global` は全リポジトリ共通の設定、省略するとそのリポジトリだけの設定になります。
 
 ```bash
-git status                        # 状態確認
-git status -s                     # 短縮表示
-git add ファイル                   # ステージング
-git add .                         # 全変更をステージ
-git add -p                        # 部分ステージ
-git commit -m "メッセージ"         # コミット
-git commit -am "メッセージ"        # add+commit（追跡済みのみ）
-git commit --amend                # 直前コミット修正
+# ユーザー名の設定（コミットに記録される名前）
+git config --global user.name "あなたの名前"
+
+# メールアドレスの設定（コミットに記録されるメールアドレス）
+git config --global user.email "your-email@example.com"
+
+# デフォルトブランチ名をmainに統一する
+git config --global init.defaultBranch main
+
+# コミットメッセージ編集時に使うエディタを指定する
+git config --global core.editor "code --wait"
+
+# 現在の設定を一覧表示する
+git config --list
+
+# 特定の設定項目の値を確認する
+git config user.name
+
+# 設定ファイルをエディタで直接開く
+git config --global --edit
 ```
 
-## 差分確認
+---
+
+## A.2　リポジトリの作成と取得（→ 第5章）
 
 ```bash
-git diff                          # 未ステージの差分
-git diff --staged                 # ステージ済みの差分
-git diff branch1..branch2         # ブランチ間の差分
-git diff --name-only              # ファイル名のみ
-git diff --stat                   # 統計
+# 現在のディレクトリをGitリポジトリとして初期化する
+git init
+
+# リモートリポジトリの完全なコピーをローカルに作成する
+git clone URL
+
+# 最新のコミットだけを取得する（高速だが履歴が不完全）
+git clone --depth 1 URL
+
+# 特定のブランチを指定してクローンする
+git clone -b ブランチ名 URL
+
+# サブモジュールも含めてクローンする
+git clone --recursive URL
 ```
 
-## 履歴
+---
+
+## A.3　基本操作（→ 第6章）
+
+日常的に最も多く使うコマンド群です。add → commit → push の流れが基本サイクルになります。
 
 ```bash
-git log                           # コミット履歴
-git log --oneline                 # 1行表示
-git log --oneline --graph --all   # グラフ表示
-git log -5                        # 最新5件
-git log -p                        # 変更内容付き
-git log --author="名前"            # 著者絞り込み
-git log --grep="キーワード"        # メッセージ検索
-git log -- ファイル名              # ファイル履歴
-git blame ファイル名               # 行ごとの変更者
-git show コミットID                # コミット詳細
+# 現在のリポジトリの状態を確認する（最も頻繁に使うコマンド）
+git status
+
+# 短縮形式で状態を確認する
+git status -s
+
+# 特定のファイルをステージングエリアに追加する
+git add ファイル名
+
+# 複数のファイルをまとめてステージングする
+git add file1.py file2.py
+
+# カレントディレクトリ以下の全変更をステージングする
+git add .
+
+# 削除されたファイルも含めて全変更をステージングする
+git add -A
+
+# 変更を部分的にステージングする（対話形式で選択）
+git add -p
+
+# ステージングした変更をコミットする（メッセージ付き）
+git commit -m "コミットメッセージ"
+
+# 複数行のコミットメッセージを書く
+git commit -m "1行目の要約
+
+詳細な説明をここに書く"
+
+# エディタを開いてコミットメッセージを書く
+git commit
+
+# ステージングとコミットを同時に行う（追跡済みファイルのみ）
+git commit -am "コミットメッセージ"
+
+# 直前のコミットメッセージを修正する（まだpushしていない場合のみ）
+git commit --amend -m "新しいメッセージ"
+
+# ローカルのコミットをリモートリポジトリに送信する
+git push
+
+# 初回プッシュ時に上流ブランチを設定する
+git push -u origin ブランチ名
+
+# リモートの変更をローカルに取り込む（fetch + merge）
+git pull
+
+# リベース形式でリモートの変更を取り込む（履歴がきれいになる）
+git pull --rebase
 ```
 
-## ブランチ
+---
+
+## A.4　差分と履歴の確認（→ 第6章、第9章）
 
 ```bash
-git branch                        # ブランチ一覧
-git branch -a                     # リモート含む一覧
-git branch ブランチ名              # 作成
-git branch -d ブランチ名           # 削除（マージ済み）
-git branch -D ブランチ名           # 強制削除
-git branch -m 新名前              # 名前変更
-git switch ブランチ名              # 切り替え
-git switch -c ブランチ名           # 作成+切り替え
-git switch -                      # 前のブランチに戻る
-git checkout ブランチ名            # 切り替え（従来）
-git checkout -b ブランチ名         # 作成+切り替え（従来）
+# ワーキングディレクトリの変更（未ステージ分）を表示する
+git diff
+
+# ステージ済みの変更を表示する
+git diff --staged
+
+# 特定のファイルの差分だけ表示する
+git diff ファイル名
+
+# ブランチ間の差分を表示する
+git diff main..feature-branch
+
+# 変更されたファイル名の一覧だけを表示する
+git diff --name-only
+
+# コミット履歴を表示する
+git log
+
+# コミット履歴を1行ずつ表示する
+git log --oneline
+
+# ブランチの分岐を視覚的に表示する
+git log --oneline --graph --all
+
+# 最新N件だけ表示する
+git log -5
+
+# 変更内容も含めて表示する
+git log -p
+
+# 統計情報（変更行数）を表示する
+git log --stat
+
+# 特定ファイルの履歴を表示する
+git log -- ファイル名
+
+# 著者で絞り込む
+git log --author="名前"
+
+# メッセージで検索する
+git log --grep="キーワード"
+
+# ファイルの各行が誰によって変更されたかを表示する
+git blame ファイル名
+
+# 特定のコミットの詳細を表示する
+git show コミットID
 ```
 
-## マージ・リベース
+---
+
+## A.5　ブランチ操作（→ 第7章）
 
 ```bash
-git merge ブランチ名               # マージ
-git merge --abort                 # マージ中止
-git rebase ブランチ名              # リベース
-git rebase --continue             # リベース続行
-git rebase --abort                # リベース中止
-git cherry-pick コミットID         # コミット取り込み
+# ローカルブランチの一覧を表示する
+git branch
+
+# リモートブランチも含めて一覧表示する
+git branch -a
+
+# 新しいブランチを作成する（切り替えはしない）
+git branch ブランチ名
+
+# ブランチを作成して切り替える
+git switch -c ブランチ名
+
+# ブランチを作成して切り替える（従来の書き方）
+git checkout -b ブランチ名
+
+# 既存のブランチに切り替える
+git switch ブランチ名
+
+# 直前にいたブランチに戻る
+git switch -
+
+# マージ済みのブランチを削除する
+git branch -d ブランチ名
+
+# 未マージでも強制削除する
+git branch -D ブランチ名
+
+# ブランチ名を変更する
+git branch -m 新しい名前
+
+# 別のブランチの変更を現在のブランチに統合する
+git merge ブランチ名
+
+# マージを中止する
+git merge --abort
+
+# 現在のブランチの分岐点を移動させる
+git rebase ブランチ名
+
+# リベースを中止する
+git rebase --abort
+
+# 特定のコミットだけを現在のブランチに取り込む
+git cherry-pick コミットID
 ```
 
-## リモート操作
+---
+
+## A.6　リモート操作（→ 第5章、第6章）
 
 ```bash
-git remote -v                     # リモート一覧
-git remote add origin URL         # リモート追加
-git remote set-url origin URL     # URL変更
-git remote remove origin          # リモート削除
-git fetch                         # リモート情報取得
-git fetch --prune                 # 削除済みブランチ掃除
-git pull                          # fetch + merge
-git pull --rebase                 # fetch + rebase
-git push                          # プッシュ
-git push -u origin ブランチ名      # 上流設定+プッシュ
-git push origin --delete ブランチ名 # リモートブランチ削除
-git push --tags                   # 全タグをプッシュ
+# 登録されているリモートリポジトリの一覧とURLを表示する
+git remote -v
+
+# リモートリポジトリを追加する
+git remote add origin URL
+
+# リモートリポジトリのURLを変更する
+git remote set-url origin 新しいURL
+
+# リモートリポジトリの登録を削除する
+git remote remove origin
+
+# リモートの最新情報を取得する（ローカルファイルは変更されない）
+git fetch
+
+# 削除されたリモートブランチの参照をクリーンアップする
+git fetch --prune
+
+# 特定のブランチをリモートにプッシュする
+git push origin ブランチ名
+
+# リモートブランチを削除する
+git push origin --delete ブランチ名
+
+# すべてのタグをリモートにプッシュする
+git push --tags
 ```
 
-## 取り消し・復元
+---
+
+## A.7　変更の取り消しと復元（→ 第9章）
 
 ```bash
-git restore ファイル名             # 変更を取り消し
-git restore --staged ファイル名    # ステージ解除
-git reset --soft HEAD~1           # コミット取消（変更残る）
-git reset HEAD~1                  # コミット+ステージ取消
-git reset --hard HEAD~1           # 完全に取り消し ⚠️
-git revert コミットID              # 打ち消しコミット（安全）
-git reflog                        # HEAD移動履歴
+# ファイルの変更を元に戻す（未ステージの変更を破棄）
+git restore ファイル名
+
+# ステージングを解除する（変更内容は保持される）
+git restore --staged ファイル名
+
+# コミットを安全に打ち消す（新しいコミットが作られる）
+git revert コミットID
+
+# 直前のコミットを取り消す（変更はステージに残る）
+git reset --soft HEAD~1
+
+# 直前のコミットとステージングを取り消す（変更はワーキングツリーに残る）
+git reset HEAD~1
+
+# 直前のコミットを完全に取り消す（変更が消える。要注意）
+git reset --hard HEAD~1
+
+# HEADの移動履歴を表示する（消えたコミットの復旧に使う）
+git reflog
 ```
 
-## 一時退避
+---
+
+## A.8　一時退避（→ 第9章）
 
 ```bash
-git stash                         # 変更を退避
-git stash save "メッセージ"        # メッセージ付き退避
-git stash -u                      # 未追跡も含む
-git stash list                    # 退避リスト
-git stash pop                     # 復元+削除
-git stash apply                   # 復元（リストに残す）
-git stash drop stash@{0}          # 特定の退避を削除
-git stash clear                   # 全削除
+# 現在の変更を一時退避する
+git stash
+
+# メッセージ付きで退避する
+git stash save "作業メモ"
+
+# 未追跡ファイルも含めて退避する
+git stash -u
+
+# 退避の一覧を表示する
+git stash list
+
+# 最新の退避を復元する（退避リストからは削除される）
+git stash pop
+
+# 最新の退避を復元する（退避リストに残す）
+git stash apply
+
+# 特定の退避を復元する
+git stash apply stash@{1}
+
+# 特定の退避を削除する
+git stash drop stash@{0}
+
+# すべての退避を削除する
+git stash clear
 ```
 
-## タグ
+---
+
+## A.9　タグ（→ 第14章）
 
 ```bash
-git tag                           # タグ一覧
-git tag -a v1.0 -m "メッセージ"    # 注釈付きタグ作成
-git tag v1.0                      # 軽量タグ作成
-git tag -d v1.0                   # タグ削除
-git push origin v1.0              # タグをプッシュ
-git push origin --tags            # 全タグをプッシュ
+# タグの一覧を表示する
+git tag
+
+# 注釈付きタグを作成する（リリースバージョンに推奨）
+git tag -a v1.0.0 -m "バージョン1.0.0"
+
+# 軽量タグを作成する
+git tag v1.0.0
+
+# 特定のコミットにタグを付ける
+git tag -a v1.0.0 -m "メッセージ" コミットID
+
+# タグを削除する
+git tag -d v1.0.0
+
+# タグをリモートにプッシュする
+git push origin v1.0.0
+
+# すべてのタグをプッシュする
+git push origin --tags
+
+# リモートのタグを削除する
+git push origin --delete v1.0.0
 ```
 
-## ファイル操作
+---
+
+## A.10　ファイル操作（→ 第6章）
 
 ```bash
-git mv 旧名 新名                  # 移動/名前変更
-git rm ファイル名                  # 削除（追跡+ファイル）
-git rm --cached ファイル名         # 追跡のみ解除
+# Gitの管理下でファイル名を変更する
+git mv 旧ファイル名 新ファイル名
+
+# Gitの追跡対象からファイルを削除する（ファイル自体も消える）
+git rm ファイル名
+
+# Gitの追跡だけを解除する（ファイルは残る）
+git rm --cached ファイル名
 ```
 
-## GitHub CLI (gh)
+---
+
+## A.11　GitHub CLI（gh）コマンド（→ 第23章）
+
+GitHub CLIは、GitHub固有の操作（PR、Issue、Actions、リリースなど）をターミナルから行うためのツールです。`git` コマンドがローカルのバージョン管理に使われるのに対し、`gh` コマンドはGitHubプラットフォームとの対話に使われます。
 
 ```bash
 # 認証
-gh auth login                     # ログイン
-gh auth status                    # 状態確認
+gh auth login                         # GitHubにログインする
+gh auth status                        # 認証状態を確認する
 
 # リポジトリ
-gh repo create 名前 --public      # リポジトリ作成
-gh repo clone owner/repo          # クローン
-gh repo list                      # 一覧
-gh repo view --web                # ブラウザで開く
+gh repo create 名前 --public           # リポジトリを作成する
+gh repo clone owner/repo               # リポジトリをクローンする
+gh repo list                           # 所有リポジトリの一覧を表示する
+gh repo view --web                     # ブラウザでリポジトリを開く
 
-# PR
-gh pr create --title "タイトル"    # PR作成
-gh pr list                        # PR一覧
-gh pr view 番号                    # PR詳細
-gh pr checkout 番号                # PRブランチを取得
-gh pr merge 番号 --squash          # スカッシュマージ
-gh pr diff 番号                    # 差分表示
+# プルリクエスト
+gh pr create --title "タイトル"         # PRを作成する
+gh pr list                             # PRの一覧を表示する
+gh pr view 番号                         # PRの詳細を表示する
+gh pr checkout 番号                     # PRのブランチをローカルに取得する
+gh pr merge 番号 --squash               # PRをスカッシュマージする
+gh pr diff 番号                         # PRの差分を表示する
 
 # Issue
-gh issue create --title "タイトル" # Issue作成
-gh issue list                     # Issue一覧
-gh issue view 番号                 # Issue詳細
-gh issue close 番号                # クローズ
+gh issue create --title "タイトル"      # Issueを作成する
+gh issue list                          # Issueの一覧を表示する
+gh issue view 番号                      # Issueの詳細を表示する
+gh issue close 番号                     # Issueをクローズする
 
 # リリース
-gh release create v1.0             # リリース作成
-gh release list                    # 一覧
+gh release create v1.0.0               # リリースを作成する
+gh release list                        # リリースの一覧を表示する
 
-# ワークフロー
-gh run list                        # 実行一覧
-gh run view ID                     # 詳細
-gh run rerun ID                    # 再実行
+# GitHub Actions
+gh run list                            # ワークフロー実行の一覧を表示する
+gh run view ID                         # 実行の詳細を表示する
+gh run rerun ID                        # 失敗した実行を再実行する
+
+# エイリアス
+gh alias set prc 'pr create'          # ショートカットを設定する
+gh alias list                         # 設定済みエイリアスの一覧を表示する
 ```
 
-## 逆引き
+---
 
-| やりたいこと | コマンド |
-|------------|---------|
-| 変更を元に戻したい | `git restore ファイル` |
-| 直前のコミットを取り消したい | `git reset --soft HEAD~1` |
-| 特定のコミットを打ち消したい | `git revert コミットID` |
-| 今の作業を一旦退避したい | `git stash` |
-| 消してしまったコミットを復元したい | `git reflog` で探す |
-| 別ブランチの特定コミットだけ欲しい | `git cherry-pick コミットID` |
-| ファイルの各行の変更者を知りたい | `git blame ファイル` |
-| リモートURLを変更したい | `git remote set-url origin URL` |
-| .gitignoreが効かない | `git rm --cached ファイル` |
-| 特定のファイルの履歴を見たい | `git log -- ファイル` |
+## A.12　逆引きリファレンス — 「やりたいこと」から探す
+
+日々の作業でよくある「こうしたい」という場面から、使うべきコマンドを逆引きできる表です。
+
+| やりたいこと | コマンド | 参照 |
+|------------|---------|------|
+| ファイルの変更を元に戻したい | `git restore ファイル名` | 第9章 |
+| ステージングを取り消したい | `git restore --staged ファイル名` | 第6章 |
+| 直前のコミットを取り消したい（変更は残す） | `git reset --soft HEAD~1` | 第9章 |
+| 特定のコミットの影響を打ち消したい | `git revert コミットID` | 第9章 |
+| 今の作業を一旦脇に置きたい | `git stash` | 第9章 |
+| 退避した作業を元に戻したい | `git stash pop` | 第9章 |
+| 消してしまったコミットを復元したい | `git reflog` で履歴を探す | 第9章 |
+| 別ブランチの特定コミットだけ取り込みたい | `git cherry-pick コミットID` | 第9章 |
+| ファイルの各行を誰が変更したか知りたい | `git blame ファイル名` | 第9章 |
+| リモートリポジトリのURLを変更したい | `git remote set-url origin URL` | 第5章 |
+| `.gitignore` に追加したのに効かない | `git rm --cached ファイル名` | 第5章 |
+| 特定ファイルの変更履歴だけ見たい | `git log -- ファイル名` | 第6章 |
+| 間違ったブランチにコミットしてしまった | `git reset --soft HEAD~1` → `git stash` → 正しいブランチで `git stash pop` | 第24章 |
+| ブランチ間の差分を確認したい | `git diff main..feature` | 第6章 |
+| リモートの最新状態だけ確認したい（ファイルは変えずに） | `git fetch` | 第6章 |
+| PRを作りたい | `gh pr create` | 第10章 |
+| Issueを作りたい | `gh issue create` | 第11章 |
+| ワークフローの結果を確認したい | `gh run list` | 第12章 |

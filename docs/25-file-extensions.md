@@ -1,203 +1,289 @@
-# 25. ファイルの拡張子とプログラミング言語
+# 第25章　ファイル拡張子とプログラミング言語
 
-## 拡張子とは
+## 25.1　この章で学ぶこと
 
-ファイル名の末尾に付く `.xxx` の部分。ファイルの種類（どの言語で書かれているか、何のデータか）を示す。
+GitHubでリポジトリを眺めていると、`.py`、`.js`、`.yaml`、`.md` など、実にさまざまな拡張子を持つファイルが並んでいることに気づきます。プログラミング経験がない人にとって、これらのファイルが何を意味するのかを理解することは、リポジトリの全体像を把握するための第一歩です。
+
+この章では、以下の内容を学びます。
+
+- ファイル拡張子の基本的な役割と、GitHubでの表示への影響
+- 主要なプログラミング言語とそれに対応する拡張子
+- データファイルや設定ファイルに使われる拡張子の種類と使い分け
+- ドキュメントファイルの拡張子
+- ビルドやパッケージ管理に使われるファイル
+- GitHub特有のファイルやディレクトリの役割
+- GitHubがリポジトリの言語を判定する仕組み
+- 文字コードの基礎知識
+- 拡張子を持たないファイルの意味
+
+この章は「プログラミング言語の入門」ではなく、「GitHubのリポジトリを読み解くための地図」として活用してください。それぞれの拡張子がどのような文脈で使われるのかを知ることで、初めて見るリポジトリでも「このプロジェクトは何の技術で作られているのか」が一目で判断できるようになります。
+
+---
+
+## 25.2　拡張子とは何か
+
+### ファイル名の末尾の .xxx の役割
+
+ファイルの**拡張子**とは、ファイル名の末尾にあるピリオド以降の部分のことです。たとえば `report.pdf` というファイル名であれば、`.pdf` が拡張子です。
 
 ```
-main.py       ← .py = Pythonファイル
-index.html    ← .html = HTMLファイル
-style.css     ← .css = CSSファイル
-README.md     ← .md = Markdownファイル
+main.py       ← .py = Pythonで書かれたプログラム
+index.html    ← .html = Webページの構造を記述したファイル
+style.css     ← .css = Webページの見た目を定義したファイル
+README.md     ← .md = Markdownで書かれた文書
+data.csv      ← .csv = カンマ区切りの表データ
 ```
 
-GitHubはファイルの拡張子を見て、**シンタックスハイライト**（色分け表示）を自動適用する。
+拡張子の役割は、**このファイルがどのような種類のデータを含んでいるか**をコンピュータと人間の両方に伝えることです。OSはファイルの拡張子を見て、どのアプリケーションでファイルを開くかを判断します。テキストエディタはファイルの拡張子を見て、どのプログラミング言語のルールで色分けするかを決定します。
 
-## プログラミング言語と拡張子の一覧
+### GitHubでのシンタックスハイライト
 
-### Web開発
+GitHubでは、ファイルの拡張子に基づいて**シンタックスハイライト**（構文の色分け表示）が自動的に適用されます。たとえば、`.py` ファイルを開くと、Pythonの予約語（`def`、`class`、`import` など）が青色で、文字列が緑色で、コメントがグレーで表示されます。
 
-| 拡張子 | 言語/形式 | 用途 | 例 |
-|--------|----------|------|-----|
-| `.html` | HTML | Webページの構造 | `index.html` |
-| `.css` | CSS | Webページのスタイル | `style.css` |
-| `.js` | JavaScript | Webの動的処理 | `app.js` |
-| `.ts` | TypeScript | 型付きJavaScript | `app.ts` |
-| `.jsx` | JSX | React用JavaScript | `App.jsx` |
-| `.tsx` | TSX | React用TypeScript | `App.tsx` |
-| `.vue` | Vue.js | Vueコンポーネント | `Header.vue` |
-| `.svelte` | Svelte | Svelteコンポーネント | `App.svelte` |
-| `.php` | PHP | サーバーサイドWeb | `index.php` |
-| `.scss` / `.sass` | Sass | CSS拡張言語 | `main.scss` |
-| `.less` | Less | CSS拡張言語 | `theme.less` |
+<!-- screenshot: GitHubでのPythonファイルのシンタックスハイライト表示 -->
 
-### 汎用プログラミング言語
+この色分けのおかげで、コードの構造が一目で把握しやすくなります。もし拡張子がないファイルや、GitHubが認識できない拡張子のファイルの場合は、色分けされずにプレーンテキストとして表示されます。
+
+---
+
+## 25.3　プログラミング言語と拡張子
+
+### Web開発の拡張子
+
+Web開発は、複数の言語を組み合わせて行います。それぞれの言語が異なる役割を担っています。
+
+| 拡張子 | 言語/技術 | 役割 | 具体例 |
+|--------|----------|------|--------|
+| `.html` | HTML | Webページの構造（骨格） | `index.html` |
+| `.css` | CSS | Webページの見た目（装飾） | `style.css` |
+| `.js` | JavaScript | Webページの動的な振る舞い | `app.js` |
+| `.ts` | TypeScript | JavaScriptに型の安全性を追加した言語 | `app.ts` |
+| `.jsx` | JSX | React（UIライブラリ）用のJavaScript | `App.jsx` |
+| `.tsx` | TSX | React用のTypeScript | `App.tsx` |
+| `.vue` | Vue.js | Vue.jsフレームワークのコンポーネント | `Header.vue` |
+| `.svelte` | Svelte | Svelteフレームワークのコンポーネント | `App.svelte` |
+| `.php` | PHP | サーバーサイドのWeb開発言語 | `index.php` |
+| `.scss` / `.sass` | Sass | CSSをより効率的に書くための拡張言語 | `main.scss` |
+
+HTMLは家の骨組み、CSSは壁紙や家具の配置、JavaScriptは電気系統（スイッチを押すと照明が点く）にたとえることができます。Web開発のリポジトリでこれらの拡張子を見かけたら、「ああ、Webサイトやアプリを作っているプロジェクトだな」と判断できます。
+
+TypeScript（`.ts`）はJavaScriptの拡張版で、変数の型を明示的に宣言できるようにした言語です。大規模なプロジェクトではバグの防止に役立つため、近年は `.js` よりも `.ts` を使うプロジェクトが増えています。
+
+### 汎用プログラミング言語の拡張子
+
+Web開発に限らず、さまざまな用途で使われる汎用的なプログラミング言語の一覧です。
 
 | 拡張子 | 言語 | 特徴 | 主な用途 |
 |--------|------|------|---------|
-| `.py` | Python | 読みやすい、汎用的 | AI/ML、データ分析、Web、自動化 |
-| `.js` | JavaScript | ブラウザ＆サーバー | Web開発（フロント＆バック） |
-| `.ts` | TypeScript | JSに型を追加 | 大規模Web開発 |
-| `.java` | Java | エンタープライズ向け | 業務システム、Android |
-| `.kt` | Kotlin | モダンなJava代替 | Android、サーバー |
-| `.c` | C言語 | 低レベル、高速 | OS、組み込み、ドライバ |
-| `.cpp` / `.cc` | C++ | Cの拡張 | ゲーム、システム開発 |
-| `.h` | C/C++ヘッダー | 宣言ファイル | ライブラリのインタフェース |
-| `.cs` | C# | Microsoft製 | ゲーム(Unity)、Windows |
-| `.go` | Go | Google製、高速 | サーバー、CLI、インフラ |
-| `.rs` | Rust | 安全＆高速 | システム開発、WebAssembly |
-| `.rb` | Ruby | 書きやすい | Web（Ruby on Rails） |
-| `.swift` | Swift | Apple製 | iOS/macOS アプリ |
-| `.m` | Objective-C | Apple旧世代 | iOS/macOS レガシー |
-| `.dart` | Dart | Google製 | Flutter（モバイルアプリ） |
-| `.scala` | Scala | JVM上の関数型 | ビッグデータ(Spark) |
-| `.ex` / `.exs` | Elixir | 並行処理に強い | Webサーバー |
-| `.lua` | Lua | 軽量スクリプト | ゲーム組み込み |
-| `.pl` / `.pm` | Perl | テキスト処理 | レガシーシステム |
-| `.zig` | Zig | モダンなC代替 | システム開発 |
+| `.py` | Python | 読みやすく書きやすい | AI/ML、データ分析、Web開発、自動化スクリプト |
+| `.java` | Java | エンタープライズ向けの堅牢な言語 | 業務システム、Androidアプリ |
+| `.go` | Go | Googleが開発した高速な言語 | サーバー、CLI、インフラツール |
+| `.rs` | Rust | メモリ安全性と高速性を両立 | システム開発、WebAssembly |
+| `.rb` | Ruby | 書きやすさを重視した言語 | Web開発（Ruby on Rails） |
+| `.swift` | Swift | Appleが開発した言語 | iOS / macOS アプリ |
+| `.kt` | Kotlin | Javaの後継となるモダンな言語 | Androidアプリ、サーバー |
+| `.c` | C言語 | 低レベルで高速な言語 | OS、組み込みシステム |
+| `.cpp` / `.cc` | C++ | C言語を拡張した言語 | ゲームエンジン、システム開発 |
+| `.h` | C/C++ ヘッダー | 関数や型の宣言を記述 | ライブラリのインターフェース定義 |
+| `.cs` | C# | Microsoft製の言語 | ゲーム（Unity）、Windows アプリ |
+| `.dart` | Dart | Google製の言語 | Flutter（クロスプラットフォームアプリ） |
+| `.scala` | Scala | JVM上で動く関数型言語 | ビッグデータ処理（Apache Spark） |
+| `.ex` / `.exs` | Elixir | 並行処理に強い言語 | 高負荷Webサーバー |
+| `.lua` | Lua | 軽量なスクリプト言語 | ゲームへの組み込み |
+| `.pl` / `.pm` | Perl | テキスト処理に強い言語 | レガシーシステム |
 
-### データサイエンス・科学計算
+GitHubでリポジトリを見たとき、主に使われている拡張子からプロジェクトの性質を推測できます。`.py` ファイルが多ければPythonプロジェクト、`.go` ファイルが多ければGoのプロジェクト、`.rs` ファイルが多ければRustのプロジェクトです。
+
+### データサイエンス・科学計算の拡張子
+
+データサイエンスやバイオインフォマティクスの分野では、独自の拡張子を持つファイルが多く使われます。
 
 | 拡張子 | 言語/形式 | 用途 |
 |--------|----------|------|
 | `.py` | Python | データ分析、機械学習 |
-| `.R` / `.r` | R言語 | 統計分析、可視化 |
-| `.Rmd` | R Markdown | R + レポート |
-| `.ipynb` | Jupyter Notebook | 対話型データ分析（Python/R） |
+| `.R` / `.r` | R言語 | 統計分析、データの可視化 |
+| `.Rmd` | R Markdown | Rのコードとレポートを統合した文書 |
+| `.ipynb` | Jupyter Notebook | 対話型のデータ分析（Python/Rなど） |
 | `.jl` | Julia | 高速な科学計算 |
-| `.m` | MATLAB | 数値計算（大学でよく使用） |
-| `.nf` | Nextflow | バイオインフォパイプライン |
-| `.wdl` | WDL | ワークフロー記述 |
-| `.qza` / `.qzv` | QIIME 2 | メタゲノム解析のアーティファクト |
+| `.m` | MATLAB | 数値計算（大学や研究機関で多用） |
+| `.nf` | Nextflow | バイオインフォマティクスのパイプライン記述 |
+| `.wdl` | WDL | ワークフロー記述言語 |
+| `.qza` / `.qzv` | QIIME 2 | メタゲノム解析のデータ（アーティファクト） |
 
-### シェル・スクリプト
+`.ipynb`（Jupyter Notebook）はGitHubで特別に対応されており、ノートブックの内容（コード、出力結果、グラフ）がそのままレンダリングされて表示されます。これは、コードと実行結果を一緒に確認できるため、データサイエンスのプロジェクトでは特に重宝されます。
+
+### シェルスクリプトの拡張子
+
+シェルスクリプトは、コマンドラインで実行する一連のコマンドをファイルにまとめたものです。OSの種類やシェルの種類によって拡張子が異なります。
 
 | 拡張子 | 言語 | 用途 |
 |--------|------|------|
-| `.sh` | Bash/Shell | Linux/macOSの自動化 |
-| `.bash` | Bash | Bash専用スクリプト |
-| `.zsh` | Zsh | Zsh専用スクリプト |
-| `.fish` | Fish | Fishシェル |
-| `.ps1` | PowerShell | Windows自動化 |
-| `.bat` / `.cmd` | バッチ | Windowsコマンド |
+| `.sh` | Bash / Shell | Linux / macOS での自動化スクリプト |
+| `.bash` | Bash | Bash専用のスクリプト |
+| `.zsh` | Zsh | Zsh専用のスクリプト（macOSのデフォルトシェル） |
+| `.fish` | Fish | Fishシェル用のスクリプト |
+| `.ps1` | PowerShell | Windowsの高機能シェルスクリプト |
+| `.bat` / `.cmd` | バッチファイル | Windowsのコマンドプロンプト用スクリプト |
 
-### データ・設定ファイル
+GitHubのリポジトリで `.sh` ファイルを見かけたら、ビルドスクリプト、デプロイスクリプト、セットアップスクリプトなど、何らかの自動化処理が含まれていると考えてよいでしょう。
 
-| 拡張子 | 形式 | 用途 | 特徴 |
-|--------|------|------|------|
-| `.json` | JSON | データ交換、設定 | 構造化データ、APIの標準 |
-| `.yaml` / `.yml` | YAML | 設定ファイル | 読みやすい、GitHub Actionsで使用 |
-| `.toml` | TOML | 設定ファイル | Rust/Pythonプロジェクトで人気 |
-| `.xml` | XML | データ、設定 | 構造化データ（やや冗長） |
-| `.csv` | CSV | 表データ | カンマ区切り |
-| `.tsv` | TSV | 表データ | タブ区切り |
-| `.ini` / `.cfg` | INI | 設定ファイル | シンプルな設定 |
-| `.env` | 環境変数 | 秘密情報 | **⚠️ .gitignoreに入れる** |
-| `.properties` | Properties | Java設定 | キー=値 形式 |
+---
 
-### ドキュメント・テキスト
+## 25.4　データ・設定ファイルの拡張子
 
-| 拡張子 | 形式 | 用途 |
-|--------|------|------|
-| `.md` | Markdown | READMEやドキュメント（GitHub標準） |
-| `.rst` | reStructuredText | Pythonドキュメント（Sphinx） |
-| `.txt` | テキスト | プレーンテキスト |
-| `.adoc` | AsciiDoc | 高機能なドキュメント |
-| `.tex` | LaTeX | 学術論文 |
-| `.org` | Org Mode | Emacs用ドキュメント |
+プログラミング言語のファイル以外にも、データや設定を記述するためのファイル形式が多数あります。それぞれの形式には特徴と得意分野があり、適材適所で使い分けられています。
 
-### Web・API定義
+| 拡張子 | 形式名 | 特徴 | 主な用途 |
+|--------|--------|------|---------|
+| `.json` | JSON | 構造化データの標準形式。プログラムから読み書きしやすい | APIのデータ交換、設定ファイル（package.jsonなど） |
+| `.yaml` / `.yml` | YAML | 人間にとって読み書きしやすい形式。インデントで構造を表現 | GitHub Actionsのワークフロー、Docker Compose、CI/CD設定 |
+| `.toml` | TOML | セクション構造が明確で読みやすい | Rust（Cargo.toml）やPython（pyproject.toml）のプロジェクト設定 |
+| `.xml` | XML | タグベースの構造化データ。冗長だが表現力が高い | Javaプロジェクトの設定（pom.xml）、古いシステムのデータ交換 |
+| `.csv` | CSV | カンマ区切りの表データ。最もシンプルな表形式 | データの受け渡し、表計算ソフトとの連携 |
+| `.tsv` | TSV | タブ区切りの表データ。データ内にカンマが含まれる場合に便利 | バイオインフォマティクスのデータ、大規模データセット |
+| `.ini` / `.cfg` | INI | セクションとキー=値のシンプルな形式 | 古い設定ファイル |
+| `.env` | 環境変数 | KEY=VALUE 形式の環境変数定義 | データベースのパスワード、APIキーなどの秘密情報 |
 
-| 拡張子 | 形式 | 用途 |
-|--------|------|------|
-| `.graphql` / `.gql` | GraphQL | APIスキーマ定義 |
-| `.proto` | Protocol Buffers | gRPC API定義 |
-| `.swagger` | Swagger/OpenAPI | REST API定義 |
+**`.env` ファイルには特に注意が必要です。** `.env` ファイルにはパスワードやAPIキーなどの秘密情報が含まれることが多いため、**必ず `.gitignore` に追加して、Gitの追跡対象から除外**してください。一度GitHubにプッシュしてしまった秘密情報は、コミット履歴に残り続けるため、すべてのキーやパスワードを無効化して再発行する必要があります。
 
-### ビルド・パッケージ管理
+JSONとYAMLは同じデータを異なる形式で表現できます。たとえば、同じデータをJSON形式で書くと波括弧とダブルクォーテーションが多くなりますが、YAML形式で書くとインデントだけで構造を表現するためスッキリします。人間が直接編集するファイル（設定ファイルなど）にはYAMLが好まれ、プログラム間のデータ交換にはJSONが好まれる傾向があります。
+
+---
+
+## 25.5　ドキュメントファイルの拡張子
+
+ソフトウェアプロジェクトにはドキュメント（文書）が欠かせません。ドキュメントの形式もいくつかの種類があります。
+
+| 拡張子 | 形式名 | 特徴 | 主な用途 |
+|--------|--------|------|---------|
+| `.md` | Markdown | シンプルな記法で見出し・リスト・リンクを表現できる。GitHubの標準 | README、プロジェクトドキュメント、Wiki |
+| `.rst` | reStructuredText | Markdownより表現力が高い。Sphinxと組み合わせて使う | Pythonプロジェクトの公式ドキュメント |
+| `.txt` | プレーンテキスト | 書式なしの純粋なテキスト | LICENSE、簡単なメモ |
+| `.adoc` | AsciiDoc | 高機能な文書作成形式 | 技術書、長い文書 |
+| `.tex` | LaTeX | 数式や論文レイアウトに特化した組版言語 | 学術論文、技術報告書 |
+| `.org` | Org Mode | Emacs向けの文書形式 | ノート、タスク管理 |
+
+GitHubでは `.md`（Markdown）ファイルが最もよく使われます。GitHubは Markdownファイルを自動的にレンダリング（見出し・太字・リンクなどを反映して整形表示）するため、リポジトリのトップページに `README.md` を配置するのが標準的な慣習です。
+
+---
+
+## 25.6　ビルド・パッケージ管理ファイル
+
+ソフトウェアプロジェクトには、プログラムのビルド方法や依存ライブラリを定義するファイルが含まれています。これらのファイルを見ると、そのプロジェクトがどの言語やツールを使っているかがわかります。
 
 | ファイル名 | 言語/ツール | 用途 |
 |-----------|-----------|------|
-| `Makefile` | Make | ビルド定義（C/C++等） |
-| `CMakeLists.txt` | CMake | クロスプラットフォームビルド |
-| `Dockerfile` | Docker | コンテナイメージ定義 |
-| `docker-compose.yml` | Docker Compose | 複数コンテナ管理 |
-| `package.json` | npm | Node.js依存関係管理 |
-| `requirements.txt` | pip | Python依存関係管理 |
-| `pyproject.toml` | Python | 現代的なPython設定 |
-| `Cargo.toml` | Cargo | Rust依存関係管理 |
-| `go.mod` | Go Modules | Go依存関係管理 |
-| `Gemfile` | Bundler | Ruby依存関係管理 |
-| `build.gradle` | Gradle | Java/Kotlinビルド |
-| `pom.xml` | Maven | Javaビルド |
+| `Makefile` | Make | ビルド手順の定義（C/C++プロジェクトに多い） |
+| `CMakeLists.txt` | CMake | クロスプラットフォーム対応のビルド設定 |
+| `Dockerfile` | Docker | コンテナイメージの構築手順 |
+| `docker-compose.yml` | Docker Compose | 複数のコンテナの構成を定義 |
+| `package.json` | npm (Node.js) | JavaScriptプロジェクトの依存ライブラリと設定 |
+| `requirements.txt` | pip (Python) | Pythonプロジェクトの依存ライブラリの一覧 |
+| `pyproject.toml` | Python | 現代的なPythonプロジェクトの設定と依存関係 |
+| `Cargo.toml` | Cargo (Rust) | Rustプロジェクトの設定と依存関係 |
+| `go.mod` | Go Modules | Goプロジェクトの依存関係 |
+| `Gemfile` | Bundler (Ruby) | Rubyプロジェクトの依存ライブラリ |
+| `build.gradle` | Gradle (Java/Kotlin) | Java/Kotlinプロジェクトのビルド設定 |
+| `pom.xml` | Maven (Java) | Javaプロジェクトのビルドと依存関係 |
+| `Cargo.lock` / `package-lock.json` | 各種 | 依存ライブラリの正確なバージョンを固定するファイル |
 
-### GitHub特有のファイル
+たとえば、リポジトリのルートに `package.json` があれば「Node.js（JavaScript/TypeScript）のプロジェクト」、`requirements.txt` か `pyproject.toml` があれば「Pythonのプロジェクト」、`Cargo.toml` があれば「Rustのプロジェクト」と判断できます。これらのファイルは、いわばプロジェクトの「名刺」のようなものです。
 
-| ファイル/フォルダ | 用途 |
-|-----------------|------|
-| `README.md` | プロジェクト説明（自動表示される） |
-| `LICENSE` | ライセンスファイル |
-| `.gitignore` | Git追跡除外設定 |
-| `.gitattributes` | ファイル属性設定（LFS等） |
-| `.github/` | GitHub固有の設定フォルダ |
-| `.github/workflows/` | GitHub Actionsのワークフロー |
-| `.github/ISSUE_TEMPLATE/` | Issueテンプレート |
-| `.github/pull_request_template.md` | PRテンプレート |
-| `.github/CODEOWNERS` | コードオーナー定義 |
-| `.github/dependabot.yml` | Dependabot設定 |
-| `.github/FUNDING.yml` | スポンサーボタン設定 |
-| `CLAUDE.md` | Claude Codeへの指示ファイル |
+---
 
-## GitHubの言語判定
+## 25.7　GitHub特有のファイルとフォルダ
 
-GitHubはリポジトリ内のファイルを自動解析して、使用言語の割合をカラーバーで表示する。
+GitHubでは、特定のファイル名やディレクトリ名を使うことで、GitHubの機能と連動する特別な動作を実現できます。
 
-<!-- screenshot: GitHubの言語バー -->
+### リポジトリルートの特別なファイル
 
-この判定は [github-linguist](https://github.com/github-linguist/linguist) というツールで行われている。
+| ファイル名 | 役割 |
+|-----------|------|
+| `README.md` | リポジトリのトップページに自動表示されるプロジェクト説明文 |
+| `LICENSE` | プロジェクトのライセンス（MIT、Apache 2.0など）。GitHubがライセンスを自動認識する |
+| `.gitignore` | Gitの追跡対象から除外するファイルのパターンを定義する |
+| `.gitattributes` | ファイルの属性（改行コード、差分表示方法、LFS対象など）を定義する |
+| `CLAUDE.md` | Claude Codeへのプロジェクト固有の指示を記述するファイル |
 
-### 言語判定のカスタマイズ
+`README.md` はリポジトリの「顔」であり、プロジェクトが何をするものなのか、どうやって使うのかを最初に伝える場所です。GitHubはリポジトリのトップページに `README.md` の内容を自動的にレンダリングして表示するため、丁寧に書かれた `README.md` は訪問者にとって非常に助けになります。
 
-`.gitattributes` でファイルの言語を上書きできる：
+### .github/ ディレクトリ内の各種ファイル
+
+`.github/` ディレクトリは、GitHubの各種機能に関連する設定ファイルを格納する特別なディレクトリです。
+
+| ファイル/ディレクトリ | 役割 |
+|-------------------|------|
+| `.github/workflows/` | GitHub Actionsのワークフローファイル（YAMLファイル）を格納する |
+| `.github/ISSUE_TEMPLATE/` | Issue作成時のテンプレートを格納する |
+| `.github/pull_request_template.md` | PR作成時に自動挿入されるテンプレート |
+| `.github/CODEOWNERS` | ファイルやディレクトリごとのレビュー担当者を定義する |
+| `.github/dependabot.yml` | Dependabot（依存ライブラリの自動更新）の設定 |
+| `.github/FUNDING.yml` | リポジトリのスポンサーボタンの設定 |
+
+`.github/workflows/` ディレクトリにYAMLファイルが入っていれば、そのリポジトリではGitHub Actions（自動テストやデプロイ）が設定されていることがわかります。`.github/CODEOWNERS` があれば、PRを作成したときに自動的に適切なレビュアーがアサインされる仕組みが導入されています。
+
+---
+
+## 25.8　GitHubの言語判定の仕組み
+
+### linguistによる自動判定
+
+GitHubのリポジトリページには、使用されているプログラミング言語の割合を示すカラーバーが表示されます。「Python 65%、JavaScript 25%、Shell 10%」のように、各言語が色分けされたバーで視覚的に表現されます。
+
+<!-- screenshot: GitHubリポジトリの言語バー -->
+
+この言語判定は、**Linguist**（https://github.com/github-linguist/linguist）というオープンソースのツールによって行われています。Linguistはリポジトリ内の全てのファイルを解析し、拡張子やファイルの内容に基づいて使用言語を判定します。
+
+ただし、Linguistの判定には以下のルールがあります。
+
+- `vendor/` ディレクトリ内のファイルは「外部ライブラリ」とみなされ、統計から除外される
+- `docs/` ディレクトリ内のファイルは「ドキュメント」とみなされ、統計から除外される
+- 自動生成されたファイル（ミニファイされたJSなど）は統計から除外される
+
+### .gitattributesでのカスタマイズ
+
+Linguistの判定結果が意図と異なる場合、`.gitattributes` ファイルで上書きできます。たとえば、プロジェクトの主要言語がPythonなのに、自動生成されたJavaScriptファイルが大量にあるせいでJavaScriptプロジェクトと判定されてしまう場合、以下のように設定できます。
 
 ```gitattributes
-# vendorディレクトリを統計から除外
+# vendorディレクトリを統計から除外する
 vendor/* linguist-vendored
 
-# ドキュメントとして扱う
+# ドキュメントとして扱う（統計から除外される）
 docs/* linguist-documentation
 
-# 特定のファイルを別言語として認識させる
+# 自動生成コードとして扱う（統計から除外される）
+generated/* linguist-generated
+
+# 特定のファイルを別の言語として認識させる
 *.jsx linguist-language=JavaScript
 
-# 生成コードとして除外
-generated/* linguist-generated
+# 特定のディレクトリのファイルを統計に含めない
+static/js/* linguist-vendored
 ```
 
-## 拡張子が無いファイル
+言語バーはリポジトリの「第一印象」に影響するため、プロジェクトの実態を正確に反映するように `.gitattributes` を設定することは、地味ですが重要です。
 
-Gitでは拡張子が無いファイルもよく使われる：
+---
 
-| ファイル名 | 用途 |
-|-----------|------|
-| `Makefile` | ビルド定義 |
-| `Dockerfile` | Dockerイメージ定義 |
-| `Procfile` | Herokuプロセス定義 |
-| `Vagrantfile` | Vagrant VM定義 |
-| `Brewfile` | Homebrew依存定義 |
-| `Rakefile` | Rubyタスク定義 |
-| `.editorconfig` | エディタ設定の統一 |
-| `.prettierrc` | Prettierフォーマッター設定 |
-| `.eslintrc` | ESLintリンター設定 |
+## 25.9　ファイルの文字コード
 
-## ファイルの文字コード
+### UTF-8が標準
+
+ファイルの**文字コード**（エンコーディング）とは、文字をどのようにバイト列として表現するかの規則のことです。現在、ソフトウェア開発における標準的な文字コードは**UTF-8**です。
 
 ```
-UTF-8 ← 現在の標準。日本語も問題なし。GitHubもこれを前提。
-Shift_JIS / EUC-JP ← レガシー。GitHubで文字化けの原因になる。
+UTF-8      ← 現在の世界標準。日本語、英語を含むあらゆる言語に対応
+Shift_JIS  ← 日本語のレガシーな文字コード。古いWindowsソフトで使用
+EUC-JP     ← 日本語のレガシーな文字コード。古いUnixシステムで使用
 ```
 
-プロジェクト内で文字コードを統一するには `.editorconfig` を配置：
+GitHubはUTF-8でエンコードされたファイルを前提としています。Shift_JISやEUC-JPでエンコードされたファイルをGitHubにプッシュすると、日本語が文字化けして表示されることがあります。特別な理由がない限り、すべてのファイルはUTF-8で保存しましょう。
+
+### .editorconfig
+
+チーム開発では、メンバーごとに異なるエディタや設定を使っていると、文字コードやインデントスタイルの不一致が発生しがちです。この問題を解決するのが**EditorConfig**（`.editorconfig` ファイル）です。
+
+`.editorconfig` ファイルをリポジトリのルートに配置すると、EditorConfigに対応したエディタ（VS Code、JetBrains IDE、Vimなど）が自動的にその設定に従います。
 
 ```ini
 # .editorconfig
@@ -214,10 +300,62 @@ trim_trailing_whitespace = true
 [*.md]
 trim_trailing_whitespace = false
 
+[*.{yml,yaml}]
+indent_size = 2
+
 [Makefile]
 indent_style = tab
 ```
 
-## 次のステップ
+この設定では、すべてのファイルでUTF-8、LF改行、スペース4つのインデントを標準としつつ、YAMLファイルではインデント2つ、Makefileではタブインデントを使うように指定しています。Markdownファイルでは行末の空白を残すように設定しています（Markdownでは行末の空白2つが改行を意味するためです）。
 
-→ [26. GitHubアプリの比較](26-github-apps.md) でデスクトップ・CLI・Web・モバイルを使い分けよう
+---
+
+## 25.10　拡張子のないファイル
+
+GitHubのリポジトリを見ていると、拡張子を持たないファイルがいくつか存在することに気づきます。これらは多くの場合、慣習的にファイル名が決まっている特別なファイルです。
+
+| ファイル名 | 用途 |
+|-----------|------|
+| `Makefile` | ビルド手順を定義するファイル（makeコマンドで実行） |
+| `Dockerfile` | Dockerコンテナイメージの構築手順を記述するファイル |
+| `Procfile` | Heroku（PaaS）でのプロセス定義ファイル |
+| `Vagrantfile` | Vagrant（仮想マシン管理ツール）の設定ファイル |
+| `Brewfile` | Homebrew（macOSのパッケージマネージャー）の依存関係リスト |
+| `Rakefile` | Ruby のタスク定義ファイル（rakeコマンドで実行） |
+| `Gemfile` | Ruby のライブラリ依存関係を定義するファイル |
+| `LICENSE` | ライセンス条件を記述するファイル |
+| `CHANGELOG` | プロジェクトの変更履歴を記録するファイル |
+
+また、ドットで始まる「隠しファイル」も拡張子がないことが多いです。
+
+| ファイル名 | 用途 |
+|-----------|------|
+| `.editorconfig` | エディタの設定を統一するファイル |
+| `.prettierrc` | Prettier（コードフォーマッター）の設定ファイル |
+| `.eslintrc` | ESLint（JavaScriptリンター）の設定ファイル |
+| `.gitignore` | Gitの追跡除外パターンを定義するファイル |
+| `.dockerignore` | Docker ビルド時に除外するファイルのパターン |
+| `.env` | 環境変数を定義するファイル（秘密情報を含むため要注意） |
+
+これらのファイルは拡張子がなくても、ファイル名自体が「何のファイルか」を示しています。Gitではこのような慣習が広く共有されているため、ファイル名を見ればその役割が推測できるようになっています。
+
+---
+
+## 25.11　まとめ
+
+この章では、GitHubのリポジトリでよく見かけるファイル拡張子と、それらが意味するものについて幅広く学びました。
+
+- **拡張子**はファイルの種類を示すもので、GitHubのシンタックスハイライトにも影響します。
+- **プログラミング言語**にはそれぞれ固有の拡張子があり、`.py`（Python）、`.js`（JavaScript）、`.go`（Go）、`.rs`（Rust）など、拡張子を見ればどの言語で書かれているかが一目でわかります。
+- **データ・設定ファイル**には `.json`、`.yaml`、`.toml` などの形式があり、用途に応じて使い分けられています。特に `.env` ファイルは秘密情報を含む可能性があるため、`.gitignore` への追加が必須です。
+- **GitHub特有のファイル**（`README.md`、`.gitignore`、`.github/` ディレクトリ内のファイルなど）は、GitHubの各機能と連動する特別な役割を持っています。
+- **Linguist**がリポジトリの言語判定を行っており、`.gitattributes` でカスタマイズできます。
+- **UTF-8**が文字コードの標準であり、`.editorconfig` でチーム全体の設定を統一できます。
+- `Makefile` や `Dockerfile` など、**拡張子のないファイル**もリポジトリでは重要な役割を果たしています。
+
+リポジトリ内のファイルの拡張子を「読める」ようになることは、GitHubを使いこなすための大切な基礎力です。初めてのリポジトリを訪れたとき、ファイルの拡張子を見渡すだけで、そのプロジェクトの全体像をかなり正確に把握できるようになるでしょう。
+
+---
+
+次の章: [第26章　GitHubアプリの比較 — Web・Desktop・CLI・Mobile・IDE](26-github-apps.md)

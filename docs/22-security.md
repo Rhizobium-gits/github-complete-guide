@@ -1,124 +1,324 @@
-# 22. セキュリティ
+# 第22章　セキュリティ — リポジトリを安全に保つ
 
-## やってはいけないこと
+## 22.1　この章で学ぶこと
+
+ソフトウェア開発において、セキュリティは「後から追加する機能」ではなく、最初から意識すべき基本姿勢です。特にGitHubのようなオンラインプラットフォームを使う場合、一度の不注意がパスワードやAPIキーの漏洩につながり、深刻な被害を引き起こす可能性があります。
+
+この章では、以下の内容を学びます。
+
+- 絶対にリポジトリにコミットしてはならない情報の種類と、なぜそれが危険なのか
+- 万が一、秘密情報をコミットしてしまった場合の緊急対応手順
+- Dependabotによる依存パッケージの脆弱性自動検出と更新
+- Secret Scanningによるリポジトリ内の秘密情報の自動スキャン
+- SECURITY.mdによるセキュリティポリシーの明文化
+- 日常的に実践すべきセキュリティのベストプラクティス7箇条
+
+セキュリティは地味な作業に見えるかもしれませんが、「事故が起きてから対処する」のと「事前に防ぐ」のとでは、必要な労力も被害の規模も桁違いです。この章を通じて、安全な開発習慣を身につけましょう。
+
+---
+
+## 22.2　絶対にコミットしてはいけないもの
+
+### なぜ秘密情報のコミットが危険なのか
+
+GitHubのリポジトリ、特にPublicリポジトリにコミットされた情報は、世界中の誰でも閲覧できます。しかし、問題はそれだけではありません。**Gitの性質上、一度コミットした情報は、たとえ後から削除しても履歴に残り続ける**のです。
+
+たとえば、`.env` ファイルに書かれたAPIキーを誤ってコミットしてしまったとします。気づいて慌ててファイルを削除し、新しいコミットを作ったとしても、古いコミットの中にはAPIキーがそのまま保存されています。`git log` で過去のコミットを辿り、`git show` でその時点のファイル内容を表示すれば、削除したはずのAPIキーを誰でも復元できてしまうのです。
+
+実際に、GitHubのPublicリポジトリを自動的にスキャンして、漏洩した認証情報を収集する悪意あるボットが常時稼働していることが知られています。APIキーがコミットされてから数分以内に悪用されたという報告もあります。
+
+### コミットしてはならない情報の一覧
+
+以下に挙げるような情報は、いかなる場合もリポジトリにコミットしてはなりません。
+
+| カテゴリ | 具体例 | ファイル名の例 |
+|---------|--------|-------------|
+| **環境変数ファイル** | データベースURL、APIキー、シークレットキー | `.env`, `.env.local`, `.env.production` |
+| **秘密鍵** | SSH秘密鍵、TLS証明書の秘密鍵 | `id_rsa`, `id_ed25519`, `*.pem`, `*.key` |
+| **認証情報** | パスワード、トークン、アクセスキー | `credentials.json`, `secrets.yaml` |
+| **クラウド認証** | AWS/GCP/Azureの認証情報 | `aws-credentials`, `service-account.json` |
+| **データベース接続情報** | ホスト名、ユーザー名、パスワードが含まれる接続文字列 | `database.yml`（パスワード入り） |
+
+これらの情報を安全に管理するためには、`.env` ファイルに秘密情報を記述し、`.gitignore` でそのファイルをGitの追跡対象から除外するのが基本的なアプローチです。CI/CD環境では、第12章で学んだGitHub Secretsを使って秘密情報を安全に渡します。
+
+代わりに、`.env.example` というファイルを用意して、秘密情報の「形式」だけを示しておくと、新しい開発メンバーが「どんな環境変数を設定すべきか」を理解できます。
 
 ```
-⚠️ 絶対にコミットしてはいけないもの：
-- パスワード、APIキー、トークン
-- .env ファイル
-- 秘密鍵 (id_rsa, *.pem)
-- データベースの接続情報
-- AWS/GCPの認証情報
+# .env.example（これはコミットしてOK）
+DATABASE_URL=postgres://user:password@localhost:5432/mydb
+API_KEY=your-api-key-here
+SECRET_KEY=generate-a-random-string
 ```
 
-一度でもコミットすると、削除しても履歴に残り、誰でも見れてしまう。
+```gitignore
+# .gitignore に追加
+.env
+.env.local
+.env.production
+*.pem
+*.key
+```
 
-### 万が一コミットしてしまったら
+---
+
+## 22.3　万が一コミットしてしまったときの対処
+
+### 最優先事項：秘密情報を無効化する
+
+秘密情報のコミットに気づいたとき、最も重要なのは**そのシークレットを直ちに無効化する**ことです。リポジトリの履歴からファイルを削除するよりも先に、漏洩した可能性のあるキーやパスワードを使えない状態にしなければなりません。
+
+具体的には以下の手順で対応します。
+
+1. **漏洩した秘密情報を即座に無効化する**：該当するサービス（AWS、Google Cloud、Slack、データベース等）の管理画面にアクセスし、漏洩したキーやトークンを失効させます
+2. **新しい秘密情報を発行する**：新しいAPIキーやパスワードを生成し、`.env` ファイルなどの安全な場所に設定し直します
+3. **リポジトリの履歴から秘密情報を完全に削除する**
+
+### 履歴からの完全削除
+
+ファイルを `git rm` で削除してコミットしても、過去のコミットの中に秘密情報は残ったままです。履歴から完全に削除するには、特別なツールを使う必要があります。
+
+**方法1：BFG Repo-Cleaner（推奨）**
+
+BFG Repo-Cleanerは、Gitリポジトリの履歴を高速に書き換えるためのツールです。`git filter-branch` よりも10〜720倍速く、使い方もシンプルです。
 
 ```bash
-# 1. まずシークレットを無効化（GitHubやサービス側で）
-# 2. 新しいシークレットを発行
-# 3. 履歴からファイルを完全削除
+# BFGのインストール（macOS）
+brew install bfg
+
+# 特定のファイルをすべての履歴から削除
+bfg --delete-files .env
+
+# 特定の文字列（例：APIキー）を履歴からすべて置換
+bfg --replace-text passwords.txt
+# passwords.txt には置換対象の文字列を1行ずつ記載
+
+# 履歴の再構築
+git reflog expire --expire=now --all
+git gc --prune=now --aggressive
+
+# リモートに強制プッシュ（この操作は破壊的なため慎重に）
+git push --force
+```
+
+**方法2：git filter-branch**
+
+BFGが使えない場合は、Git標準の `filter-branch` コマンドを使います。
+
+```bash
 git filter-branch --force --index-filter \
   'git rm --cached --ignore-unmatch .env' \
   --prune-empty --tag-name-filter cat -- --all
 
-# または BFG Repo-Cleaner を使う（高速）
-bfg --delete-files .env
 git reflog expire --expire=now --all
 git gc --prune=now --aggressive
 git push --force
 ```
 
-## Dependabot（依存関係の自動更新）
+いずれの方法も**リポジトリの履歴を書き換える破壊的な操作**です。チームで作業している場合は、全メンバーにリポジトリを改めてクローンし直してもらう必要があります。だからこそ、「最初からコミットしない」ことが最善の対策なのです。
 
-脆弱性のあるライブラリを自動検出・更新PRを作成してくれる。
+---
 
-### 有効化
+## 22.4　Dependabot — 依存パッケージの脆弱性を自動検出する
 
-リポジトリ → Settings → **Code security and analysis**:
-- **Dependency graph**: 有効
-- **Dependabot alerts**: 有効
-- **Dependabot security updates**: 有効
+### なぜ依存パッケージの管理が重要なのか
 
-<!-- screenshot: Dependabot設定画面 -->
+現代のソフトウェアは、数十から数百のオープンソースライブラリ（依存パッケージ）の上に成り立っています。あなたのプロジェクトが直接使っているライブラリだけでなく、そのライブラリがさらに依存しているライブラリまで含めると、依存関係は非常に深くなります。
 
-### 設定ファイル
+これらのライブラリのいずれかに脆弱性が発見された場合、あなたのプロジェクトも影響を受ける可能性があります。しかし、何百もの依存パッケージの脆弱性情報を手動で追跡するのは現実的ではありません。ここでDependabotが力を発揮します。
 
-`.github/dependabot.yml`:
+### Dependabotとは
+
+**Dependabot**は、GitHubが提供する依存パッケージの自動監視・更新サービスです。Dependabotは以下の3つの機能を持っています。
+
+**Dependency graph（依存グラフ）**は、リポジトリが依存しているパッケージの一覧を自動的に解析して可視化します。`package.json`（Node.js）、`requirements.txt`（Python）、`Gemfile`（Ruby）などのファイルから依存関係を読み取ります。
+
+**Dependabot alerts（セキュリティアラート）**は、依存パッケージに既知の脆弱性が発見された場合に自動的に通知してくれます。GitHubの脆弱性データベース（GitHub Advisory Database）と照合して、影響のあるパッケージを特定します。
+
+**Dependabot security updates（セキュリティ更新）**は、脆弱性が発見されたパッケージを安全なバージョンに更新するPull Requestを自動的に作成してくれます。開発者はそのPRをレビューしてマージするだけで、脆弱性への対応が完了します。
+
+### 有効化の手順
+
+1. リポジトリの **Settings** タブを開きます
+2. 左メニューの **Code security and analysis** を選択します
+3. 以下の3つを順番に有効化します
+   - **Dependency graph**: 有効
+   - **Dependabot alerts**: 有効
+   - **Dependabot security updates**: 有効
+
+<!-- screenshot: Code security and analysis設定画面でDependabotの各機能を有効化する -->
+
+### 設定ファイルによるカスタマイズ
+
+Dependabotの動作をより細かく制御するには、`.github/dependabot.yml` ファイルをリポジトリに配置します。
+
 ```yaml
 version: 2
 updates:
-  # Python (pip)
+  # Pythonの依存パッケージを毎週チェック
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
     labels:
       - "dependencies"
+      - "python"
     reviewers:
       - "username"
+    commit-message:
+      prefix: "chore(deps)"
 
-  # npm
+  # Node.jsの依存パッケージ
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
 
-  # GitHub Actions
+  # GitHub Actionsのアクション
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
 ```
 
-## Secret Scanning
+`schedule` セクションでは、Dependabotがチェックを行う頻度を `daily`（毎日）、`weekly`（毎週）、`monthly`（毎月）から選択できます。プロジェクトの重要度に応じて適切な頻度を設定しましょう。`labels` や `reviewers` を指定しておくと、自動生成されるPRが整理しやすくなります。
 
-リポジトリ内にAPIキーやトークンが含まれていないか自動スキャン。
+---
 
-Settings → **Code security and analysis** → **Secret scanning**: 有効
+## 22.5　Secret Scanning — リポジトリ内の秘密情報を自動検出する
 
-対応するシークレットの種類：
-- AWS Access Key
-- GitHub Token
-- Google API Key
-- Slack Token
-- npm Token
-- その他多数
+### Secret Scanningとは
 
-## セキュリティポリシー
+**Secret Scanning**は、リポジトリにコミットされたコードの中に、APIキーやトークンなどの秘密情報が含まれていないかを自動的にスキャンする機能です。22.2節で「コミットしてはいけない」と書きましたが、人間はミスをするものです。Secret Scanningは、そのミスが被害に発展する前に検出してくれるセーフティネットです。
 
-`SECURITY.md` をリポジトリに配置して、脆弱性の報告方法を案内：
+### 検出できる秘密情報の種類
+
+Secret Scanningが検出できるパターンは、GitHubのパートナー企業と連携して随時追加されています。代表的なものを挙げます。
+
+- **GitHub** — Personal Access Token、OAuth Token
+- **AWS** — Access Key ID、Secret Access Key
+- **Google Cloud** — API Key、Service Account Key
+- **Slack** — Bot Token、Webhook URL
+- **Stripe** — API Key（テスト用/本番用）
+- **npm** — Access Token
+- **Azure** — Storage Account Key、Service Principal
+- その他、100種類以上のパターンに対応
+
+### 有効化と動作
+
+Secret Scanningは、リポジトリの Settings → **Code security and analysis** → **Secret scanning** で有効化します。パブリックリポジトリでは一部の機能が自動的に有効になっています。
+
+秘密情報が検出されると、リポジトリの管理者にアラートが送信されます。GitHubのパートナー企業（AWS、Google等）に対しては、検出された時点で自動的にパートナー企業にも通知が行き、そのトークンが自動的に無効化されることもあります。
+
+### Push protection
+
+Secret Scanningには「**Push protection**」という強力な機能もあります。これを有効にすると、秘密情報が含まれるコミットを**プッシュする前にブロック**してくれます。つまり、秘密情報がリポジトリに入り込む前の段階で防御できるのです。
+
+Settings → Code security and analysis → Secret scanning → **Push protection** を有効にすることで利用できます。
+
+---
+
+## 22.6　セキュリティポリシー — SECURITY.mdの作成
+
+### なぜセキュリティポリシーが必要か
+
+あなたのプロジェクトを使っている人が脆弱性を発見した場合、どこに報告すればよいのでしょうか。公開のIssueに書かれてしまうと、修正が行われる前に悪意ある第三者に知られてしまう可能性があります。
+
+`SECURITY.md` ファイルは、脆弱性を発見した人に対して「どのように報告してほしいか」を伝えるための文書です。リポジトリのルートまたは `.github/` ディレクトリに配置すると、GitHubのUIに「Security policy」として表示されます。
+
+### SECURITY.mdの書き方
 
 ```markdown
 # Security Policy
 
-## Supported Versions
+## サポート対象バージョン
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 2.x     | ✅ サポート中       |
-| 1.x     | ❌ サポート終了     |
+| バージョン | サポート状況 |
+| --------- | ---------- |
+| 2.x       | サポート中   |
+| 1.x       | サポート終了 |
 
-## Reporting a Vulnerability
+## 脆弱性の報告方法
 
-脆弱性を発見した場合は、Issueではなく以下にメールで報告してください：
+脆弱性を発見された場合は、以下の方法でご報告ください。
 
-security@example.com
+**公開のIssueでの報告はお控えください。**
+脆弱性の詳細が公開されると、修正が完了する前に悪用されるリスクがあります。
 
-公開前に修正する時間をいただくため、公開的なIssueでの報告はお控えください。
+### 報告先
+
+- メール: security@example.com
+- GitHub Security Advisories: リポジトリの「Security」タブから
+  「Report a vulnerability」をクリック
+
+### 報告に含めてほしい情報
+
+- 脆弱性の概要
+- 再現手順
+- 影響範囲
+- 可能であれば修正案
+
+### 対応の流れ
+
+1. 報告を受領後、48時間以内に確認のご連絡をします
+2. 脆弱性の検証と影響評価を行います
+3. 修正パッチを作成します
+4. 修正をリリースし、報告者にクレジットを記載します
 ```
 
-## セキュリティのベストプラクティス
+GitHubには「Security Advisories」という機能もあり、非公開で脆弱性の報告・議論・修正を行い、準備が整ってから公開するというワークフローをサポートしています。
 
-1. **2FA必須**: アカウントの二段階認証を有効化
-2. **.gitignoreの徹底**: `.env`, 認証情報ファイルを確実に無視
-3. **シークレット管理**: GitHub SecretsやVaultを使用
-4. **最小権限**: PATの権限は必要最小限に
-5. **定期的な更新**: Dependabotのアラートに対応
-6. **ブランチ保護**: mainへの直接pushを禁止
-7. **監査**: 定期的にアクセス権限を見直す
+---
 
-## 次のステップ
+## 22.7　セキュリティのベストプラクティス7箇条
 
-→ [23. 外部連携](23-integrations.md) でツール連携を学ぼう
+日々の開発で実践すべきセキュリティ対策を7つにまとめました。
+
+### 第1条：二段階認証（2FA）を必ず有効にする
+
+第3章で解説した二段階認証は、アカウントセキュリティの最も基本的かつ効果的な対策です。パスワードが漏洩しても、2FAが有効であれば不正ログインを防げます。GitHubでは2023年以降2FAが必須化されていますが、認証アプリの設定とリカバリーコードの保管を確実に行いましょう。
+
+### 第2条：.gitignoreを徹底する
+
+`.env` ファイルや認証情報ファイルは、プロジェクトの最初の段階で `.gitignore` に追加しておきましょう。「後で追加すればいい」と思っていると、つい忘れてコミットしてしまいます。第5章で紹介した言語別の `.gitignore` テンプレートを活用するのが手軽です。
+
+### 第3条：GitHub Secretsで秘密情報を管理する
+
+CI/CDパイプラインでAPIキーやパスワードが必要な場合は、コードに直接書くのではなく、GitHub Secretsに保存して `${{ secrets.API_KEY }}` の形式で参照します。Secretsの値はログに出力されないよう保護されています。
+
+### 第4条：最小権限の原則を守る
+
+Personal Access Token（PAT）を作成する際は、必要最小限のスコープ（権限）だけを付与してください。「全部チェックしておけば楽だから」という考えは、トークンが漏洩した際の被害を最大化します。有効期限も設定し、定期的にトークンを更新する習慣をつけましょう。
+
+### 第5条：Dependabotのアラートに迅速に対応する
+
+Dependabotから脆弱性のアラートが届いたら、放置せずに対応しましょう。特に「Critical」や「High」の深刻度のアラートは、攻撃者に悪用される可能性が高いため、速やかにPRをマージしてパッケージを更新してください。
+
+### 第6条：ブランチ保護ルールを設定する
+
+mainブランチへの直接pushを禁止し、Pull Requestとコードレビューを必須にすることで、意図しない変更や秘密情報の混入を防ぎます。第17章で解説したブランチ保護ルールを設定しましょう。
+
+### 第7条：定期的にアクセス権限を見直す
+
+プロジェクトを離れたメンバーのCollaborator権限が残っていないか、不要になったGitHub Appがインストールされたままになっていないか、PATの有効期限が切れていないか——こうした点を定期的に確認する習慣をつけましょう。Settings → Collaborators、Settings → Applications、Settings → Developer settings を定期的にチェックします。
+
+---
+
+## 22.8　まとめ
+
+本章では、GitHubリポジトリを安全に保つためのセキュリティ対策について学びました。
+
+- **秘密情報は絶対にコミットしない**。一度コミットすると履歴に残り続け、削除は非常に困難。`.gitignore` による事前防止が最善策
+- 万が一コミットしてしまった場合は、まず**秘密情報を無効化**し、BFG Repo-Cleanerなどで**履歴から完全削除**する
+- **Dependabot**は依存パッケージの脆弱性を自動検出し、更新PRを作成してくれる
+- **Secret Scanning**はリポジトリ内の秘密情報を自動スキャンし、Push protectionでコミット前にブロックもできる
+- **SECURITY.md**でセキュリティポリシーを明文化し、脆弱性の報告先と対応フローを案内する
+- **7つのベストプラクティス**（2FA、.gitignore、Secrets、最小権限、Dependabot対応、ブランチ保護、権限見直し）を日常的に実践する
+
+セキュリティは一度設定すれば終わりではなく、継続的に注意を払うべきものです。この章で学んだ対策を習慣化することで、安心して開発に集中できる環境を維持しましょう。
+
+---
+
+> **次の章へ進む**: [第23章 外部連携 — 開発ツールとつなげる](23-integrations.md)

@@ -1,207 +1,360 @@
-# 24. トラブルシューティング — よくあるエラーと解決法
+# 第24章　トラブルシューティング — よくある問題の処方箋
 
-## 認証エラー
+## 24.1　この章で学ぶこと
 
-### `Permission denied (publickey)`
+GitやGitHubを使っていると、さまざまなエラーメッセージや予期しない挙動に遭遇することがあります。特に初心者のうちは、ターミナルに赤い文字で表示されるエラーを見ると不安になるかもしれません。しかし、実際にはGit関連のトラブルの大半はパターンが決まっており、原因さえわかれば落ち着いて対処できるものばかりです。
+
+この章では、GitやGitHubを使う際によく遭遇するエラーとトラブルを、カテゴリ別に整理して解説します。それぞれのトラブルについて、**なぜそのエラーが発生するのか（原因）**と**どうすれば解決できるのか（対処法）**を丁寧に説明します。
+
+- 認証エラー（SSH鍵やトークンに関する問題）
+- push/pullエラー（リモートリポジトリとの同期に関する問題）
+- ブランチ関連の問題（ブランチ切り替えや取得に関する問題）
+- コミット関連の問題（間違ったコミットの修正に関する問題）
+- .gitignoreが効かない問題
+- ネットワーク関連の問題（接続やパフォーマンスに関する問題）
+- その他のよくある問題
+
+この章は「困ったときに引く辞書」として使えるように構成しています。目次からエラーメッセージを探して、該当する節に飛んでください。
+
+---
+
+## 24.2　認証エラー
+
+認証エラーは、GitHubへの接続がうまくいかないときに発生します。GitHubとの接続方式にはSSH接続とHTTPS接続の2種類があり、それぞれ異なる認証の仕組みを使うため、エラーの種類も異なります。
+
+### Permission denied (publickey) の原因と解決法
 
 ```
 git@github.com: Permission denied (publickey).
 fatal: Could not read from remote repository.
 ```
 
-**原因**: SSH鍵が設定されていない、または正しく登録されていない
+このエラーは、SSH接続を使ってGitHubにアクセスしようとしたとき、正しいSSH鍵が見つからなかった場合に発生します。SSH接続では、ローカルマシンに保存された秘密鍵とGitHubに登録された公開鍵のペアを使って認証を行います。この「鍵のペア」がどちらか一方でも欠けていたり、正しく設定されていなかったりすると、このエラーが表示されます。
 
-**解決法**:
+主な原因は3つです。(1) SSH鍵がそもそも作成されていない、(2) SSH鍵は作成されているがGitHubに公開鍵を登録していない、(3) SSHエージェントに秘密鍵が追加されていない。
+
+以下の手順で問題を診断し、解決しましょう。
+
 ```bash
-# SSH鍵の確認
+# ステップ1: SSH鍵が存在するか確認する
 ls -la ~/.ssh/
 
-# SSH接続テスト
-ssh -T git@github.com
+# id_ed25519 や id_rsa といったファイルがあれば鍵は存在する
+# なければステップ2へ
 
-# 鍵がない場合は作成
+# ステップ2: SSH鍵を新規作成する（鍵がない場合）
 ssh-keygen -t ed25519 -C "your-email@example.com"
+# パスフレーズの設定を求められる。空でもよいがセキュリティのため設定推奨
 
-# エージェントに追加
+# ステップ3: SSHエージェントに秘密鍵を追加する
+eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
 
-# 公開鍵をGitHubに登録
+# ステップ4: 公開鍵の内容を表示してコピーする
 cat ~/.ssh/id_ed25519.pub
-# → GitHub Settings → SSH keys に貼り付け
+
+# ステップ5: GitHubに公開鍵を登録する
+# GitHub → Settings → SSH and GPG keys → New SSH key
+# 表示された公開鍵の全文を貼り付けて保存する
+
+# ステップ6: 接続テストを行う
+ssh -T git@github.com
+# "Hi username! You've successfully authenticated" と表示されれば成功
 ```
 
-### `remote: Invalid username or password`
+もし複数のSSH鍵を使い分けている場合（仕事用と個人用など）は、`~/.ssh/config` ファイルでホストごとに使用する鍵を指定する必要があります。
+
+### Invalid username or password の原因と解決法
 
 ```
 remote: Invalid username or password.
-fatal: Authentication failed
+fatal: Authentication failed for 'https://github.com/...'
 ```
 
-**原因**: パスワード認証は廃止された。PATまたはSSHが必要。
+このエラーは、HTTPS接続でGitHubにアクセスしようとしたときに発生します。最も多い原因は、**GitHubのパスワード認証が2021年8月に廃止された**ことを知らずに、パスワードでログインしようとしているケースです。
 
-**解決法**:
+現在、HTTPS接続でGitHubにアクセスするには、パスワードの代わりに**個人アクセストークン（Personal Access Token: PAT）**を使う必要があります。ただし、トークンを手動で管理するのは面倒なので、GitHub CLI（`gh`）を使って認証するのが最も簡単で推奨される方法です。
+
 ```bash
-# GitHub CLIで認証し直す
+# GitHub CLIで認証をセットアップする（最も簡単な方法）
 gh auth login
+# プロンプトに従って、ブラウザで認証を完了する
 
-# または PAT を使う
-# GitHub → Settings → Developer settings → Personal access tokens
+# 認証状態を確認する
+gh auth status
 ```
 
-### `403 Forbidden`
+`gh auth login` を実行すると、対話的に接続方式（HTTPS/SSH）や認証方法を選択できます。認証が完了すると、以降の `git push` や `git pull` では自動的にトークンが使用されるため、パスワードの入力を求められることはなくなります。
 
-**原因**: トークンの権限不足
+もし何らかの理由でPATを手動で作成する必要がある場合は、GitHub → Settings → Developer settings → Personal access tokens から作成できます。トークンには必要最小限のスコープ（権限）だけを付与し、有効期限を設定することがセキュリティ上重要です。
 
-**解決法**: PATのスコープに `repo` が含まれているか確認。
+### 403 Forbidden の原因と解決法
 
-## push/pullエラー
+`403 Forbidden` は、認証自体は成功しているものの、実行しようとした操作に対する権限が不足している場合に発生します。
 
-### `rejected – non-fast-forward`
+最も多い原因は、使用しているPATのスコープに `repo` が含まれていないことです。PATを作成するとき、どの操作を許可するかをスコープで指定しますが、リポジトリへのpush/pullには `repo` スコープが必要です。GitHub → Settings → Developer settings → Personal access tokens で、トークンのスコープを確認・更新してください。
+
+また、Organization（組織）のリポジトリにアクセスする場合は、Organizationの管理者がそのトークンの使用を承認している必要がある場合もあります。
+
+---
+
+## 24.3　push/pullエラー
+
+push/pullエラーは、ローカルリポジトリとリモートリポジトリの間でコミット履歴に不整合が生じたときに発生します。チーム開発で複数人が同じリポジトリを操作しているときに起きやすいトラブルです。
+
+### rejected non-fast-forward の原因と解決法
 
 ```
 ! [rejected]        main -> main (non-fast-forward)
-error: failed to push some refs
+error: failed to push some refs to 'github.com:owner/repo.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally.
 ```
 
-**原因**: リモートに自分が持っていないコミットがある
+このエラーは、`git push` しようとしたときに最もよく遭遇するエラーのひとつです。原因は明快で、**リモートリポジトリに、自分のローカルにはないコミットが存在している**ということです。
 
-**解決法**:
+たとえるなら、あなたが本に新しいページを書いて出版社に送ろうとしたら、「他の著者が先に新しいページを追加したので、まずそれを読んでから送り直してください」と言われたようなものです。
+
+解決方法は、まずリモートの変更を取り込んでから、改めてプッシュすることです。
+
 ```bash
-# まずpullしてからpush
+# 方法1: pull --rebase で取り込む（推奨）
+# リモートの変更を取り込んだ上に、自分のコミットを積み直す
 git pull --rebase
 git push
 
-# または（確認してから）
+# 方法2: 先にfetchして確認してから取り込む（慎重にやりたい場合）
 git fetch origin
-git log HEAD..origin/main  # リモートの変更を確認
-git rebase origin/main
+git log HEAD..origin/main  # リモートにある自分にないコミットを確認
+git rebase origin/main     # 自分のコミットをリモートの上に載せ替える
 git push
 ```
 
-### `fatal: refusing to merge unrelated histories`
+`git pull --rebase` と通常の `git pull`（マージ）の違いは、履歴の見た目です。`--rebase` を使うとコミット履歴が直線的になり、不要なマージコミットが作られません。チーム開発では `--rebase` を使うことが多いですが、どちらを使うかはチームのルール次第です。
 
-**原因**: 共通の祖先がない2つのリポジトリをマージしようとしている
+**注意**: `git push --force` で強制的にプッシュすることも技術的には可能ですが、これはリモートの履歴を上書きする危険な操作です。他のチームメンバーの作業を消してしまう可能性があるため、特別な理由がない限り使わないでください。
 
-**解決法**:
-```bash
-git pull origin main --allow-unrelated-histories
+### refusing to merge unrelated histories の原因と解決法
+
+```
+fatal: refusing to merge unrelated histories
 ```
 
-### `Your branch is behind 'origin/main'`
+このエラーは、共通の祖先コミットを持たない2つの履歴をマージしようとしたときに発生します。最もよくあるシナリオは、GitHubでREADME付きのリポジトリを作成した後に、ローカルで別途 `git init` して作業を始め、それをリモートにプッシュしようとした場合です。
+
+GitHubで作成されたリポジトリ（READMEの初期コミットを含む）と、ローカルで `git init` したリポジトリは、完全に別の履歴を持つため、Gitは安全のためにマージを拒否します。
+
+```bash
+# --allow-unrelated-histories オプションで明示的に許可する
+git pull origin main --allow-unrelated-histories
+
+# コンフリクトが発生する場合は解決してコミットする
+```
+
+このエラーを根本的に避けるには、GitHubでリポジトリを作成するときにREADMEを追加せず（空のリポジトリとして作成し）、ローカルの既存リポジトリをそのままプッシュするのが最もスムーズです。
+
+### Your branch is behind
+
+```
+Your branch is behind 'origin/main' by 3 commits, and can be fast-forwarded.
+```
+
+このメッセージはエラーではなく、「リモートリポジトリに新しいコミットがあり、ローカルはそれを取り込んでいない」という状態を知らせる情報メッセージです。他のチームメンバーがプッシュした変更がリモートにあるとき表示されます。
 
 ```bash
 # リモートの変更を取り込む
 git pull
 
-# リベースで取り込む（推奨）
+# リベースで取り込む（コミット履歴を直線的に保ちたい場合）
 git pull --rebase
 ```
 
-## ブランチ関連
+この状態でローカルに未コミットの変更がない場合は、`git pull` するだけで解決します。
 
-### `error: Your local changes would be overwritten`
+---
+
+## 24.4　ブランチ関連の問題
+
+### local changes would be overwritten（未コミット変更時のブランチ切替）
 
 ```
-error: Your local changes to the following files would be overwritten by checkout
+error: Your local changes to the following files would be overwritten by checkout:
+    src/app.py
+Please commit your changes or stash them before you switch branches.
 ```
 
-**原因**: 未コミットの変更がある状態でブランチを切り替えようとした
+このエラーは、ファイルを編集したもののまだコミットしていない状態で、別のブランチに切り替えようとしたときに発生します。Gitは、未コミットの変更がブランチ切り替えによって失われることを防ぐために、このエラーを出して切り替えを拒否します。
 
-**解決法**:
+対処法は2つあります。
+
 ```bash
-# 方法1: 変更を退避
+# 方法1: 変更を一時退避する（stash）
+# 今の変更を「棚に上げて」から、ブランチを切り替える
 git stash
 git switch other-branch
-# 戻ったら復元
+
+# 作業が終わったら元のブランチに戻り、退避した変更を復元する
 git switch original-branch
 git stash pop
 
-# 方法2: 変更をコミット
+# 方法2: 変更をコミットしてからブランチを切り替える
+# 作業途中でも仮のコミットとして保存する
 git add .
-git commit -m "WIP: save progress"
+git commit -m "WIP: 作業途中の保存"
 git switch other-branch
 ```
 
-### `error: branch 'x' not found`
+`git stash` は「一時的な引き出し」のようなものです。今の変更をいったん退避させておき、後で元に戻すことができます。`stash pop` で最後に退避した変更が復元されます。退避した内容の一覧は `git stash list` で確認できます。
+
+### branch not found（リモートブランチの取得）
+
+```
+error: pathspec 'feature-x' did not match any file(s) known to git
+```
+
+このエラーは、存在しないブランチに切り替えようとしたときに発生します。チームメンバーが作成したリモートブランチに切り替えたい場合、まずローカルにリモートの情報を取得する必要があります。
 
 ```bash
-# リモートブランチを取得
+# ステップ1: リモートの最新情報を取得する
 git fetch origin
 
-# リモートブランチ一覧を確認
+# ステップ2: リモートブランチの一覧を確認する
 git branch -r
 
-# リモートブランチを元にローカルブランチを作成
-git switch -c branch-name origin/branch-name
+# ステップ3: リモートブランチを元にローカルブランチを作成して切り替える
+git switch -c feature-x origin/feature-x
+
+# または単純に（Gitが自動的にリモートブランチを追跡する）
+git switch feature-x
 ```
 
-## コミット関連
+`git fetch` はリモートの情報を取得するだけで、ローカルのファイルは一切変更しません。安全に実行できるコマンドなので、「なんかおかしいな」と思ったらまず `git fetch` を実行する癖をつけるとよいでしょう。
 
-### 間違ったブランチにコミットした
+---
+
+## 24.5　コミット関連の問題
+
+コミットに関する問題は、「間違えた」「取り消したい」というケースがほとんどです。重要なのは、**まだプッシュしていないコミットは比較的安全に修正できる**が、**既にプッシュしたコミットの修正は慎重に行う必要がある**ということです。
+
+### 間違ったブランチにコミットした場合
+
+作業に集中していると、`main` ブランチに直接コミットしてしまうことがあります。本来は `feature` ブランチに対してコミットすべきだったのに、ブランチを切り替え忘れていたケースです。
 
 ```bash
-# 1. コミットを取り消し（変更は残る）
+# ステップ1: 直前のコミットを取り消す（変更内容はそのまま残る）
 git reset --soft HEAD~1
 
-# 2. 正しいブランチに切り替え
+# ステップ2: 変更を一時退避する
 git stash
-git switch correct-branch
+
+# ステップ3: 正しいブランチに切り替える（なければ作成する）
+git switch -c feature-branch
+# または既存のブランチに切り替える場合
+# git switch feature-branch
+
+# ステップ4: 退避した変更を復元する
 git stash pop
 
-# 3. 正しいブランチでコミット
+# ステップ5: 正しいブランチで改めてコミットする
 git add .
-git commit -m "正しいメッセージ"
+git commit -m "適切なコミットメッセージ"
 ```
 
-### コミットメッセージを間違えた
+`git reset --soft HEAD~1` は、直前のコミットを「なかったこと」にしますが、コミットされていたファイルの変更内容はステージングエリアに残ります。つまり、コミットだけが消えて、ファイルの中身はそのままです。`--soft` と `--hard` の違いは非常に重要で、`--hard` を使うとファイルの変更内容も完全に消えてしまいます。
+
+### コミットメッセージを間違えた場合
+
+コミットした直後に、コミットメッセージにtypoがあったり、内容が不適切だったりすることに気づくことがあります。
 
 ```bash
-# 直前のコミットメッセージを修正（まだpushしていない場合）
-git commit --amend -m "正しいメッセージ"
+# まだプッシュしていない場合: --amend で直前のコミットメッセージを修正できる
+git commit --amend -m "正しいコミットメッセージ"
 ```
 
-### 大きなファイルをコミットしてしまった
+`--amend` は直前のコミットを「修正」するコマンドです。コミットメッセージだけでなく、コミットに含めるファイルも変更できます。たとえば、コミットし忘れたファイルを後から追加する場合にも使えます。
 
 ```bash
-# 直前のコミットの場合
+# コミットし忘れたファイルを追加する
+git add forgotten-file.py
+git commit --amend --no-edit  # メッセージはそのままで、ファイルだけ追加
+```
+
+**注意**: 既にプッシュ済みのコミットに `--amend` を使うと、履歴が書き換わるため、`git push --force` が必要になります。これは他のチームメンバーに影響を与える可能性があるため、十分注意してください。
+
+### 大きなファイルをコミットしてしまった場合
+
+誤って数百MBの動画ファイルやデータファイルをコミットしてしまうことがあります。GitHubでは100MBを超えるファイルのプッシュが拒否されるため、このようなファイルを含むコミットはプッシュできません。
+
+```bash
+# 直前のコミットの場合: コミットを取り消して .gitignore を設定する
 git reset --soft HEAD~1
 echo "large-file.zip" >> .gitignore
 git add .gitignore
-git commit -m "Add .gitignore"
+git rm --cached large-file.zip   # ステージングから大きなファイルを除外
+git add .
+git commit -m "コミットし直し（大きなファイルを除外）"
+```
 
-# 過去のコミットの場合
-# BFG Repo-Cleanerを使う
+過去のコミット（何個も前のコミット）に大きなファイルが含まれている場合は、`git filter-branch` や **BFG Repo-Cleaner** というツールを使って履歴からファイルを完全に除去する必要があります。
+
+```bash
+# BFG Repo-Cleaner を使う方法
 brew install bfg
 bfg --strip-blobs-bigger-than 100M
 git reflog expire --expire=now --all
 git gc --prune=now --aggressive
 ```
 
-## .gitignore 関連
+BFGはリポジトリの全履歴をスキャンし、指定サイズ以上のファイルを過去のコミットからも除去します。ただし、これは履歴を書き換える操作であるため、チームメンバー全員に事前に周知し、操作後は全員がリポジトリを再クローンする必要があります。
 
-### `.gitignore` が効かない
+---
 
-**原因**: 既に追跡されているファイルは `.gitignore` に追加しても無視されない
+## 24.6　.gitignoreが効かない問題
 
-**解決法**:
+### 既に追跡されたファイルの対処
+
+`.gitignore` ファイルに特定のファイルやディレクトリのパターンを追加したのに、Gitが依然としてそのファイルの変更を追跡し続けている――これは非常によくある問題です。
+
+原因は明確です。`.gitignore` は**まだGitに追跡されていない（untrackedな）ファイル**を無視するための仕組みであり、**既にGitに追跡されている（trackedな）ファイル**には効果がありません。つまり、一度でも `git add` してコミットしたファイルは、後から `.gitignore` に追加しても無視されないのです。
+
+解決するには、まずGitの追跡を明示的に解除する必要があります。
+
 ```bash
-# 追跡を解除
+# ファイルの追跡を解除する（ファイル自体は削除されない）
 git rm --cached ファイル名
 
-# フォルダの場合
-git rm -r --cached フォルダ名
+# ディレクトリの場合は -r オプションを付ける
+git rm -r --cached ディレクトリ名/
 
-# コミット
+# .gitignore にパターンが追加されていることを確認する
+cat .gitignore
+
+# 変更をコミットする
 git add .gitignore
-git commit -m "Remove tracked files that should be ignored"
+git commit -m "追跡対象から除外し、.gitignore を更新"
 ```
 
-## ネットワーク関連
+`git rm --cached` の `--cached` オプションが重要です。このオプションを付けないと、ファイルがディスクから物理的に削除されてしまいます。`--cached` を付けることで、「Gitの追跡からは外すが、ファイル自体は手元に残す」という動作になります。
 
-### `Connection timed out`
+よくある具体例としては、`.env` ファイル（環境変数や秘密情報を含むファイル）を最初に誤ってコミットしてしまい、後から `.gitignore` に追加しても追跡が止まらないケースがあります。このような場合、上記の手順で追跡を解除した後、GitHubの履歴にも秘密情報が残っているため、トークンやパスワードをすべて無効化して新しいものに更新することも忘れないでください。
+
+---
+
+## 24.7　ネットワーク関連
+
+### Connection timed out（ポート443の使用）
+
+```
+ssh: connect to host github.com port 22: Connection timed out
+fatal: Could not read from remote repository.
+```
+
+SSH接続でGitHubにアクセスしようとしたとき、接続がタイムアウトすることがあります。原因の多くは、ファイアウォールやプロキシがSSHのデフォルトポート（22番）をブロックしているためです。企業ネットワークや公共Wi-Fiでよく発生します。
+
+解決策は、SSH接続をポート443（HTTPS用のポート。通常はブロックされない）経由で行うように設定することです。
 
 ```bash
-# SSHの設定でポート443を使う
+# ~/.ssh/config に以下の設定を追加する
 cat >> ~/.ssh/config << 'EOF'
 Host github.com
   Hostname ssh.github.com
@@ -209,83 +362,181 @@ Host github.com
   User git
 EOF
 
-# テスト
+# 接続テスト
 ssh -T git@github.com
 ```
 
-### クローンが遅い
+GitHubは `ssh.github.com` のポート443でもSSH接続を受け付けてくれるため、この設定を行うことでファイアウォールを回避できます。この設定は一度行えば永続的に有効です。
+
+### クローンが遅い（shallow clone）
+
+大きなリポジトリ（長い歴史を持つリポジトリや多くのファイルを含むリポジトリ）をクローンすると、非常に時間がかかることがあります。Gitのクローンは全ての履歴（全てのコミット、全てのブランチ）をダウンロードするため、歴史が長いリポジトリほどデータ量が大きくなります。
+
+これを解決する方法が**shallow clone（浅いクローン）**です。
 
 ```bash
-# 浅いクローン（最新のみ）
+# 最新のコミットだけをクローンする（最も高速）
 git clone --depth 1 git@github.com:owner/repo.git
 
-# 特定ブランチだけ
+# 特定のブランチだけをクローンする
 git clone --single-branch -b main git@github.com:owner/repo.git
+
+# 両方を組み合わせる（最も高速かつ最小のデータ量）
+git clone --depth 1 --single-branch -b main git@github.com:owner/repo.git
 ```
 
-## その他
+shallow cloneで取得したリポジトリは、後から全ての履歴を取得することもできます。
 
-### `detached HEAD`
-
-```
-You are in 'detached HEAD' state.
-```
-
-**原因**: ブランチではなくコミットを直接チェックアウトした
-
-**解決法**:
 ```bash
-# ブランチに戻る
+# 全ての履歴を後から取得する
+git fetch --unshallow
+```
+
+---
+
+## 24.8　その他の問題
+
+### detached HEAD
+
+```
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+```
+
+**detached HEAD**は、ブランチではなく特定のコミットを直接チェックアウトした状態です。通常、HEADは現在のブランチの先頭を指しますが、detached HEADの状態ではHEADが特定のコミットを直接指しています。
+
+この状態自体は危険ではありませんが、この状態で新しいコミットを作成すると、どのブランチにも属さない「浮いた」コミットになってしまいます。ブランチに戻ると、そのコミットはGCの対象となり、最終的に削除される可能性があります。
+
+```bash
+# 単純にブランチに戻りたい場合
 git switch main
 
 # 現在の状態を新しいブランチとして保存したい場合
 git switch -c new-branch-name
 ```
 
-### LF/CRLF 改行コードの問題
+detached HEAD状態になる典型的な原因は、`git checkout <コミットハッシュ>` で過去のコミットを直接チェックアウトした場合です。過去のコードを確認したいだけなら問題ありませんが、確認が終わったら必ずブランチに戻りましょう。
+
+### LF/CRLFの改行コード問題
+
+```
+warning: LF will be replaced by CRLF in file.txt
+```
+
+この警告は、ファイルの改行コードに関する問題です。改行コードにはLF（Line Feed、`\n`、Unix/macOS標準）とCRLF（Carriage Return + Line Feed、`\r\n`、Windows標準）の2種類があり、異なるOS間で共同作業をすると改行コードの不一致が発生することがあります。
+
+改行コードの不一致は、差分表示でファイル全体が「変更された」と表示されるなどの問題を引き起こします。
 
 ```bash
-# macOS/Linux
+# macOS / Linux での推奨設定
+# コミット時にCRLFをLFに変換、チェックアウト時はそのまま
 git config --global core.autocrlf input
 
-# Windows
+# Windows での推奨設定
+# コミット時にCRLFをLFに変換、チェックアウト時にLFをCRLFに変換
 git config --global core.autocrlf true
 ```
 
-### `fatal: not a git repository`
+プロジェクト全体で改行コードを統一するには、`.gitattributes` ファイルをリポジトリに配置するのが確実です。
 
-```bash
-# 現在のディレクトリがGitリポジトリか確認
-git status
+```gitattributes
+# すべてのテキストファイルの改行をLFに統一する
+* text=auto eol=lf
 
-# リポジトリでない場合は初期化
-git init
-
-# または正しいディレクトリに移動
-cd /path/to/your/repo
+# Windows用バッチファイルはCRLFを維持する
+*.bat text eol=crlf
 ```
 
-## 困ったときのコマンド
+### not a git repository
+
+```
+fatal: not a git repository (or any of the parent directories): .git
+```
+
+このエラーは、Gitリポジトリではないディレクトリで `git` コマンドを実行したときに発生します。Gitコマンドは `.git` ディレクトリを探して、それが見つからない場合にこのエラーを出します。
 
 ```bash
-# 現在の状態を把握
+# 現在のディレクトリを確認する
+pwd
+
+# 正しいリポジトリのディレクトリに移動する
+cd /path/to/your/repo
+
+# または、現在のディレクトリをGitリポジトリとして初期化する
+git init
+```
+
+ほとんどの場合、単にディレクトリを間違えているだけです。ターミナルの現在位置（`pwd` コマンドで確認できます）がリポジトリのルートディレクトリ、またはその中のサブディレクトリであることを確認しましょう。
+
+---
+
+## 24.9　困ったときのコマンド集
+
+トラブルの原因がわからないとき、まずは現在の状態を正確に把握することが重要です。以下のコマンドは「何が起きているか」を把握するためのものです。
+
+```bash
+# === 状態確認コマンド（安全にいつでも実行できる） ===
+
+# 現在の状態を表示する（最初に実行すべきコマンド）
 git status
+
+# 最近のコミット履歴を確認する
 git log --oneline -10
+
+# リモートリポジトリの接続先を確認する
 git remote -v
+
+# 全てのブランチ（ローカル＋リモート）を一覧表示する
 git branch -a
 
-# 最後の手段: 全てを元に戻す（未コミットの変更が消える）
-git checkout .           # ファイルの変更を元に戻す
-git clean -fd            # 未追跡ファイルを削除
+# 現在のブランチとリモートの差分を確認する
+git fetch origin
+git log HEAD..origin/main --oneline
 
-# 核オプション: リモートの状態に完全に戻す
+# 設定を確認する
+git config --list
+```
+
+上記のコマンドはいずれもリポジトリの状態を「読み取る」だけのコマンドであり、何も変更しません。安心して実行できます。
+
+以下のコマンドは「元に戻す」ためのコマンドですが、**変更が失われる可能性がある**ため、慎重に使ってください。
+
+```bash
+# === 復元コマンド（注意して使用する） ===
+
+# 特定のファイルの変更を元に戻す（未コミットの変更が消える）
+git checkout -- ファイル名
+
+# 全ファイルの変更を元に戻す（未コミットの全変更が消える）
+git checkout .
+
+# 未追跡ファイルを削除する
+git clean -fd
+
+# リモートの状態に完全にリセットする（ローカルの全変更が消える）
 git fetch origin
 git reset --hard origin/main
 ```
 
-> ⚠️ `reset --hard` と `clean -fd` は変更が完全に失われる。使う前にバックアップを。
+特に `git reset --hard` と `git clean -fd` は、未コミットの変更を完全に削除する不可逆的な操作です。実行前に、本当に変更を失ってよいか慎重に確認してください。心配な場合は、事前に `git stash` で変更を退避させておくとよいでしょう。
 
-## 付録へ
+---
 
-→ [付録A: Gitコマンド早見表](appendix-a-cheatsheet.md)
-→ [付録B: 用語集](appendix-b-glossary.md)
+## 24.10　まとめ
+
+この章では、GitやGitHubを使う際によく遭遇するトラブルとその解決法を網羅的に解説しました。
+
+- **認証エラー**では、SSH鍵の設定やPATの使用が鍵であること、`gh auth login` が最も手軽な認証方法であることを学びました。
+- **push/pullエラー**では、`non-fast-forward` は `git pull --rebase` で解決できること、`unrelated histories` はリポジトリの初期設定の不整合が原因であることを理解しました。
+- **ブランチ関連**では、`git stash` による一時退避や `git fetch` によるリモート情報の取得が解決の鍵であることを学びました。
+- **コミット関連**では、`git reset --soft` や `git commit --amend` を使って、プッシュ前のコミットを安全に修正する方法を学びました。
+- **.gitignore**が効かない問題は、`git rm --cached` で追跡を解除することで解決できることを確認しました。
+- **ネットワーク関連**では、ポート443への切り替えやshallow cloneといった実用的な対処法を学びました。
+- **detached HEAD**や**改行コード問題**といったその他のトラブルについても、原因と対処法を理解しました。
+
+トラブルに遭遇したとき、最も大切なのは「慌てないこと」です。まず `git status` で現在の状態を確認し、エラーメッセージをよく読み、この章で該当するパターンを探してください。Gitの操作でデータが完全に失われることは稀で、ほとんどの場合は回復可能です。
+
+---
+
+次の章: [第25章　ファイル拡張子とプログラミング言語](25-file-extensions.md)

@@ -1,40 +1,70 @@
-# 06. 基本ワークフロー — add, commit, push, pull
+# 第6章　基本ワークフロー — 変更を記録し共有する
 
-## Gitの3つのエリア
+## 6.1　この章で学ぶこと
+
+前の章でリポジトリという「器」を作る方法を学びました。この章では、その器の中で日々の開発作業をどのように進めるか — つまり、ファイルの変更を記録し、チームメンバーと共有するための基本的なワークフローを学びます。
+
+Gitの基本ワークフローは、突き詰めると「編集する → 記録する → 共有する」というシンプルな流れです。しかし、このシンプルな流れの中に、Gitが持つ強力な思想が詰まっています。この章では、以下のコマンドとその背景にある考え方を丁寧に解説します。
+
+- `git status` — 今の状態を把握する
+- `git add` — 記録したい変更を選び取る（ステージング）
+- `git commit` — 変更を確定して履歴に刻む
+- `git push` — ローカルの履歴をGitHubに送信する
+- `git pull` — GitHubの変更をローカルに取り込む
+- `git log` — 過去の履歴を振り返る
+- `git diff` — 変更内容を詳しく確認する
+- ファイルの移動・削除・変更の取り消し
+
+各コマンドを「何ができるか」だけでなく「なぜそのような設計になっているのか」という観点から理解することで、応用的な場面でも自信を持って操作できるようになります。
+
+---
+
+## 6.2　Gitの3つのエリアを理解する
+
+Gitを使いこなすうえで最も重要な概念が、**3つのエリア**の理解です。Gitでは、ファイルの変更が最終的にリポジトリに記録されるまでに、3つの段階を経ます。
 
 ```
-作業ディレクトリ        ステージングエリア        ローカルリポジトリ        リモートリポジトリ
-(Working Dir)         (Staging/Index)        (Local Repo)           (Remote/GitHub)
-┌──────────┐          ┌──────────┐           ┌──────────┐           ┌──────────┐
-│ ファイルを │  git add  │ コミット  │ git commit │ ローカルに │  git push  │ GitHubに  │
-│ 編集する   │ ───────→ │ 対象を選択│ ────────→  │ 記録される │ ────────→  │ 反映される│
-│           │          │          │            │           │            │          │
-│           │          │          │            │           │  git pull   │          │
-│           │          │          │            │           │ ←────────  │          │
-└──────────┘          └──────────┘           └──────────┘           └──────────┘
+ワーキングディレクトリ    ステージングエリア      ローカルリポジトリ      リモートリポジトリ
+(Working Directory)     (Staging Area)       (Local Repository)    (GitHub)
+┌───────────────┐      ┌───────────────┐    ┌───────────────┐    ┌───────────────┐
+│               │      │               │    │               │    │               │
+│  ファイルを     │ add  │  記録対象を     │commit│  履歴として    │push │  チームと      │
+│  自由に編集     │ ──→  │  選択する      │ ──→  │  確定する     │ ──→ │  共有する      │
+│               │      │               │    │               │    │               │
+│               │      │               │    │               │pull │               │
+│               │      │               │    │               │ ←── │               │
+└───────────────┘      └───────────────┘    └───────────────┘    └───────────────┘
 ```
 
-## 基本の流れ
+### 買い物にたとえて理解する
 
-```bash
-# 1. 状態を確認
-git status
+この3つのエリアは、買い物のプロセスにたとえるとわかりやすくなります。
 
-# 2. ファイルを編集（エディタで作業）
+**ワーキングディレクトリ（Working Directory）** は、お店の中で商品棚を見ながら歩き回っている状態です。商品を手に取って見たり、棚に戻したりと、自由に行動できます。プロジェクトフォルダの中でファイルを編集している状態がこれに当たります。
 
-# 3. 変更をステージに追加
-git add ファイル名
+**ステージングエリア（Staging Area）** は、「買い物カゴ」に相当します。棚から商品を選んでカゴに入れた状態です。まだ購入は確定していないので、カゴから商品を戻すこともできます。Gitでは `git add` でファイルをステージングエリアに追加します。インデックス（Index）とも呼ばれます。
 
-# 4. コミット（ローカルに記録）
-git commit -m "変更内容の説明"
+**ローカルリポジトリ（Local Repository）** は、「レジで会計を済ませた」状態です。購入が確定し、レシート（コミット履歴）が発行されます。`git commit` でステージングエリアの内容が確定され、変更履歴として永続的に記録されます。
 
-# 5. プッシュ（GitHubに反映）
-git push
-```
+そして **リモートリポジトリ** は、「購入した商品を自宅に届ける」ようなものです。`git push` でローカルの履歴をGitHubに送信し、チームメンバーと共有します。
 
-## git status — 状態の確認
+### なぜステージングエリアが必要なのか
 
-現在のリポジトリの状態を表示する最も重要なコマンド。
+「編集したファイルを直接コミットすればいいのでは？」と思うかもしれません。しかし、ステージングエリアの存在には重要な意味があります。
+
+たとえば、あなたが3つのファイルを編集したとします。そのうち2つはログイン機能の実装に関する変更で、残り1つはREADMEの誤字修正です。これらを1つのコミットにまとめてしまうと、後から履歴を見たときに「このコミットは何をしたのか」がわかりにくくなります。
+
+ステージングエリアがあることで、「ログイン機能の変更だけを選んでコミット」→「READMEの修正を別のコミットとして記録」という、論理的に意味のある単位でコミットを作成できます。これは第6.5節のコミットメッセージの話とも密接に関わってきます。
+
+---
+
+## 6.3　git status — 現在の状態を把握する
+
+`git status` は、Gitの作業中に最も頻繁に使うコマンドです。現在のリポジトリの状態 — どのファイルが変更されているか、どのファイルがステージングされているか、未追跡のファイルがあるか — を一目で把握できます。
+
+### 出力の読み方
+
+`git status` を実行すると、以下のような出力が表示されます。1つずつ意味を見ていきましょう。
 
 ```bash
 git status
@@ -44,323 +74,562 @@ git status
 On branch main
 Your branch is up to date with 'origin/main'.
 
-Changes to be committed:           ← ステージ済み（緑）
+Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
         modified:   README.md
 
-Changes not staged for commit:      ← 変更あるがステージされてない（赤）
+Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
         modified:   src/main.py
 
-Untracked files:                    ← 新規ファイル（赤）
+Untracked files:
   (use "git add <file>..." to include in what will be committed)
         new-file.txt
 ```
 
+**1行目: `On branch main`** — 現在 `main` ブランチで作業していることを示しています。ブランチについては第7章で詳しく学びます。
+
+**2行目: `Your branch is up to date with 'origin/main'.`** — ローカルの `main` ブランチがリモート（GitHub）の `main` ブランチと同じ状態であることを意味します。新しいコミットをプッシュしていない場合やリモートに新しいコミットがある場合は、別のメッセージが表示されます。
+
+**`Changes to be committed:`（緑色で表示）** — ステージングエリアに追加されたファイルの一覧です。次に `git commit` を実行すると、ここに表示されているファイルの変更がコミットに含まれます。カッコ内には、ステージを取り消すためのコマンドが親切に表示されています。
+
+**`Changes not staged for commit:`（赤色で表示）** — 変更されているがまだステージングされていないファイルです。`git add` でステージングするか、`git restore` で変更を元に戻すことができます。
+
+**`Untracked files:`（赤色で表示）** — Gitが一度も追跡したことのない新しいファイルです。`git add` で追跡を開始できます。
+
+### 短縮表示
+
+頻繁に `git status` を実行する場合、短縮表示が便利です。
+
 ```bash
-# 短縮表示
 git status -s
-#  M README.md      ← ステージ済みの変更
-# M  src/main.py    ← 未ステージの変更
-# ?? new-file.txt   ← 未追跡ファイル
 ```
 
-## git add — ステージング
+```
+M  README.md       # 左側のMは「ステージ済みの変更」
+ M src/main.py     # 右側のMは「未ステージの変更」
+?? new-file.txt    # ??は「未追跡ファイル」
+A  added-file.txt  # Aは「新規追加してステージ済み」
+```
 
-コミットに含めるファイルを選択する。
+短縮表示では2列の文字で状態を表します。左列がステージングエリアの状態、右列がワーキングディレクトリの状態を示します。慣れると情報が一目で読み取れるようになります。
+
+---
+
+## 6.4　git add — ステージングの操作と考え方
+
+`git add` は、ワーキングディレクトリの変更をステージングエリアに追加するコマンドです。「次のコミットに含めたい変更を選ぶ」操作と考えてください。
+
+### 基本的な使い方
 
 ```bash
-# 特定のファイルをステージ
+# 特定のファイルをステージングする
 git add README.md
 
-# 複数ファイルをステージ
-git add file1.py file2.py
+# 複数のファイルを指定する
+git add file1.py file2.py file3.py
 
-# 特定のディレクトリ内の全ファイル
+# 特定のディレクトリ内の全ファイルをステージングする
 git add src/
 
-# カレントディレクトリの全変更をステージ
+# カレントディレクトリ以下の全変更をステージングする
 git add .
 
-# 全変更をステージ（削除も含む）
+# リポジトリ全体の全変更をステージングする（削除されたファイルも含む）
 git add -A
-
-# 変更の一部だけをステージ（対話的に選択）
-git add -p
 ```
 
-### ステージの取り消し
+### なぜ全部addせず選ぶのか
+
+`git add .` や `git add -A` を使えばすべての変更を一度にステージングできます。しかし、先ほど説明したように、コミットは「論理的に意味のある単位」で作成することが望ましいのです。
+
+たとえば、バグを修正している最中に、ついでにコードのインデントを整えたとします。このとき、バグ修正のファイルとインデント修正のファイルを別々のコミットにすることで、後から「バグ修正のコミットだけを取り消す」といった操作が可能になります。すべてを1つのコミットにまとめてしまうと、このような柔軟な対応ができなくなります。
+
+### -pオプション：ファイルの一部だけをステージングする
+
+`git add -p`（`--patch`）は、1つのファイルの中から一部の変更だけをステージングできる強力なオプションです。
 
 ```bash
-# 特定ファイルのステージを解除
+git add -p src/main.py
+```
+
+このコマンドを実行すると、ファイル内の変更箇所が「ハンク（hunk）」という単位で1つずつ表示され、それぞれについて以下の選択肢が提示されます。
+
+- `y` — このハンクをステージングする
+- `n` — このハンクをスキップする（ステージングしない）
+- `s` — ハンクをさらに小さく分割する
+- `q` — 終了する
+
+この機能は、1つのファイルに複数の論理的に異なる変更を加えた場合に特に有用です。
+
+### ステージングの取り消し
+
+間違えてステージングしてしまった場合は、`git restore --staged` で取り消すことができます。ステージングを取り消しても、ファイルの内容自体は変更されたままです。あくまでも「ステージングエリアから外す」だけの操作です。
+
+```bash
+# 特定ファイルのステージングを取り消す
 git restore --staged README.md
 
-# 全ファイルのステージを解除
+# すべてのステージングを取り消す
 git restore --staged .
 ```
 
-## git commit — コミット
+---
 
-ステージした変更をローカルリポジトリに記録する。
+## 6.5　git commit — 変更を記録する
+
+`git commit` は、ステージングエリアにある変更をローカルリポジトリに「確定」するコマンドです。コミットとは、プロジェクトのある時点の**スナップショット**（全体像の記録）に、メッセージや著者情報、タイムスタンプなどのメタデータを付けたものです。
+
+### 基本的な使い方
 
 ```bash
-# メッセージ付きコミット
+# メッセージを付けてコミットする
 git commit -m "Add user authentication feature"
 
-# 複数行メッセージ
-git commit -m "Add user authentication
+# 複数行のメッセージを書く場合
+git commit -m "Add user authentication feature
 
 - Implement login/logout endpoints
-- Add password hashing
+- Add password hashing with bcrypt
 - Create user session management"
 
-# エディタでメッセージを書く
+# エディタを開いてメッセージを書く場合（-m を省略する）
 git commit
-# → 設定したエディタが開く
 
-# add + commit を同時に（追跡済みファイルのみ）
+# 追跡済みファイルの変更をaddとcommitを同時に行う（新規ファイルは対象外）
 git commit -am "Fix typo in README"
 ```
 
-### 良いコミットメッセージの書き方
+`git commit` を `-m` オプションなしで実行すると、第2章で設定したエディタ（VS Codeやvimなど）が開きます。長いコミットメッセージを書く場合や、フォーマットを丁寧に整えたい場合はこの方法が適しています。
 
-**基本ルール:**
-- 1行目: 50文字以内の要約
-- 2行目: 空行
-- 3行目以降: 詳細な説明（必要な場合）
+### コミットメッセージの書き方の哲学
 
-**慣例的なプレフィックス:**
+コミットメッセージは、「未来の自分」や「チームメンバー」に向けた手紙のようなものです。3か月後にバグが見つかったとき、コミット履歴をたどって原因を探ることがあります。そのとき、`"fix"` や `"update"` としか書かれていないコミットが並んでいたら、原因調査は非常に困難になります。
+
+良いコミットメッセージには、以下のルールがあります。
+
+**構造のルール:**
+- **1行目（タイトル行）**: 50文字以内で変更の要約を書く。命令形（「Add...」「Fix...」「Update...」）で始める
+- **2行目**: 空行にする（タイトルと本文を区切るため）
+- **3行目以降（本文）**: 必要に応じて詳細な説明を書く。「なぜ」この変更が必要なのかを記述する
+
+```
+feat: Add dark mode support for the dashboard
+
+The dashboard was difficult to use in low-light environments.
+This commit adds a toggle switch in the header that switches
+between light and dark themes using CSS custom properties.
+```
+
+### Conventional Commits
+
+チーム開発では、コミットメッセージの書き方を統一するために**Conventional Commits**という規約がよく使われます。これは、コミットメッセージの先頭に「タイプ」を示すプレフィックスを付ける方式です。
 
 | プレフィックス | 用途 | 例 |
 |-------------|------|-----|
-| `feat:` | 新機能 | `feat: Add dark mode support` |
-| `fix:` | バグ修正 | `fix: Resolve login timeout issue` |
-| `docs:` | ドキュメント | `docs: Update API reference` |
-| `style:` | コードスタイル | `style: Format with prettier` |
-| `refactor:` | リファクタリング | `refactor: Extract helper functions` |
-| `test:` | テスト | `test: Add unit tests for auth` |
-| `chore:` | 雑務 | `chore: Update dependencies` |
+| `feat:` | 新しい機能の追加 | `feat: Add dark mode support` |
+| `fix:` | バグの修正 | `fix: Resolve login timeout issue` |
+| `docs:` | ドキュメントのみの変更 | `docs: Update API reference` |
+| `style:` | コードの意味に影響しない変更（書式、セミコロンなど） | `style: Format with prettier` |
+| `refactor:` | バグ修正でも機能追加でもないコードの変更 | `refactor: Extract helper functions` |
+| `test:` | テストの追加・修正 | `test: Add unit tests for auth` |
+| `chore:` | ビルドプロセスやツールの変更 | `chore: Update dependencies` |
+| `perf:` | パフォーマンスの改善 | `perf: Optimize database queries` |
+| `ci:` | CI/CD設定の変更 | `ci: Add GitHub Actions workflow` |
+
+Conventional Commitsを採用すると、コミットの種類が一目で分かるだけでなく、コミット履歴から自動的にCHANGELOGを生成するツールとの連携も可能になります。
 
 ```bash
 # 良い例
 git commit -m "fix: Prevent crash when user input is empty"
+git commit -m "feat: Add CSV export for report page"
+git commit -m "docs: Add contributing guidelines"
 
-# 悪い例
+# 悪い例（何をしたかわからない）
 git commit -m "fix"
 git commit -m "update"
+git commit -m "WIP"
 git commit -m "asdfgh"
 ```
 
-### コミットの修正
+### --amend：直前のコミットを修正する
+
+コミットした直後に、タイプミスに気づいたり、ファイルを追加し忘れたりすることがあります。そのような場合に `--amend` オプションを使うと、直前のコミットを修正できます。
 
 ```bash
-# 直前のコミットメッセージを修正
-git commit --amend -m "新しいメッセージ"
+# 直前のコミットメッセージだけを修正する
+git commit --amend -m "fix: Correct the validation logic for email input"
 
-# 直前のコミットにファイルを追加
+# ファイルを追加し忘れた場合、追加してから amend する
 git add forgotten-file.py
-git commit --amend --no-edit
+git commit --amend --no-edit   # --no-edit でメッセージはそのまま
 ```
 
-> ⚠️ `--amend` はpush済みのコミットには使わないこと（履歴が変わるため）
+> **重要な注意**: `--amend` はコミットの内容を書き換えます。つまり、既にプッシュ済みのコミットを `--amend` で修正すると、ローカルとリモートの履歴が食い違い、トラブルの原因になります。**`--amend` はまだプッシュしていないコミットにのみ使う**、というルールを必ず守ってください。
 
-## git push — プッシュ
+---
 
-ローカルのコミットをリモート（GitHub）に送信する。
+## 6.6　git push — ローカルの記録をGitHubに送信する
+
+`git commit` で変更をローカルリポジトリに記録した後、その記録をGitHub（リモートリポジトリ）に送信するのが `git push` です。プッシュするまで、あなたのコミットは他のチームメンバーには見えません。
+
+### 基本的な使い方
 
 ```bash
-# 基本のプッシュ
+# 基本のプッシュ（上流ブランチが設定済みの場合）
 git push
 
-# 初回プッシュ（上流ブランチを設定）
+# 初回プッシュ時（上流ブランチを設定する）
 git push -u origin main
-# -u: 次回から git push だけで OK になる
-
-# 特定のブランチをプッシュ
-git push origin feature-branch
 ```
 
-### プッシュできない場合
+### -uオプション（--set-upstream）の意味
+
+初めてブランチをプッシュするとき、Gitは「ローカルのこのブランチは、リモートのどのブランチに対応するのか？」を知りません。`-u`（`--set-upstream`の省略形）オプションを付けることで、ローカルブランチとリモートブランチの対応関係（上流ブランチ、upstream branch）を設定します。
 
 ```bash
-# リモートに新しいコミットがある場合
-git push
-# → error: failed to push some refs
+# 初回: -u でローカルのmainとリモートのmainを関連付ける
+git push -u origin main
 
-# 解決: まずpullしてからpush
-git pull
+# 2回目以降: -u は不要。git push だけでOK
 git push
 ```
 
-## git pull — プル
+この設定は一度行えばリポジトリに記録されるため、同じブランチで2回目以降は `git push` だけで十分です。
 
-リモートの変更をローカルに取り込む。
+### プッシュできない場合の対処
+
+チーム開発では、あなたが作業している間に他のメンバーがリモートにプッシュしていることがあります。この場合、あなたの `git push` は拒否されます。
 
 ```bash
-# 基本のプル
+git push
+# → ! [rejected]        main -> main (fetch first)
+# → error: failed to push some refs to 'github.com:username/repo.git'
+```
+
+このエラーは「リモートにあなたが持っていない新しいコミットがあるので、まず取り込んでください」という意味です。対処方法は次のとおりです。
+
+```bash
+# まずリモートの変更を取り込む
 git pull
 
-# 特定のブランチからプル
+# コンフリクト（競合）が発生した場合は解決する（第8章で詳しく解説）
+
+# その後、改めてプッシュする
+git push
+```
+
+このように、Gitは「リモートの変更を無視して上書きする」ことを防ぐ安全機構を持っています。
+
+---
+
+## 6.7　git pull — GitHubの変更をローカルに取り込む
+
+`git pull` は、リモートリポジトリ（GitHub）にある最新の変更をローカルに取り込むコマンドです。チーム開発では、作業を始める前に `git pull` を実行して最新の状態にするのが良い習慣です。
+
+### 基本的な使い方
+
+```bash
+# 基本のプル（上流ブランチから取り込む）
+git pull
+
+# 特定のリモート・ブランチを指定する
 git pull origin main
 
-# rebaseでプル（履歴がきれいになる）
+# リベースモードでプルする（履歴がきれいになる）
 git pull --rebase
 ```
 
 ### pull = fetch + merge
 
-```bash
-# pullを分解すると...
-git fetch          # リモートの情報を取得（ローカルは変更されない）
-git merge origin/main  # 取得した変更をマージ
+`git pull` は実際には2つのコマンドを連続して実行しています。まず `git fetch` でリモートの最新情報をダウンロードし、次に `git merge` でダウンロードした変更をローカルブランチに統合します。
 
-# fetchだけしたい場合（安全に確認したいとき）
-git fetch
-git log HEAD..origin/main  # リモートの新しいコミットを確認
-git merge origin/main      # 問題なければマージ
+```bash
+# git pull は以下の2つのコマンドと同じ動作をする
+git fetch           # リモートの最新情報をダウンロード（ローカルのファイルは変わらない）
+git merge origin/main  # ダウンロードした変更をマージする
 ```
 
-## git log — 履歴の確認
+### fetchだけを使う理由
+
+`git fetch` を単独で使う場面もあります。`fetch` はリモートの情報をダウンロードするだけで、ローカルのファイルには一切手を加えません。これにより、「リモートでどのような変更があったのか」を安全に確認してから、マージするかどうかを判断できます。
 
 ```bash
-# 基本のログ
-git log
+# リモートの最新情報を取得する（ローカルのファイルは変更されない）
+git fetch
 
-# 1行表示
+# リモートにある自分が持っていないコミットを確認する
+git log HEAD..origin/main --oneline
+
+# 内容を確認して問題なければマージする
+git merge origin/main
+```
+
+この方法は、大きな変更がリモートにプッシュされている可能性があるとき、いきなりマージして自分の作業が壊れるのを避けたい場合に有用です。「まず偵察してから行動する」というアプローチです。
+
+---
+
+## 6.8　git log — 履歴を確認する
+
+`git log` は、リポジトリのコミット履歴を表示するコマンドです。過去にどのような変更が、誰によって、いつ行われたのかを確認できます。
+
+### 基本的な使い方と各オプション
+
+```bash
+# 基本のログ表示（新しいコミットから順に表示される）
+git log
+```
+
+基本の `git log` を実行すると、各コミットについてハッシュ値、著者、日時、コミットメッセージが表示されます。`q` キーを押すと表示を終了できます。
+
+```bash
+# 1行表示（ハッシュの短縮形 + コミットメッセージだけを表示）
 git log --oneline
 
-# グラフ表示
+# 出力例:
+# a1b2c3d feat: Add dark mode support
+# d4e5f6g fix: Resolve login timeout issue
+# k0l1m2n Initial commit
+```
+
+`--oneline` はコミット全体を俯瞰するのに便利です。ハッシュ値は先頭7文字に短縮されますが、通常はこれでコミットを一意に特定できます。
+
+```bash
+# グラフ表示（ブランチの分岐・合流を視覚的に表示）
 git log --oneline --graph --all
 
-# 最新5件だけ
+# 出力例:
+# * a1b2c3d (HEAD -> main, origin/main) feat: Add dark mode
+# * d4e5f6g fix: Resolve login issue
+# | * h7i8j9k (feature/api) feat: Add REST API
+# |/
+# * k0l1m2n Initial commit
+```
+
+`--graph` はブランチの分岐と合流をASCIIアートで描画します。`--all` はすべてのブランチを表示します（省略すると現在のブランチのみ）。
+
+```bash
+# 最新の5件だけ表示する
 git log -5
 
-# 特定ファイルの履歴
+# 特定ファイルに関するコミットだけを表示する
 git log -- README.md
 
-# 変更内容も表示
+# 変更内容（diff）も一緒に表示する
 git log -p
 
-# 統計情報付き
+# ファイルごとの変更行数の統計を表示する
 git log --stat
 
-# 著者で絞り込み
+# 特定の著者のコミットだけを表示する
 git log --author="username"
 
-# 日付で絞り込み
+# 日付で絞り込む
 git log --since="2024-01-01" --until="2024-06-30"
 
-# メッセージで検索
+# コミットメッセージにキーワードを含むものを検索する
 git log --grep="fix"
 ```
 
-### きれいなログ表示（エイリアス設定推奨）
+### きれいなログ表示のエイリアス
+
+日常的に使うログ表示コマンドは長くなりがちです。Gitのエイリアス機能を使って、短いコマンドで呼び出せるように設定しておくと便利です。
 
 ```bash
-git log --oneline --graph --decorate --all
+# エイリアスを設定する
+git config --global alias.lg "log --oneline --graph --decorate --all"
+
+# 設定後は以下のように使える
+git lg
 ```
 
-```
-* a1b2c3d (HEAD -> main, origin/main) feat: Add dark mode
-* d4e5f6g fix: Resolve login issue
-| * h7i8j9k (feature/api) feat: Add REST API
-|/
-* k0l1m2n Initial commit
-```
+`--decorate` オプションは、ブランチ名やタグ名をコミットの横に表示します。先ほどの出力例で `(HEAD -> main, origin/main)` のように表示されていたのが、このオプションの効果です。
 
-## git diff — 差分の確認
+---
+
+## 6.9　git diff — 差分を確認する
+
+`git diff` は、ファイルの変更内容を詳細に確認するコマンドです。「何が変わったのか」を正確に把握するために使います。コミットやプッシュの前に差分を確認する習慣をつけると、意図しない変更を混入させるリスクを減らせます。
+
+### 4つの差分比較パターン
+
+`git diff` は、比較するエリアの組み合わせによって表示される内容が変わります。
+
+**パターン1: ワーキングディレクトリとステージングエリアの差分（未ステージの変更）**
 
 ```bash
-# ワーキングディレクトリの変更（未ステージ）
 git diff
+```
 
-# ステージ済みの変更
+まだ `git add` していない変更を表示します。最も基本的な使い方です。
+
+**パターン2: ステージングエリアとリポジトリの差分（ステージ済みの変更）**
+
+```bash
 git diff --staged
+# または
+git diff --cached   # --staged と同じ意味
+```
 
-# 特定ファイルの差分
-git diff README.md
+`git add` してステージングしたが、まだコミットしていない変更を表示します。「次のコミットに含まれる内容」を確認するのに使います。
 
-# コミット間の差分
+**パターン3: コミット間の差分**
+
+```bash
+# 2つのコミット間の差分を表示する
 git diff abc1234..def5678
 
-# ブランチ間の差分
-git diff main..feature-branch
-
-# 変更されたファイル名のみ
-git diff --name-only
-
-# 統計のみ
-git diff --stat
+# 直前のコミットと現在の差分
+git diff HEAD~1..HEAD
 ```
 
-## ファイルの操作
+特定のコミット間で何が変わったかを確認するときに使います。
 
-### ファイルの移動/名前変更
+**パターン4: ブランチ間の差分**
 
 ```bash
-# Git管理下でファイル名を変更
+# 2つのブランチの差分を表示する
+git diff main..feature-branch
+```
+
+プルリクエストを作成する前に、mainブランチとの差分を確認するのに使えます。
+
+### 便利なオプション
+
+```bash
+# 特定ファイルの差分だけを表示する
+git diff README.md
+
+# 変更されたファイルの名前だけを一覧表示する（内容は表示しない）
+git diff --name-only
+
+# ファイルごとの変更行数の統計だけを表示する
+git diff --stat
+
+# 単語単位で差分を表示する（行全体ではなく変更箇所だけをハイライト）
+git diff --word-diff
+```
+
+`--name-only` と `--stat` は、大量のファイルが変更されている場合に全体像を把握するのに便利です。まず `--stat` で概要を確認し、気になるファイルだけ `git diff ファイル名` で詳細を見る、という使い方がおすすめです。
+
+---
+
+## 6.10　ファイルの移動・削除・変更取り消し
+
+日常の開発では、ファイルの名前を変えたり、不要になったファイルを削除したり、編集内容を元に戻したりすることがあります。これらの操作にもGit専用のコマンドがあります。
+
+### ファイルの移動・名前変更（git mv）
+
+```bash
+# ファイル名を変更する
 git mv old-name.py new-name.py
 
-# ディレクトリの移動
+# ファイルを別のディレクトリに移動する
 git mv src/utils.py lib/utils.py
 ```
 
-### ファイルの削除
+`git mv` を使わず、OSのファイルマネージャやコマンド（`mv`）で名前を変えても動作しますが、Gitはそれを「旧ファイルの削除 + 新ファイルの追加」として認識します。`git mv` を使うと、Gitが「名前変更」として正しく追跡してくれます。
+
+### ファイルの削除（git rm）
 
 ```bash
-# Gitの追跡とファイル自体を削除
+# Gitの追跡からもディスクからも削除する
 git rm unnecessary-file.py
 
-# Gitの追跡だけ解除（ファイルは残す）
+# Gitの追跡だけ解除し、ディスク上にはファイルを残す
 git rm --cached secret.env
 ```
 
+`git rm --cached` は、第5章の `.gitignore` の節で解説した「既に追跡されたファイルを無視する」場面で特に重要です。
+
 ### 変更の取り消し
 
+ファイルを編集したが、やっぱり元に戻したい、という場面は頻繁にあります。`git restore` コマンドで元に戻すことができます。
+
 ```bash
-# ファイルの変更を元に戻す（未ステージの変更）
+# ファイルの変更を元に戻す（ワーキングディレクトリの変更を取り消す）
 git restore README.md
 
 # 全ファイルの変更を元に戻す
 git restore .
 
-# ステージを解除（変更は保持）
+# ステージングを取り消す（変更自体はワーキングディレクトリに残る）
 git restore --staged README.md
 ```
 
-## 実践: 一連の流れ
+> **注意**: `git restore` で元に戻した変更は、コミットされていない限り復元できません。本当に不要な変更かどうかを確認してから実行してください。
+
+---
+
+## 6.11　実践：一連の開発フローを体験する
+
+ここまで学んだコマンドを使って、実際の開発フローを一通り体験してみましょう。新しいリポジトリを作成するところから、ファイルを編集してコミット・プッシュするまでの流れをステップバイステップで進めます。
 
 ```bash
-# 1. リポジトリをクローン
+# ステップ1: リポジトリをクローンする
 git clone git@github.com:username/my-project.git
 cd my-project
 
-# 2. ブランチを作成して切り替え
-git checkout -b feature/add-login
-
-# 3. ファイルを編集（エディタで作業）
-code src/auth.py
-
-# 4. 状態確認
+# ステップ2: 現在の状態を確認する
 git status
+# → "nothing to commit, working tree clean" と表示されるはず
 
-# 5. 変更をステージ
+# ステップ3: 新しいブランチを作成して切り替える（詳しくは第7章）
+git switch -c feature/add-login
+
+# ステップ4: ファイルを編集する（エディタで自由に作業）
+# ここでは src/auth.py を新規作成したとします
+
+# ステップ5: 状態を確認する
+git status
+# → Untracked files: に src/auth.py が表示される
+
+# ステップ6: 差分を確認する（新規ファイルの場合は内容全体が差分として表示）
+git diff
+
+# ステップ7: ファイルをステージングする
 git add src/auth.py
 
-# 6. コミット
+# ステップ8: ステージングされた内容を確認する
+git diff --staged
+
+# ステップ9: コミットする
 git commit -m "feat: Add login functionality"
 
-# 7. さらに作業してコミット...
+# ステップ10: さらに作業を続けてコミットする
+# ... テンプレートファイルを編集 ...
 git add src/templates/login.html
 git commit -m "feat: Add login page template"
 
-# 8. プッシュ
+# ステップ11: 履歴を確認する
+git log --oneline
+# → 2つのコミットが表示される
+
+# ステップ12: GitHubにプッシュする
 git push -u origin feature/add-login
 
-# 9. GitHubでプルリクエストを作成
-gh pr create --title "Add login feature" --body "Login機能を追加"
+# ステップ13: GitHubでプルリクエストを作成する（第10章で詳しく解説）
+gh pr create --title "feat: Add login feature" --body "Login機能を追加"
 ```
 
-## 次のステップ
+この流れが、日常的な開発作業の基本パターンです。慣れてくると、`status` → `add` → `commit` → `push` のサイクルが自然に身についてきます。最初のうちは、各ステップの間に `git status` を挟んで状態を確認する習慣をつけると、Gitの動作への理解が深まります。
 
-→ [07. ブランチ操作](07-branches.md) でブランチを使いこなそう
+---
+
+## 6.12　まとめ
+
+この章では、Gitの日常的なワークフローの中核となるコマンド群を学びました。
+
+- **3つのエリア**: ワーキングディレクトリ → ステージングエリア → ローカルリポジトリという3段階の構造が、Gitの柔軟性の源泉である
+- **git status**: 作業中に最も頻繁に使うコマンド。現在の状態を把握する習慣をつけよう
+- **git add**: コミットに含める変更を選択する。`-p` オプションでファイル内の一部だけをステージングすることもできる
+- **git commit**: 変更を履歴に確定する。コミットメッセージは「未来の自分への手紙」として丁寧に書こう。Conventional Commitsの規約が広く使われている
+- **git push**: ローカルの記録をGitHubに送信する。初回は `-u` で上流ブランチを設定する
+- **git pull**: GitHubの変更を取り込む。内部的にはfetch + mergeの2段階で動作する。安全を期すなら `fetch` だけで偵察してからマージするとよい
+- **git log**: 履歴を確認する。`--oneline --graph --all` の組み合わせが特に便利
+- **git diff**: 差分を確認する。ステージ前・ステージ後・コミット間・ブランチ間の4パターンを使い分ける
+
+次の章では、チーム開発に不可欠な「ブランチ」の概念と操作を学びます。ブランチを使いこなすことで、複数の機能を同時に、安全に開発できるようになります。
+
+→ [第7章　ブランチ — 並行開発の技法](07-branches.md)

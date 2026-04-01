@@ -1,211 +1,338 @@
-# 19. ファイルの扱い方 — Raw URL, 画像, LFS, サブモジュール
+# 第19章　ファイルの扱い方 --- Raw URL・画像・LFS
 
-## GitHub上のファイル表示
+## 19.1 この章で学ぶこと
 
-### ファイルのURL構造
+GitHubは単なる「コードの保管庫」ではありません。リポジトリの中にあるファイルは、それぞれ固有のURLを持ち、特定の行を指し示したり、過去のある時点のスナップショットを永久に参照したりできます。さらに、画像や大容量ファイルの管理、別のリポジトリを取り込むサブモジュールなど、ファイルにまつわるさまざまな仕組みが用意されています。
+
+この章では以下のことを学びます。
+
+- GitHub上のファイルURLの構造と、blob・tree・raw・blame・commitsの違い
+- 特定の行へのリンクと、パーマリンク（永続リンク）の作り方
+- Raw URLを使った生データの取得と、プログラムからの読み込み
+- 画像をリポジトリに保存・表示する方法
+- Git LFS（Large File Storage）で大容量ファイルを効率的に管理する方法
+- サブモジュールでリポジトリの中に別のリポジトリを含める方法
+- GitHub上でのファイル操作と便利なキーボードショートカット
+
+---
+
+## 19.2 GitHub上のファイルURL構造 --- blob/tree/raw/blame/commitsの違いを詳しく
+
+GitHub上でファイルやフォルダを閲覧するとき、ブラウザのアドレスバーに表示されるURLには一定の規則があります。この規則を理解しておくと、他の人にファイルの場所を伝えたり、自動化スクリプトからファイルを取得したりする際に非常に役立ちます。
+
+GitHubのファイルURLは、以下の構造になっています。
 
 ```
-https://github.com/{owner}/{repo}/blob/{branch}/{path}
-                                  ^^^^
-                                  blob = ファイル表示
+https://github.com/{owner}/{repo}/{表示モード}/{ブランチまたはコミット}/{ファイルパス}
 ```
 
-| URL要素 | 意味 | 例 |
-|---------|------|-----|
-| `blob` | ファイルの中身を表示 | `/blob/main/README.md` |
-| `tree` | ディレクトリを表示 | `/tree/main/src/` |
-| `raw` | ファイルの生データ | `/raw/main/data.csv` |
-| `blame` | 各行の変更者を表示 | `/blame/main/app.py` |
-| `commits` | ファイルのコミット履歴 | `/commits/main/app.py` |
+ここで「表示モード」にあたる部分が、ファイルをどのような形で見るかを決定します。主な表示モードは5つあります。
 
-### 特定の行へのリンク
+| 表示モード | 意味 | URLの例 |
+|-----------|------|---------|
+| `blob` | ファイルの中身をシンタックスハイライト付きで表示 | `/blob/main/src/app.py` |
+| `tree` | ディレクトリの中身（ファイル一覧）を表示 | `/tree/main/src/` |
+| `raw` | ファイルの生データをそのまま返す（HTMLの装飾なし） | `/raw/main/data.csv` |
+| `blame` | ファイルの各行を「誰がいつ変更したか」と共に表示 | `/blame/main/app.py` |
+| `commits` | そのファイルに関するコミット履歴だけを表示 | `/commits/main/app.py` |
 
-ファイル表示画面で行番号をクリック → URLに `#L42` が追加される。
+<!-- screenshot: blob表示とtree表示の比較 -->
+
+**blob** は最もよく使う表示モードです。リポジトリのファイル一覧からファイル名をクリックしたとき、自動的にこのモードで開かれます。コードにはシンタックスハイライトが適用され、行番号も表示されるため、読みやすい形で内容を確認できます。
+
+**tree** はディレクトリを表示するモードです。リポジトリのトップページや、フォルダ名をクリックしたときに使われます。blob がファイル単体を表示するのに対し、tree はフォルダの中身の一覧を表示します。この名前はGitの内部データ構造に由来しています。Gitでは、ディレクトリを「tree オブジェクト」、ファイルを「blob オブジェクト」として管理しているのです。
+
+**raw** はファイルの生データをそのまま返します。HTMLの装飾やヘッダー・フッターは一切なく、ファイルの中身だけが返されます。このモードは次のセクションで詳しく扱います。
+
+**blame** は「git blame」コマンドのWeb版です。ファイルの各行について、「その行を最後に変更したのは誰か」「どのコミットで変更されたか」を表示します。バグの原因を追跡するときや、ある行がなぜそのように書かれているかを調べるときに重宝します。「blame（非難する）」という名前が少し物騒ですが、実際には「責任の所在を明らかにする」という意味合いで使われています。
+
+**commits** はそのファイルに関係するコミットだけを時系列で表示します。リポジトリ全体のコミット履歴ではなく、特定のファイルがどのように変遷してきたかを追跡できるので、ファイルの変更履歴を調べるときに便利です。
+
+---
+
+## 19.3 特定行へのリンクとパーマリンク
+
+### 行番号リンク
+
+コードレビューやIssueの議論で「このファイルの42行目を見てほしい」と伝えたいことがあります。そんなとき、GitHub上のファイル表示画面で行番号をクリックすると、URLの末尾に `#L42` が追加され、その行がハイライトされます。
 
 ```
 # 42行目へのリンク
 https://github.com/owner/repo/blob/main/src/app.py#L42
 
-# 42行目〜50行目のハイライト
+# 42行目から50行目までの範囲をハイライト
 https://github.com/owner/repo/blob/main/src/app.py#L42-L50
 ```
 
-> PRやIssueでコードを参照する時に便利。
+範囲指定は、最初の行番号をクリックした後、Shiftキーを押しながら最後の行番号をクリックすることで設定できます。このURLをコピーしてIssueやPRのコメントに貼り付ければ、他のメンバーに正確な場所を伝えることができます。
 
-### パーマリンク（永続リンク）
+<!-- screenshot: 行番号をクリックしてハイライトされた状態 -->
 
-ブランチ指定のURLはファイルが変更されると内容が変わる。特定コミットのURLなら永続的：
+### パーマリンク --- なぜ永続リンクが重要なのか
+
+ここで一つ、重要な注意点があります。ブランチ名を含むURL（例えば `/blob/main/src/app.py#L42`）は、ブランチの先端を指しています。つまり、誰かがそのファイルを編集してコミットすると、同じURLで表示される内容が変わってしまいます。42行目にあったコードが別の行に移動したり、まったく別の内容になっていたりする可能性があるのです。
+
+これは、本の「最新版の42ページ」を参照するようなものです。改訂されれば42ページの内容は変わります。一方、「初版第3刷の42ページ」と言えば、いつ誰が参照しても同じ内容を指します。
+
+Gitの世界では、この「初版第3刷」にあたるのがコミットハッシュです。コミットハッシュを含むURLは**パーマリンク（永続リンク）**と呼ばれ、未来永劫同じ内容を指し続けます。
 
 ```
 # ブランチ指定（内容が変わりうる）
-https://github.com/owner/repo/blob/main/app.py
+https://github.com/owner/repo/blob/main/src/app.py#L42
 
-# コミットハッシュ指定（永続リンク）
-https://github.com/owner/repo/blob/abc1234/app.py
+# コミットハッシュ指定（パーマリンク --- 永久に同じ内容）
+https://github.com/owner/repo/blob/a1b2c3d4e5f6/src/app.py#L42
 ```
 
-ファイル表示画面で `y` キーを押すとパーマリンクに変換される。
+パーマリンクを手動で作るのは面倒ですが、GitHubには便利なショートカットがあります。ファイル表示画面で **`y`キー** を押すと、URLのブランチ名部分がその時点のコミットハッシュに自動的に置き換えられます。これだけでパーマリンクの完成です。
 
-## Raw URL（生データ）
+IssueやPRのコメント、ドキュメント、ブログ記事などでコードの特定箇所を参照するときは、必ずパーマリンクを使いましょう。ブランチ名を含むURLを貼ると、半年後にリンクをクリックした人が見る内容が、あなたが意図したものとまったく違っている可能性があります。
 
-ファイルの「生の内容」を直接取得するURL。
+---
+
+## 19.4 Raw URL --- 生データの取得
+
+### Raw URLとは
+
+GitHubの通常のファイル表示（blob）は、HTMLページの中にコードが埋め込まれた形で表示されます。人間が読むには見やすいですが、プログラムからファイルの中身を取得したい場合には不便です。そこで登場するのが**Raw URL**です。
+
+Raw URLはファイルの中身だけをそのまま返します。HTMLの装飾は一切ありません。CSVファイルならCSVデータそのもの、Pythonスクリプトならソースコードそのものが返されます。
+
+Raw URLのドメインは `raw.githubusercontent.com` であり、通常のGitHubのURLとは異なります。
 
 ```
-# 通常の表示URL
+# 通常の表示URL（HTMLページとして表示される）
 https://github.com/owner/repo/blob/main/data.csv
 
-# Raw URL（生データ）
+# Raw URL（ファイルの中身だけが返される）
 https://raw.githubusercontent.com/owner/repo/main/data.csv
 ```
 
-### Rawの使い道
+### curlでのダウンロード
+
+Raw URLを使えば、コマンドラインからファイルを直接ダウンロードできます。
 
 ```bash
-# スクリプトを直接ダウンロード・実行
+# ファイルをダウンロード
 curl -O https://raw.githubusercontent.com/owner/repo/main/install.sh
 
-# .gitignore テンプレートをダウンロード
+# .gitignoreテンプレートをダウンロード
 curl -o .gitignore https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore
 
-# CSVデータを直接読み込み（Python）
-import pandas as pd
-df = pd.read_csv("https://raw.githubusercontent.com/owner/repo/main/data.csv")
+# シェルスクリプトを直接ダウンロードして実行（信頼できるソースに限る）
+curl -fsSL https://raw.githubusercontent.com/owner/repo/main/setup.sh | bash
 ```
 
-## 画像の保存と表示
+最後の例（ダウンロードして即実行）は便利ですが、信頼できるソースからのスクリプトに限って使うようにしてください。内容を確認せずに実行するのはセキュリティ上のリスクがあります。
 
-### 方法1: リポジトリに画像を保存
+### プログラムからの読み込み
+
+Raw URLはプログラムから直接データを読み込むのにも使えます。例えば、Pythonのpandasライブラリでは、URLを直接指定してCSVファイルを読み込めます。
+
+```python
+import pandas as pd
+
+# GitHubに置いたCSVデータを直接読み込む
+url = "https://raw.githubusercontent.com/owner/repo/main/data.csv"
+df = pd.read_csv(url)
+print(df.head())
+```
+
+この方法は、データ分析のチュートリアルやサンプルコードでよく使われます。読者がデータをダウンロードする手間なく、コードをそのまま実行できるからです。ただし、大量のデータを繰り返し取得する場合は、ローカルにダウンロードしてから読み込む方が効率的です。
+
+---
+
+## 19.5 画像の保存と表示
+
+GitHubのREADMEやドキュメントに画像を表示する方法は、主に2つあります。それぞれに利点と欠点があるので、用途に応じて使い分けましょう。
+
+### 方法1: リポジトリに画像ファイルを保存する
+
+最も正統派の方法は、リポジトリ内に画像ファイルを含めることです。プロジェクトの一部として画像をバージョン管理できるため、画像がなくなる心配がありません。
 
 ```
 my-repo/
 ├── docs/
-│   ├── images/         ← 画像フォルダ
+│   ├── images/         ← 画像用のフォルダを作る
 │   │   ├── screenshot1.png
-│   │   └── diagram.svg
+│   │   ├── architecture.svg
+│   │   └── demo.gif
 │   └── guide.md
 └── README.md
 ```
 
-Markdownでの参照：
+Markdownからは相対パスで参照します。
+
 ```markdown
-<!-- 相対パス（推奨） -->
+<!-- READMEから画像を参照する場合 -->
 ![スクリーンショット](docs/images/screenshot1.png)
 
-<!-- READMEからの相対パス -->
-![ダイアグラム](./docs/images/diagram.svg)
+<!-- docs/guide.md から同じフォルダの画像を参照する場合 -->
+![アーキテクチャ図](images/architecture.svg)
 ```
 
-### 方法2: Issueにドラッグ＆ドロップ
+SVG形式の画像はファイルサイズが小さく、拡大してもきれいに表示されるため、図やダイアグラムにはSVGがおすすめです。ただし、スクリーンショットのような写真的な画像にはPNGやJPEGが適しています。
 
-1. IssueやPRのコメント欄に画像をドラッグ＆ドロップ
-2. 自動的にGitHubのCDNにアップロードされる
-3. URLが生成される：`https://github.com/user-attachments/assets/...`
+この方法の注意点として、画像ファイルはバイナリデータであり、変更するたびにリポジトリのサイズが増えていくことがあります。大量の高解像度画像を含める場合は、後述するGit LFSの利用を検討してください。
 
-```markdown
-<!-- 生成されたURLを他の場所でも使える -->
-![screenshot](https://github.com/user-attachments/assets/xxxxx)
+### 方法2: IssueにドラッグアンドドロップしてCDNを利用する
+
+もう一つの便利な方法は、GitHub自身のCDN（コンテンツ配信ネットワーク）を活用するやり方です。IssueやPull Requestのコメント欄に画像をドラッグアンドドロップすると、GitHubが自動的に画像をアップロードし、URLを生成してくれます。
+
+<!-- screenshot: Issueのコメント欄に画像をドラッグアンドドロップする操作 -->
+
+生成されるURLは以下のような形式です。
+
+```
+https://github.com/user-attachments/assets/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
-> この方法はリポジトリのサイズを増やさずに画像をホストできる。
-
-### 方法3: GitHub Wiki に保存
-
-WikiページにアップロードしてURLを取得。
-
-### 画像のサイズ指定
+このURLをREADMEや他のMarkdownファイルで使えば、リポジトリのサイズを増やさずに画像を表示できます。
 
 ```markdown
-<!-- HTMLタグでサイズ指定 -->
+![デモ画面](https://github.com/user-attachments/assets/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
+```
+
+ただし、この方法で生成されたURLがいつまで有効であるかはGitHubの裁量に依存します。長期的に重要な画像は、リポジトリに含める方法の方が確実です。
+
+### HTMLタグでのサイズ指定
+
+Markdownの画像記法（`![alt](url)`）ではサイズを指定できません。画像が大きすぎる場合は、HTMLの `<img>` タグを使ってサイズを制御しましょう。
+
+```html
+<!-- 幅を500ピクセルに指定（高さは自動調整） -->
 <img src="docs/images/screenshot.png" width="500">
 
-<!-- 幅と高さ -->
+<!-- 幅と高さを両方指定 -->
 <img src="docs/images/screenshot.png" width="400" height="300">
+
+<!-- 中央寄せにする場合 -->
+<p align="center">
+  <img src="docs/images/logo.png" width="200">
+</p>
 ```
 
-## Git LFS (Large File Storage)
+GitHubのMarkdownレンダラーはHTMLタグの一部をサポートしています。`<img>` タグは問題なく使えるので、サイズの調整が必要な場合は積極的に活用しましょう。
 
-大きなファイル（画像、動画、データセット、バイナリ）をGitで効率的に管理する仕組み。
+---
 
-通常のGitは全履歴を保持するため、大きなファイルがあるとリポジトリが肥大化する。LFSはファイルのポインタだけをGitに保存し、実体は別サーバーに保管する。
+## 19.6 Git LFS --- 大容量ファイルの管理
 
-### セットアップ
+### なぜ大きなファイルが問題になるのか
+
+Gitは本来、テキストファイル（ソースコード）を管理するために設計されたツールです。テキストファイルであれば、差分（diff）を効率的に計算・保存できるため、ファイルが何千回変更されてもリポジトリのサイズはそれほど大きくなりません。
+
+しかし、バイナリファイル（画像、動画、データセット、コンパイル済みバイナリなど）は事情が違います。Gitはバイナリファイルの差分を効率的に計算できないため、ファイルが変更されるたびにファイル全体のコピーが履歴に追加されます。例えば、100MBの画像ファイルを10回更新すると、リポジトリの履歴には約1GBのデータが蓄積されることになります。
+
+リポジトリが肥大化すると、`git clone` に時間がかかり、ディスク容量を圧迫し、チーム全体の生産性が低下します。GitHubにはリポジトリサイズの推奨上限（5GB程度）もあります。
+
+### LFSの仕組み --- ポインタファイル
+
+**Git LFS（Large File Storage）** はこの問題を解決するための拡張機能です。仕組みはシンプルです。大きなファイルの実体をリポジトリの外（LFS専用のストレージサーバー）に保管し、リポジトリには「ポインタ」だけを保存します。
+
+ポインタファイルは数百バイト程度の小さなテキストファイルで、以下のような内容です。
+
+```
+version https://git-lfs.github.com/spec/v1
+oid sha256:4cac19622fc3ada9c0fdeadb33f88f367b541f38b89de0ee093e6d0e2e13df38
+size 104857600
+```
+
+`git clone` するとポインタファイルだけがダウンロードされるため高速です。ファイルの実体は、実際に必要になったとき（チェックアウトやdiffの際）に自動的にLFSサーバーからダウンロードされます。
+
+### セットアップ手順
 
 ```bash
-# LFSのインストール
-brew install git-lfs    # macOS
-apt install git-lfs      # Ubuntu
+# 1. Git LFSのインストール
+brew install git-lfs      # macOS (Homebrew)
+apt install git-lfs        # Ubuntu/Debian
 
-# LFSの初期化（一度だけ）
+# 2. Git LFSの初期化（ユーザーごとに一度だけ実行）
 git lfs install
 
-# 追跡するファイルパターンを指定
-git lfs track "*.psd"
-git lfs track "*.zip"
-git lfs track "data/*.csv"
+# 3. 追跡するファイルパターンを指定
+git lfs track "*.psd"           # Photoshopファイル
+git lfs track "*.zip"           # ZIPアーカイブ
+git lfs track "*.mp4"           # 動画ファイル
+git lfs track "data/*.csv"      # dataフォルダ内のCSV
 
-# .gitattributes が自動生成される
+# 4. 自動生成された .gitattributes を確認
 cat .gitattributes
 # *.psd filter=lfs diff=lfs merge=lfs -text
 # *.zip filter=lfs diff=lfs merge=lfs -text
 
-# .gitattributes もコミット対象
+# 5. .gitattributes をコミット（これが重要！）
 git add .gitattributes
-git commit -m "Configure Git LFS"
+git commit -m "Configure Git LFS tracking"
 ```
 
-### 使い方
+`.gitattributes` ファイルは他のチームメンバーと共有されるため、必ずコミットしてください。これにより、リポジトリをクローンした全員が同じLFS設定を使えるようになります。
 
-LFS設定後は通常通り `git add`, `git commit`, `git push` するだけ。
+設定後は、通常通り `git add`、`git commit`、`git push` するだけです。LFSが追跡対象に指定されたファイルは、自動的にLFSストレージにアップロードされます。
 
 ```bash
-git add large-file.zip
-git commit -m "Add large dataset"
+git add large-dataset.zip
+git commit -m "Add training dataset"
 git push
 ```
 
 ### 容量制限
 
-| プラン | ストレージ | 帯域 |
-|--------|----------|------|
-| Free | 1 GB | 1 GB/月 |
-| Pro | 1 GB | 1 GB/月 |
-| 追加パック | $5/月で50GBストレージ + 50GB帯域 |
+GitHub上のLFSストレージには容量制限があります。
 
-## サブモジュール (Submodule)
+| プラン | ストレージ | 帯域幅（月あたり） |
+|--------|----------|-----------------|
+| Free | 1 GB | 1 GB |
+| Pro | 1 GB | 1 GB |
+| 追加データパック | +50 GB ストレージ / +50 GB 帯域（$5/月） |
 
-リポジトリの中に**別のリポジトリ**を含める仕組み。
+無料プランでも1GBまでは使えますが、それ以上のデータを扱う場合はデータパックの購入が必要です。大規模なデータセットを扱う研究プロジェクトなどでは、別のストレージサービス（S3やGCSなど）を併用することも検討しましょう。
+
+---
+
+## 19.7 サブモジュール --- リポジトリの中に別リポジトリを含める
+
+### サブモジュールとは
+
+開発を進めていると、「複数のプロジェクトで共通して使うライブラリ」を別リポジトリとして管理したい場面が出てきます。このとき、共通ライブラリのコードをコピーして各プロジェクトに含めると、更新の反映が面倒になります。かといって、パッケージマネージャー経由で配布するほど大げさなものでもない場合もあるでしょう。
+
+**サブモジュール（submodule）** は、あるリポジトリの中に別のリポジトリを「入れ子」にする仕組みです。親リポジトリは、子リポジトリの特定のコミットへの参照を保持します。
 
 ```
-my-project/
+my-project/            ← 親リポジトリ
 ├── src/
 ├── lib/
-│   └── shared-utils/    ← 別リポジトリ（サブモジュール）
-└── .gitmodules
+│   └── shared-utils/  ← サブモジュール（別リポジトリ）
+├── .gitmodules        ← サブモジュールの設定ファイル
+└── README.md
 ```
 
 ### サブモジュールの追加
 
 ```bash
-# サブモジュールを追加
+# サブモジュールを追加（lib/shared-utils/ に配置）
 git submodule add git@github.com:owner/shared-utils.git lib/shared-utils
 
-# .gitmodules が作成される
+# .gitmodules ファイルが自動的に作成される
 cat .gitmodules
 # [submodule "lib/shared-utils"]
 #     path = lib/shared-utils
 #     url = git@github.com:owner/shared-utils.git
 
-git commit -m "Add shared-utils submodule"
+# 設定をコミット
+git add .gitmodules lib/shared-utils
+git commit -m "Add shared-utils as submodule"
 ```
 
 ### サブモジュール付きリポジトリのクローン
 
+サブモジュールを含むリポジトリをクローンする際は、`--recursive` オプションを付ける必要があります。このオプションを忘れると、サブモジュールのディレクトリは空のままになります。
+
 ```bash
-# クローンと同時にサブモジュールを取得
+# クローンと同時にサブモジュールも取得（推奨）
 git clone --recursive git@github.com:owner/my-project.git
 
-# または後から
-git clone git@github.com:owner/my-project.git
+# すでにクローン済みの場合は、後からサブモジュールを取得
 cd my-project
 git submodule init
 git submodule update
@@ -213,35 +340,74 @@ git submodule update
 
 ### サブモジュールの更新
 
-```bash
-# サブモジュールを最新に更新
-git submodule update --remote
+サブモジュールの元リポジトリに新しいコミットが追加された場合、親リポジトリ側で明示的に更新する必要があります。
 
-# 全サブモジュールを更新
+```bash
+# サブモジュールを最新のコミットに更新
+cd lib/shared-utils
+git pull origin main
+cd ../..
+
+# 親リポジトリでサブモジュールの更新をコミット
+git add lib/shared-utils
+git commit -m "Update shared-utils submodule"
+
+# または、一括で全サブモジュールを更新
 git submodule update --remote --merge
 ```
 
-## GitHub上でのファイル操作
+サブモジュールは強力な仕組みですが、チームメンバーがサブモジュールの概念を理解していないと混乱の原因になることもあります。使用する際はREADMEにサブモジュールの存在と、`--recursive` でのクローンが必要である旨を記載しておくとよいでしょう。
 
-### ファイルの作成・編集
+---
 
-1. リポジトリページでフォルダを開く
-2. 「**Add file**」→「**Create new file**」
-3. ファイル名と内容を入力
-4. 「**Commit changes**」をクリック
+## 19.8 GitHub上でのファイル操作
 
-パスに `/` を含めると自動でフォルダが作成される:
-```
-docs/guide/getting-started.md
-```
+Gitコマンドやエディタを使わずに、GitHubのWeb画面上でもファイルの作成・編集ができます。ちょっとしたタイポの修正やドキュメントの更新には、Web上で直接編集する方が手軽です。
 
-<!-- screenshot: GitHub上でのファイル作成 -->
+### ファイルの作成
 
-### ファイルの検索
+1. リポジトリのページを開く
+2. 「**Add file**」ボタンをクリックし、「**Create new file**」を選択
+3. ファイル名の入力欄にパスを入力（スラッシュを含めるとフォルダが自動作成される）
+4. エディタにファイルの内容を入力
+5. 「**Commit changes**」をクリック
 
-- **`t`キー**: ファイル名でファジー検索
-- **`/`キー** または **`s`キー**: リポジトリ内検索
+<!-- screenshot: GitHub上でのファイル作成画面 -->
 
-## 次のステップ
+例えば、ファイル名の入力欄に `docs/guide/getting-started.md` と入力すると、`docs/guide/` というフォルダ構造が自動的に作成され、その中に `getting-started.md` が作られます。
 
-→ [20. READMEとドキュメント](20-readme-docs.md) でドキュメント作成を学ぼう
+### ファイルの編集
+
+既存のファイルを表示した状態で、鉛筆アイコン（Edit）をクリックすると、その場で編集できます。編集後は通常のコミットと同様に、コミットメッセージを入力して保存します。直接mainブランチにコミットすることも、新しいブランチを作ってPull Requestを開くこともできます。
+
+### キーボードショートカットによる検索
+
+GitHub上でファイルを探すとき、マウスでフォルダを一つずつ開いていくのは非効率です。以下のキーボードショートカットを覚えておくと、素早くファイルを見つけられます。
+
+| キー | 機能 |
+|------|------|
+| `t` | ファイルファインダーを開く（ファイル名のファジー検索） |
+| `s` または `/` | リポジトリ内の検索バーにフォーカス |
+
+**`t`キー**は特に便利です。リポジトリのどのページにいても `t` を押すと、ファイル名を部分一致で検索できるファインダーが開きます。例えば「conf」と入力すれば、`config.yml`、`.prettierrc.conf`、`settings/configuration.py` などが候補に表示されます。大規模なリポジトリでファイルを探すときに重宝するショートカットです。
+
+<!-- screenshot: tキーで開くファイルファインダー -->
+
+---
+
+## 19.9 まとめ
+
+この章では、GitHub上でのファイルの扱い方を幅広く学びました。
+
+- **URL構造**: blob（ファイル表示）、tree（ディレクトリ表示）、raw（生データ）、blame（行ごとの変更者）、commits（ファイルの変更履歴）の5つの表示モードがある
+- **行番号リンク**: `#L42` や `#L42-L50` で特定行を指し示せる
+- **パーマリンク**: `y` キーでブランチ指定URLをコミットハッシュ指定に変換でき、内容が変わらない永続リンクを作れる
+- **Raw URL**: `raw.githubusercontent.com` から生データを取得でき、curlやプログラムから直接読み込める
+- **画像**: リポジトリに保存する方法とIssueにD&DしてCDNを使う方法がある。HTMLの `<img>` タグでサイズ指定が可能
+- **Git LFS**: 大容量のバイナリファイルはポインタだけをGitに保存し、実体は別サーバーに保管する仕組み
+- **サブモジュール**: リポジトリの中に別リポジトリを入れ子にでき、`--recursive` オプションでクローンする
+- **Web上のファイル操作**: ブラウザ上でファイルの作成・編集ができ、`t` キーでファイルを素早く検索できる
+
+---
+
+次の章 → [第20章　READMEとドキュメント --- プロジェクトの顔を作る](20-readme-docs.md)

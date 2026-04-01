@@ -1,115 +1,239 @@
-# 12. GitHub Actions (CI/CD)
+# 第12章　GitHub Actions — 自動化で開発を加速する
 
-## GitHub Actionsとは
+## 12.1 この章で学ぶこと
 
-GitHubに組み込まれた**自動化ツール**。コードのpushやPR作成をトリガーに、テスト・ビルド・デプロイを自動実行できる。
+この章では、GitHubに組み込まれた自動化プラットフォームである**GitHub Actions**について学びます。具体的には、以下の内容を扱います。
+
+- CI/CD（継続的インテグレーション/継続的デリバリー）とは何か、なぜ必要なのか
+- GitHub Actionsを構成する基本用語（Workflow、Event、Job、Step、Action、Runner）
+- YAMLファイルによるワークフローの定義方法を1行ずつ理解する
+- トリガー（Event）の種類と使い分け
+- Python、Node.js、自動リリースなど実用的なワークフロー例
+- APIキーなどの秘密情報をワークフローで安全に扱う方法
+- 料金体系と無料枠の制限
+- ワークフローの実行結果の確認とデバッグ方法
+
+「コードを書いたら、あとは自動でテスト・ビルド・デプロイしてほしい」――この願いを実現するのがGitHub Actionsです。
+
+---
+
+## 12.2 CI/CDとは何か
+
+### 手動テストの限界
+
+ソフトウェア開発の初期段階では、コードを変更するたびに手動でテストを実行し、問題がなければ手動でサーバーにデプロイする、というワークフローでも何とかなります。しかし、プロジェクトが成長し、チームメンバーが増え、1日に何度もコードが変更されるようになると、手動での確認は現実的ではなくなります。
+
+たとえば、ある開発者がログイン機能を修正したとします。手動テストでは、ログイン機能自体が正しく動くかは確認できても、その変更が商品一覧ページや決済機能に影響を与えていないかまでは、なかなか確認しきれません。こうした「意図せず他の機能を壊してしまう」問題を**リグレッション（退行）**と呼びます。
+
+### Continuous Integration（継続的インテグレーション）
+
+**CI（Continuous Integration）**とは、開発者がコードを共有リポジトリに統合（push/merge）するたびに、自動でビルドとテストを実行する手法です。「継続的」という言葉がついているのは、これを一度だけでなく、コードが変更されるたびに繰り返し行うためです。
+
+CIを導入すると、以下のようなサイクルが自動的に回ります。
+
+1. 開発者がコードを変更してプッシュする
+2. CIシステムが自動的にテストを実行する
+3. テスト結果がPull Requestに表示される
+4. テストが通れば安心してマージできる。失敗すれば修正してから再挑戦する
+
+この仕組みがあることで、リグレッションを早期に発見でき、常にメインブランチが「動く状態」に保たれます。
+
+### Continuous Delivery / Deployment（継続的デリバリー/デプロイ）
+
+**CD**はCIの延長にある概念で、テストに通ったコードを自動で本番環境にデプロイ（公開）する仕組みです。Continuous Deliveryは「いつでもデプロイ可能な状態を保つ」こと、Continuous Deploymentは「テストが通ったら自動的にデプロイまで行う」ことを指します。
+
+GitHub Actionsは、このCI/CDの両方をGitHubの中で実現できるツールです。外部のCI/CDサービス（Jenkins、CircleCI、Travis CIなど）をわざわざ契約・設定する必要がなく、リポジトリの中にYAMLファイルを1つ置くだけで始められます。
+
+---
+
+## 12.3 GitHub Actionsの基本用語
+
+GitHub Actionsを理解するには、6つの基本用語を押さえる必要があります。これらは相互に関係しているので、全体像を把握しながら1つずつ見ていきましょう。
+
+### Workflow（ワークフロー）
+
+ワークフローは、自動化の全体を定義する**設計図**です。`.github/workflows/` ディレクトリに配置するYAMLファイル1つが、1つのワークフローに対応します。たとえば、テスト用のワークフロー（`ci.yml`）とデプロイ用のワークフロー（`deploy.yml`）を別々に作ることができます。
+
+### Event（イベント）
+
+ワークフローを起動する**トリガー**です。「コードがプッシュされたら」「Pull Requestが作成されたら」「毎日午前0時になったら」など、さまざまな条件を指定できます。1つのワークフローに複数のイベントを設定することも可能です。
+
+### Job（ジョブ）
+
+ワークフロー内で実行される**タスクの塊**です。1つのワークフローに複数のジョブを含めることができ、デフォルトでは各ジョブは**並列に**実行されます。ジョブ間に依存関係を設定すれば、「テストジョブが成功したらデプロイジョブを実行する」のように順序を制御できます。
+
+### Step（ステップ）
+
+ジョブ内の**個々の処理**です。ステップは上から順に逐次実行されます。各ステップでは、シェルコマンドを実行するか、既存のActionを呼び出すかのいずれかを行います。
+
+### Action（アクション）
+
+再利用可能な**処理の部品**です。GitHub Marketplaceには、コードのチェックアウト、言語のセットアップ、キャッシュの管理など、よく使う処理がActionとして公開されています。自分でゼロからスクリプトを書かなくても、`uses: actions/checkout@v4` のように参照するだけで利用できます。
+
+### Runner（ランナー）
+
+ワークフローを実際に実行する**サーバー（仮想マシン）**です。GitHubが提供するRunner（GitHub-hosted runner）には、Ubuntu、macOS、Windowsの3種類があります。`runs-on: ubuntu-latest` のように指定します。自分のサーバーをRunnerとして使う「self-hosted runner」を設定することも可能です。
+
+これらの関係を階層構造で整理すると、以下のようになります。
 
 ```
-開発者がpush → GitHub Actionsが起動 → テスト実行 → 結果をPRに表示
-                                      ↓
-                                 ビルド・デプロイ
-```
-
-## 基本概念
-
-| 用語 | 説明 |
-|------|------|
-| **Workflow** | 自動化の定義ファイル（`.github/workflows/` に配置） |
-| **Event** | ワークフローを起動するトリガー（push, PRなど） |
-| **Job** | ワークフロー内のタスクグループ |
-| **Step** | Job内の個々の処理 |
-| **Action** | 再利用可能な処理の単位 |
-| **Runner** | ワークフローを実行するサーバー |
-
-```
-Workflow (YAMLファイル)
-├── Event (トリガー: push, pull_request, schedule...)
-├── Job 1 (例: テスト)
-│   ├── Step 1: コードをチェックアウト
-│   ├── Step 2: 依存関係をインストール
-│   └── Step 3: テストを実行
-└── Job 2 (例: デプロイ)
+Workflow（YAMLファイル全体）
+├── Event（トリガー: push, pull_request, schedule...）
+├── Job 1（例: テスト）
+│   ├── Step 1: actions/checkout を使ってコードを取得
+│   ├── Step 2: actions/setup-python を使ってPythonをインストール
+│   ├── Step 3: pip install で依存関係をインストール（run コマンド）
+│   └── Step 4: pytest でテストを実行（run コマンド）
+└── Job 2（例: デプロイ ← Job 1に依存）
     ├── Step 1: ビルド
     └── Step 2: デプロイ
 ```
 
-## 最初のワークフロー
+---
 
-`.github/workflows/ci.yml` を作成：
+## 12.4 最初のワークフローを作ってみる
+
+ここでは、Pythonプロジェクトの簡単なCIワークフローを例に、YAMLファイルの各行が何を意味しているかを1つずつ解説します。
+
+まず、リポジトリのルートに `.github/workflows/` ディレクトリを作成し、その中に `ci.yml` というファイルを作成します。
 
 ```yaml
-name: CI  # ワークフロー名
+name: CI                          # (1) ワークフローの名前。Actions タブに表示される
 
-on:  # トリガー
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+on:                                # (2) トリガーの定義
+  push:                            #     コードがプッシュされた時
+    branches: [main]               #     main ブランチへのプッシュのみ対象
+  pull_request:                    #     PRが作成・更新された時
+    branches: [main]               #     main ブランチへのPRのみ対象
 
-jobs:  # ジョブ定義
-  test:  # ジョブ名
-    runs-on: ubuntu-latest  # 実行環境
+jobs:                              # (3) ジョブの定義
+  test:                            # (4) ジョブ名（任意の名前）
+    runs-on: ubuntu-latest         # (5) 実行環境（Ubuntu最新版のランナー）
 
-    steps:  # 処理ステップ
-      - name: Checkout code
-        uses: actions/checkout@v4  # 公式アクション
+    steps:                         # (6) ステップの定義
+      - name: Checkout code        # (7) ステップ名（ログに表示される）
+        uses: actions/checkout@v4  # (8) 公式Actionを使ってコードをチェックアウト
 
       - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+        uses: actions/setup-python@v5  # Pythonをインストールする公式Action
+        with:                          # Actionに渡すパラメータ
+          python-version: '3.12'       # Python 3.12を使用
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt  # (9) シェルコマンドを直接実行
 
       - name: Run tests
-        run: pytest
+        run: pytest                           # pytestでテストを実行
 ```
 
-## トリガー（Event）の種類
+それぞれのポイントを補足します。
 
-### よく使うトリガー
+**(1) `name`** — ワークフローの名前です。GitHub Actionsタブで一覧表示されるときに使われます。省略すると、ファイル名がそのまま表示されます。
+
+**(2) `on`** — 「いつこのワークフローを実行するか」を定義します。この例では、mainブランチへのpushと、mainブランチに対するPRが対象です。
+
+**(5) `runs-on`** — ジョブを実行するRunnerの種類です。`ubuntu-latest` を指定すると、GitHubが管理するUbuntuの最新LTS版が使われます。macOSが必要な場合は `macos-latest`、Windowsなら `windows-latest` を指定します。
+
+**(8) `uses`** — 既存のActionを利用する記法です。`actions/checkout@v4` は「GitHubの公式organizationが公開しているcheckoutアクションのv4」を意味します。`@v4` のようにバージョンを固定することで、Actionの更新による予期しない動作変更を防ぎます。
+
+**(9) `run`** — シェルコマンドを直接実行します。複数行のコマンドを書きたい場合は、パイプ記号 `|` を使います。
+
+```yaml
+      - name: Install and test
+        run: |
+          pip install -r requirements.txt
+          pytest --verbose
+```
+
+このファイルをリポジトリにプッシュするだけで、GitHub Actionsが自動的にワークフローを認識し、次回のpushやPR作成時にテストが実行されるようになります。
+
+<!-- screenshot: GitHub Actionsタブでワークフローの実行結果が表示されている状態。緑のチェックマークが付いたジョブ一覧 -->
+
+---
+
+## 12.5 トリガー（Event）の種類
+
+ワークフローをいつ実行するかを決めるのがトリガーです。用途に応じてさまざまなトリガーが用意されています。
+
+### push — コードがプッシュされた時
+
+最も基本的なトリガーです。ブランチやファイルパスで条件を絞り込めます。
 
 ```yaml
 on:
-  # プッシュ時
   push:
-    branches: [main, develop]
-    paths: ['src/**']  # 特定パスの変更時のみ
+    branches: [main, develop]      # mainまたはdevelopへのpush
+    paths: ['src/**', 'tests/**']  # src/またはtests/配下の変更時のみ
+```
 
-  # PR時
+`paths` フィルタは特に便利です。たとえば、ドキュメントだけを修正したのにテストが走るのは無駄です。`paths` でソースコードのディレクトリだけを指定しておけば、不要な実行を防げます。
+
+### pull_request — Pull Requestに関するイベント
+
+```yaml
+on:
   pull_request:
     branches: [main]
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened]  # PR作成時、更新時、再オープン時
+```
 
-  # スケジュール（cron形式）
+`types` を省略すると、`opened`、`synchronize`、`reopened` がデフォルトで適用されます。
+
+### schedule — 定期実行
+
+cron式でスケジュール実行を設定できます。セキュリティスキャンや依存関係の更新チェックなど、定期的に行いたいタスクに適しています。
+
+```yaml
+on:
   schedule:
-    - cron: '0 0 * * *'  # 毎日0時（UTC）
+    - cron: '0 0 * * *'   # 毎日UTC 0時（日本時間 午前9時）
+    - cron: '0 9 * * 1'   # 毎週月曜UTC 9時
+```
 
-  # 手動実行
+cron式の各フィールドは左から「分 時 日 月 曜日」です。時刻はUTC基準であることに注意してください。
+
+### workflow_dispatch — 手動実行
+
+ボタン1つでワークフローを手動実行できるトリガーです。入力パラメータを定義すると、実行時にドロップダウンやテキストフィールドで値を指定できます。
+
+```yaml
+on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Deploy target'
+        description: 'デプロイ先の環境'
         required: true
         default: 'staging'
         type: choice
         options:
           - staging
           - production
-
-  # リリース公開時
-  release:
-    types: [published]
-
-  # Issue作成時
-  issues:
-    types: [opened]
+      dry_run:
+        description: 'ドライランモード（実際にはデプロイしない）'
+        required: false
+        type: boolean
+        default: true
 ```
 
-## 実用的なワークフロー例
+<!-- screenshot: workflow_dispatchの手動実行画面。入力フィールドとRun workflowボタンが表示されている状態 -->
 
-### Python プロジェクト
+### release — リリース公開時
+
+```yaml
+on:
+  release:
+    types: [published]  # リリースが公開された時
+```
+
+このトリガーは、第14章で学ぶリリース機能と組み合わせて、バイナリの自動ビルドやパッケージの自動公開に使われます。
+
+---
+
+## 12.6 実用的なワークフロー例
+
+### Pythonプロジェクトの本格的なCI
+
+複数のPythonバージョンでテストを実行し、リンターによるコード品質チェックも行う例です。`strategy.matrix` を使うと、指定した組み合わせのすべてに対してジョブが自動的に実行されます。
 
 ```yaml
 name: Python CI
@@ -125,7 +249,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.10', '3.11', '3.12']
+        python-version: ['3.10', '3.11', '3.12']  # 3バージョンでテスト
 
     steps:
       - uses: actions/checkout@v4
@@ -156,7 +280,9 @@ jobs:
         uses: codecov/codecov-action@v4
 ```
 
-### Node.js プロジェクト
+`actions/cache@v4` はビルド時間を短縮するための重要なActionです。`requirements.txt` が変わらない限り、前回インストールしたパッケージのキャッシュが再利用されます。大規模なプロジェクトでは、キャッシュの有無でビルド時間が数分変わることもあります。
+
+### Node.jsプロジェクトのCI
 
 ```yaml
 name: Node.js CI
@@ -178,10 +304,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'npm'          # npm のキャッシュを自動管理
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci             # npm install より厳密で高速
 
       - name: Lint
         run: npm run lint
@@ -193,20 +319,22 @@ jobs:
         run: npm run build
 ```
 
-### 自動リリース
+`npm ci` は `npm install` と異なり、`package-lock.json` に基づいて厳密にパッケージをインストールします。CI環境では、環境ごとにバージョンが異なるという問題を防ぐために `npm ci` が推奨されます。
+
+### タグプッシュによる自動リリース
 
 ```yaml
 name: Release
 
 on:
   push:
-    tags: ['v*']
+    tags: ['v*']          # v で始まるタグがプッシュされた時
 
 jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write     # リリース作成に必要な権限
 
     steps:
       - uses: actions/checkout@v4
@@ -214,64 +342,163 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          generate_release_notes: true
+          generate_release_notes: true  # PRラベルから自動でリリースノート生成
 ```
 
-## Secrets（シークレット）
+---
 
-APIキーやパスワードなど秘密情報をワークフローで使う方法。
+## 12.7 Secrets（シークレット）
 
-### 設定方法
+### なぜSecretsが必要か
 
-1. リポジトリ → Settings → Secrets and variables → Actions
-2. 「New repository secret」をクリック
-3. 名前と値を入力
+ワークフローの中で外部サービスのAPIキーやデプロイ用のパスワードを使いたい場面があります。しかし、これらの秘密情報をYAMLファイルに直接書いてしまうと、リポジトリにアクセスできる全員に見えてしまいます。パブリックリポジトリの場合は、世界中の誰からも見える状態になります。
 
-<!-- screenshot: Secrets設定画面 -->
+GitHub Secretsは、こうした秘密情報を**暗号化して安全に保存**し、ワークフローの中からだけ参照できるようにする仕組みです。Secretsの値はログに出力される場合も自動的に `***` にマスクされるため、誤って表示されることはありません。
+
+### Secretsの設定方法
+
+Web UIでは、リポジトリの Settings → Secrets and variables → Actions → 「New repository secret」から設定します。
+
+<!-- screenshot: リポジトリのSecrets設定画面。シークレット名の一覧が表示されている状態（値は表示されない） -->
+
+CLIからも設定できます。
 
 ```bash
-# CLIで設定
+# 対話的に値を入力（画面に表示されない）
 gh secret set API_KEY
-# → 値を入力するプロンプトが表示される
+
+# ファイルから値を読み込む
+gh secret set API_KEY < api_key.txt
+
+# 環境変数から設定
+echo "$MY_API_KEY" | gh secret set API_KEY
 ```
 
-### 使い方
+一度設定したSecretの値は、Web UIからもCLIからも**読み取ることはできません**。値を確認したい場合は、再度設定し直す必要があります。これはセキュリティ上の意図的な設計です。
+
+### ワークフローでの使い方
+
+Secretsはワークフロー内で `${{ secrets.SECRET_NAME }}` という構文で参照します。
 
 ```yaml
 steps:
-  - name: Deploy
+  - name: Deploy to production
     env:
       API_KEY: ${{ secrets.API_KEY }}
-    run: ./deploy.sh
+      DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+    run: |
+      echo "Deploying with API key..."
+      ./deploy.sh
 ```
 
-## 料金
+`env` でシェルの環境変数にマッピングしてからスクリプト内で使うのが一般的なパターンです。`${{ secrets.API_KEY }}` を `run` の中に直接書くこともできますが、`env` を使うほうがスクリプトの可読性が高く、別環境での再利用もしやすくなります。
+
+---
+
+## 12.8 料金と制限
+
+GitHub Actionsの料金は、リポジトリの種類とRunnerのOSによって異なります。
+
+### パブリックリポジトリ
+
+パブリックリポジトリでは、GitHub Actionsは**完全に無料**で、実行時間の制限もありません。これはオープンソースプロジェクトにとって非常に大きなメリットです。
+
+### プライベートリポジトリ
+
+プライベートリポジトリでは、プランに応じた月間の無料枠が設けられています。
 
 | プラン | Linux | macOS | Windows |
 |--------|-------|-------|---------|
 | Free | 2,000分/月 | 200分/月 | 500分/月 |
 | Pro | 3,000分/月 | 300分/月 | 750分/月 |
+| Team | 3,000分/月 | 300分/月 | 750分/月 |
+| Enterprise | 50,000分/月 | 5,000分/月 | 10,000分/月 |
 
-パブリックリポジトリは**無料・無制限**。
+注意すべき点として、macOSランナーはLinuxランナーの**10倍**の分数として計算されます。つまり、macOSで10分間実行すると、Linuxの100分ぶんに相当します。Windowsは2倍です。特別な理由がなければ、`runs-on: ubuntu-latest` を使用することでコストを抑えられます。
 
-## ワークフローの確認
+無料枠を超過した場合は追加料金が発生しますが、デフォルトでは支出制限が$0に設定されているため、意図せず高額な請求が来ることはありません。ただし、設定を変更している場合は注意が必要です。
+
+### その他の制限
+
+- ワークフロー1回の実行時間: 最大**6時間**（ジョブ単位）
+- ワークフローの同時実行数: プランにより異なる
+- APIリクエスト: 1時間あたり1,000リクエスト
+
+---
+
+## 12.9 ワークフローの確認とデバッグ
+
+### CLIでの操作
+
+ワークフローの実行結果は、Web UIのActionsタブで確認できますが、CLIでもすべての操作が可能です。
 
 ```bash
-# 実行一覧
+# 最近のワークフロー実行一覧を表示
 gh run list
 
-# 特定の実行の詳細
+# 特定のワークフローだけ表示
+gh run list --workflow ci.yml
+
+# 実行の詳細を確認（各ステップの成否が分かる）
 gh run view 1234567890
 
-# ログを表示
+# ログを表示（エラーの原因を調査する際に必須）
 gh run view 1234567890 --log
+
+# 失敗したステップのログだけ表示
+gh run view 1234567890 --log-failed
 
 # 失敗したワークフローを再実行
 gh run rerun 1234567890
+
+# 失敗したジョブだけ再実行（時間短縮）
+gh run rerun 1234567890 --failed
+
+# ワークフローの実行をブラウザで確認
+gh run view 1234567890 --web
 ```
 
-<!-- screenshot: Actions実行結果画面 -->
+<!-- screenshot: GitHub ActionsタブでCIワークフローの実行結果が表示されている状態。各ステップの実行時間と成否が確認できる -->
 
-## 次のステップ
+### デバッグのコツ
 
-→ [13. GitHub Pages](13-github-pages.md) でWebサイトを公開しよう
+ワークフローが失敗した場合、まずは `--log-failed` でエラーログを確認しましょう。よくある失敗の原因には以下のようなものがあります。
+
+- **依存関係のインストール失敗** — `requirements.txt` や `package.json` に存在しないパッケージが指定されている
+- **テストの失敗** — コードのバグ。ローカルで再現してから修正する
+- **権限の不足** — `permissions` の設定が不足している（特にリリース作成やPages デプロイ時）
+- **Secretsの未設定** — 必要なSecretが設定されていない（Secret名のtypoにも注意）
+
+ワークフローの開発中にデバッグ用のステップを追加することもできます。
+
+```yaml
+      - name: Debug info
+        run: |
+          echo "Runner OS: $RUNNER_OS"
+          echo "Working directory: $(pwd)"
+          ls -la
+          python --version
+```
+
+ただし、Secretsの値をデバッグ用にechoすると自動的にマスクされるため、値そのものは確認できません。
+
+---
+
+## 12.10 まとめ
+
+この章では、GitHub Actionsによるワークフロー自動化の基礎から実践までを学びました。
+
+- **CI/CD**は、コード変更のたびに自動でテスト・ビルド・デプロイを行う手法であり、ソフトウェアの品質を維持しながら開発速度を上げるために不可欠です
+- GitHub Actionsは**Workflow、Event、Job、Step、Action、Runner**の6つの概念で構成されており、`.github/workflows/` ディレクトリにYAMLファイルを置くだけで利用できます
+- **トリガー**には push、pull_request、schedule、workflow_dispatch などがあり、用途に応じて適切なものを選択します
+- `strategy.matrix` を使えば、複数のバージョンや環境での**マトリクステスト**が簡単に設定できます
+- **Secrets**を使うことで、APIキーやパスワードなどの秘密情報をワークフロー内で安全に利用できます
+- パブリックリポジトリでは**無料・無制限**、プライベートリポジトリでもプランに応じた無料枠があります
+
+GitHub Actionsは、最初の設定こそYAMLの記法に慣れる必要がありますが、一度設定してしまえば、その後のすべてのpushやPRに対して自動的にテストが走り、チーム全体の開発効率が大きく向上します。「まずは簡単なテスト実行から始めて、徐々にワークフローを充実させていく」というアプローチが、導入を成功させるコツです。
+
+次の章では、GitHubを使って**Webサイトを無料で公開**する方法――GitHub Pagesについて学びます。
+
+---
+
+次の章: [第13章　GitHub Pages — Webサイトを無料で公開する](13-github-pages.md)

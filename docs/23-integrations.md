@@ -1,183 +1,331 @@
-# 23. 外部連携（インテグレーション）
+# 第23章　外部連携 — 開発ツールとつなげる
 
-## VS Code との連携
+## 23.1　この章で学ぶこと
 
-### GitHub 拡張機能
+GitHubは単体でも非常に強力なプラットフォームですが、その真の力は他のツールやサービスと連携したときに発揮されます。現代のソフトウェア開発では、コードエディタ、チャットツール、CI/CDサービス、プロジェクト管理ツールなど、数多くのツールが日常的に使われています。これらのツールとGitHubをつなげることで、開発のワークフロー全体がシームレスにつながり、生産性が飛躍的に向上します。
+
+この章では、以下の内容を学びます。
+
+- VS Codeとの連携によって、エディタを離れずにGit操作やPRレビューを行う方法
+- Claude Codeとの連携によって、AIの支援を受けながらGitHub上の開発を加速する方法
+- GitHub AppsやOAuth Appsを使って、外部サービスをリポジトリに統合する方法
+- Slackとの連携によって、チームの通知をリアルタイムに受け取る方法
+- Webhookの仕組みを理解し、独自の自動化を構築する方法
+- GitHub APIを使ってプログラムからGitHubを操作する方法
+- Gistを使ってコードスニペットを手軽に共有する方法
+
+開発ツールを「点」として個別に使うのではなく、GitHubを中心として「線」でつなげることで、チーム全体の開発体験が大きく変わります。それでは、最も身近なツールであるVS Codeとの連携から見ていきましょう。
+
+---
+
+## 23.2　VS Codeとの連携
+
+### なぜVS CodeとGitHubの連携が重要なのか
+
+Visual Studio Code（VS Code）は、Microsoftが開発した無料のコードエディタであり、現在世界で最も広く使われている開発環境のひとつです。GitHubもまたMicrosoft傘下のサービスであるため、両者の連携は非常に密接に設計されています。コードを書いている最中にブラウザに切り替えてPRを確認したり、ターミナルに移動してGitコマンドを打ったりする必要がなく、VS Codeの中だけで開発からレビュー、コミット、プッシュまでの一連の作業を完結させることができます。
+
+### 拡張機能一覧と用途
+
+VS Codeの強みのひとつは、拡張機能（Extension）によって機能を自由に追加できることです。GitHub関連の拡張機能は数多く存在しますが、特に重要なものを以下に紹介します。
 
 | 拡張機能 | 用途 |
 |---------|------|
-| **GitHub Pull Requests and Issues** | VS Code内でPR/Issue操作 |
-| **GitLens** | Git履歴の可視化、blame表示 |
-| **GitHub Copilot** | AIコーディング支援 |
-| **GitHub Copilot Chat** | AI対話型コーディング |
-| **GitHub Actions** | ワークフロー管理 |
+| **GitHub Pull Requests and Issues** | VS Code内でPRの作成・レビュー・マージ、Issueの閲覧・作成ができる |
+| **GitLens** | 各行の最終変更者・日時を表示し、コミット履歴やブランチ比較を視覚的に行える |
+| **GitHub Copilot** | AIによるコード補完。コメントや文脈からコードを自動生成する |
+| **GitHub Copilot Chat** | AIとの対話形式でコーディングの相談やコード生成ができる |
+| **GitHub Actions** | ワークフローの状態確認や管理をVS Code内で行える |
+| **Git Graph** | ブランチの分岐・マージの履歴をグラフとして視覚的に表示する |
 
-### VS Code でのGit操作
+拡張機能のインストールは、VS Codeの左サイドバーにある四角いアイコン（Extensions）をクリックし、検索バーに拡張機能名を入力して「Install」ボタンを押すだけです。
 
-- **ソース管理パネル** (`Cmd+Shift+G`): add, commit, push, pull
-- **ブランチ切り替え**: ステータスバーのブランチ名をクリック
-- **差分表示**: 変更ファイルをクリック
-- **インラインblame**: GitLensが各行の最終変更者を表示
+### ソース管理パネルの使い方
 
-<!-- screenshot: VS Codeのソース管理パネル -->
+VS Codeには、拡張機能を一切追加しなくても最初からGit連携機能が組み込まれています。左サイドバーの分岐アイコン、またはキーボードショートカット `Cmd+Shift+G`（macOS）/ `Ctrl+Shift+G`（Windows/Linux）を押すと、**ソース管理パネル**が表示されます。
 
-### github.dev（ブラウザ版VS Code）
+<!-- screenshot: VS Codeのソース管理パネル全体像 -->
 
-リポジトリページで `.` キーを押すか、URLの `github.com` を `github.dev` に変更すると、ブラウザ上でVS Codeが起動する。
+ソース管理パネルでは、以下の操作をGUIで行うことができます。
+
+- **変更ファイルの確認**: 変更・追加・削除されたファイルが一覧表示される。ファイルをクリックすると左右分割の差分表示（diff）が開き、何がどう変わったかを視覚的に確認できる
+- **ステージング**: 各ファイルの横にある `+` ボタンをクリックすることで、`git add` に相当する操作ができる。個別のファイルだけをステージすることも、全ファイルをまとめてステージすることもできる
+- **コミット**: パネル上部のテキストボックスにコミットメッセージを入力し、チェックマークボタン（またはCmd+Enter）を押すとコミットが作成される
+- **Push / Pull / Sync**: パネル下部やステータスバーの同期ボタンで、リモートリポジトリとの同期が行える
+
+また、ステータスバー（画面最下部）にはブランチ名が表示されており、これをクリックすることでブランチの切り替えや新規作成ができます。ブランチ名の横に表示される矢印と数字（例: ↑1 ↓2）は、ローカルとリモートの差分を示しており、ローカルに未プッシュのコミットが1つ、リモートに未プルのコミットが2つあることを意味します。
+
+### インラインblame
+
+GitLens拡張機能をインストールすると、エディタ内の各行の右端に、その行を最後に変更した人の名前・日時・コミットメッセージが薄いグレーの文字で表示されるようになります。これを**インラインblame**と呼びます。
+
+たとえば、あるコードの意図がわからないとき、インラインblameを見れば「誰が」「いつ」「なぜ」その行を変更したかがすぐにわかります。表示されている情報をクリックすると、そのコミットの詳細（変更の全体像、コミットメッセージの全文など）を確認できます。これはコードレビューやバグ調査のときに非常に役立つ機能です。
+
+### github.dev — ブラウザ版VS Code
+
+GitHubリポジトリのページを開いているとき、キーボードの `.`（ピリオド）キーを押すと、ブラウザ上でVS Codeが起動します。これが**github.dev**です。URLで表現すると、以下のように `github.com` を `github.dev` に置き換えるだけで同じことが起こります。
 
 ```
 https://github.com/owner/repo → https://github.dev/owner/repo
 ```
 
-軽い編集やコードレビューに便利。
+github.devはブラウザ上で動作するため、何もインストールする必要がありません。軽い編集やコードレビューに非常に便利です。ただし、ターミナルは使えず、ビルドやテストの実行はできません。本格的な開発にはCodespaces（クラウド上の完全な開発環境）が適していますが、ちょっとしたtypoの修正やドキュメントの編集にはgithub.devで十分です。
 
-## Claude Code との連携
+<!-- screenshot: github.devの画面（ブラウザ内にVS Codeが表示されている様子） -->
+
+---
+
+## 23.3　Claude Codeとの連携
+
+### Claude Codeとは何か
+
+Claude Codeは、Anthropic社が開発したAIコーディングアシスタントです。ターミナルやVS Codeの中で動作し、リポジトリのコードを理解した上で、コードの読み書き、テストの実行、コミットの作成、PRの作成といった開発作業を対話的に支援してくれます。GitHubのリポジトリと組み合わせて使うことで、開発の生産性を大きく向上させることができます。
 
 ### インストールと認証
+
+Claude Codeはnpmパッケージとして配布されています。Node.jsがインストールされている環境であれば、以下のコマンドで簡単にインストールできます。
 
 ```bash
 # Claude Codeのインストール
 npm install -g @anthropic-ai/claude-code
 
-# 起動（初回は認証画面が開く）
+# Claude Codeを起動（初回は認証画面がブラウザで開く）
 claude
 ```
 
-### GitHubリポジトリでの使用
+初回起動時にはブラウザが開き、Anthropicアカウントでの認証が求められます。認証が完了すると、ターミナル上でClaude Codeとの対話が始まります。
+
+### GitHubリポジトリでの使用方法
+
+Claude Codeは、起動したディレクトリのコンテキスト（ファイル構成、コードの内容、Git履歴など）を理解します。そのため、GitHubリポジトリのローカルクローン内でClaude Codeを起動すると、そのプロジェクトに特化した支援を受けることができます。
 
 ```bash
-cd my-project    # Gitリポジトリに移動
-claude           # Claude Codeを起動
+# Gitリポジトリに移動してClaude Codeを起動
+cd my-project
+claude
 
-# Claude Codeに直接タスクを依頼
-claude "このリポジトリのバグを修正して"
-claude "テストを書いて"
-claude "PRの説明を書いて"
+# リポジトリのコンテキストを理解した上でタスクを依頼できる
+claude "このリポジトリのREADMEを改善して"
+claude "テストカバレッジを向上させて"
+claude "このバグを調査して修正して"
 ```
 
-### Claude Code でのGit操作
+Claude Codeはリポジトリ内のファイルを読み、必要に応じてファイルを作成・編集し、コマンドを実行することができます。たとえば「テストを書いて」と依頼すると、既存のコードを分析し、適切なテストファイルを生成し、テストが通ることを確認するところまで自動的に行ってくれます。
 
-Claude Codeはリポジトリのコンテキストを理解し：
-- コードの読み書き
-- テストの実行
-- コミットの作成
-- PRの作成
+### Git操作の対話的な依頼
 
-を対話的に行える。
+Claude Codeの大きな特徴は、Git操作を自然言語で依頼できることです。コミットメッセージを考えたり、複雑なGitコマンドを覚えたりする必要がありません。
 
 ```bash
-# 例: Claude Codeにコミットを依頼
-> このファイルの変更をコミットして
+# Claude Codeにコミットを依頼
+> この変更をコミットして
 
-# 例: PRを作成
-> この変更でPRを作って
+# PRの作成を依頼
+> この変更でPRを作って、説明文も書いて
+
+# ブランチ操作を依頼
+> 新しいブランチを作ってこの機能を実装して
 ```
 
-### VS Code拡張として
+Claude Codeは変更の内容を分析して適切なコミットメッセージを自動生成し、PRの説明文もコードの変更内容に基づいて作成します。特にPRの説明文は、変更の「何を」「なぜ」行ったかを的確にまとめてくれるため、レビュアーにとっても理解しやすいものになります。
 
-VS Code内でClaude Codeを使用可能。コマンドパレットから操作。
+また、リポジトリに `CLAUDE.md` というファイルを配置しておくと、Claude Codeがそのファイルの指示に従って動作します。プロジェクト固有のコーディング規約やテスト方針を記述しておけば、それに準拠したコードを生成してくれます。
 
-## GitHub Apps / OAuth Apps
+### VS Code拡張としての使用
 
-### GitHub Marketplace
+Claude CodeはCLI（コマンドライン）だけでなく、VS Codeの拡張機能としても使用できます。VS Code内のサイドパネルにClaude Codeのチャットインターフェースが表示され、コードを編集しながらAIに相談したり、作業を依頼したりすることができます。
 
-https://github.com/marketplace で便利なアプリを探せる：
+<!-- screenshot: VS Code内のClaude Codeパネル -->
 
-| カテゴリ | 例 |
-|---------|-----|
-| CI/CD | CircleCI, Travis CI |
-| コード品質 | Codecov, SonarCloud |
-| プロジェクト管理 | Jira, Linear |
-| セキュリティ | Snyk, Socket |
-| デプロイ | Vercel, Netlify, Railway |
-| チャット | Slack, Discord |
+エディタで開いているファイルのコンテキストを自動的に理解するため、「この関数のバグを直して」「この部分のリファクタリングを提案して」といった依頼がスムーズに行えます。
 
-### アプリのインストール
+---
 
-1. GitHub Marketplace でアプリを選択
-2. 「Install」をクリック
-3. 権限を確認して許可
-4. 対象リポジトリを選択（全リポジトリ or 特定のリポジトリ）
+## 23.4　GitHub Apps / OAuth Apps
 
-### インストール済みアプリの管理
+### GitHub Marketplaceの概要
 
-Settings → **Applications** → **Installed GitHub Apps**
-
-<!-- screenshot: インストール済みアプリ一覧 -->
-
-## Slack連携
-
-### GitHub for Slack
+GitHubには**Marketplace**という仕組みがあり、サードパーティの開発者が作ったアプリケーション（GitHub App）を簡単にリポジトリにインストールして使うことができます。Marketplaceは以下のURLからアクセスできます。
 
 ```
-# Slackで以下のコマンドを実行
+https://github.com/marketplace
+```
+
+Marketplaceには無料のアプリから有料のアプリまで、数千のアプリが登録されています。スマートフォンのApp StoreやGoogle Playのように、カテゴリ別に探すことができ、レビューや評価も参考にできます。
+
+### カテゴリ別の代表的なアプリ
+
+GitHub Marketplaceのアプリは、おおまかに以下のカテゴリに分類できます。それぞれの代表的なアプリを見てみましょう。
+
+| カテゴリ | 代表的なアプリ | 用途 |
+|---------|-------------|------|
+| **CI/CD** | CircleCI, Travis CI, Jenkins | コードの自動テスト・自動デプロイ |
+| **コード品質** | Codecov, SonarCloud, Code Climate | テストカバレッジの計測やコード品質の分析 |
+| **プロジェクト管理** | Jira, Linear, ZenHub | タスク管理やスプリント計画 |
+| **セキュリティ** | Snyk, Socket, Dependabot | 依存ライブラリの脆弱性スキャン |
+| **デプロイ** | Vercel, Netlify, Railway | Webサイトやアプリの自動デプロイ |
+| **チャット連携** | Slack, Discord, Microsoft Teams | 通知やコマンド連携 |
+
+たとえばVercelをインストールすると、PRを作成するたびにプレビュー環境が自動的に作成され、PRのコメントにプレビューURLが投稿されます。レビュアーはそのURLにアクセスするだけで、変更後のWebサイトを実際に確認できるのです。
+
+### インストール方法
+
+GitHub Appのインストール手順は以下のとおりです。
+
+1. GitHub Marketplace（https://github.com/marketplace）でアプリを検索する
+2. アプリの詳細ページを開き、「Install」または「Set up a plan」ボタンをクリックする
+3. アプリが要求する権限（リポジトリの読み取り、Issueの書き込みなど）を確認し、許可する
+4. アプリのインストール先を選択する。すべてのリポジトリに適用するか、特定のリポジトリだけに限定するかを選べる
+5. 必要に応じて、アプリ側の設定画面で追加の設定を行う
+
+権限の確認は非常に重要です。アプリがどのデータにアクセスし、何を変更できるのかを必ず確認してからインストールしましょう。不必要に広い権限を要求するアプリには注意が必要です。
+
+### 管理方法
+
+インストール済みのアプリは、以下の場所から管理できます。
+
+- **個人アカウント**: Settings → Applications → Installed GitHub Apps
+- **Organization**: Organization Settings → Installed GitHub Apps
+
+<!-- screenshot: インストール済みアプリの管理画面 -->
+
+この画面から、アプリの権限変更、対象リポジトリの変更、アプリのアンインストールが行えます。使わなくなったアプリは、セキュリティの観点からもこまめにアンインストールすることをおすすめします。
+
+---
+
+## 23.5　Slack連携
+
+### なぜSlack連携が必要なのか
+
+開発チームの多くが日常的なコミュニケーションにSlackを使っています。GitHubでPRが作られたり、Issueにコメントが付いたりしたとき、毎回GitHubのWebサイトを確認しに行くのは非効率です。Slack連携を設定すると、GitHubで起きたイベントがリアルタイムでSlackチャンネルに通知されるため、チームメンバーは普段使っているSlackの画面から離れることなく、開発の状況を把握できます。
+
+### GitHub for Slackの設定
+
+GitHubとSlackを連携するには、**GitHub for Slack**というアプリを使います。Slackワークスペースにこのアプリをインストールした後、通知を受け取りたいチャンネルで以下のコマンドを実行します。
+
+```
 /github subscribe owner/repo
-
-# 通知されるイベント
-- Issues
-- Pull Requests
-- Deployments
-- Releases
 ```
 
-カスタマイズ：
+この1つのコマンドを実行するだけで、指定したリポジトリのIssue、Pull Request、デプロイ、リリースに関する通知がそのチャンネルに届くようになります。
+
+### 通知カスタマイズ
+
+デフォルトの通知ではうるさすぎる場合や、逆に特定のイベントだけを受け取りたい場合は、通知の種類を細かくカスタマイズできます。
+
 ```
+# 特定のイベントだけを購読する
 /github subscribe owner/repo issues pulls deployments releases
+
+# 特定のイベントの購読を解除する
 /github unsubscribe owner/repo issues
+
+# PRのレビュー通知も受け取る
+/github subscribe owner/repo reviews
+
+# コミット通知を受け取る
+/github subscribe owner/repo commits
+
+# 現在の購読状態を確認する
+/github subscribe list
 ```
 
-## Webhook
+チーム開発では、たとえば `#frontend` チャンネルにはフロントエンドのリポジトリを、`#backend` チャンネルにはバックエンドのリポジトリを購読させるといった使い分けが効果的です。通知が多すぎるとノイズになりますので、チームで話し合って適切な粒度を決めましょう。
 
-特定のイベントが起きたとき、外部URLにHTTPリクエストを送信する。
+---
 
-### 設定
+## 23.6　Webhook
 
-リポジトリ → Settings → **Webhooks** → 「Add webhook」
+### 仕組みの解説
 
-| 設定 | 説明 |
-|------|------|
-| **Payload URL** | リクエスト送信先URL |
-| **Content type** | `application/json` |
-| **Secret** | 署名検証用の秘密鍵 |
-| **Events** | どのイベントでトリガーするか |
+Webhookは、GitHubで特定のイベントが発生したときに、あらかじめ指定した外部のURL（エンドポイント）にHTTPリクエスト（POSTリクエスト）を自動送信する仕組みです。前節で紹介したSlack連携も、内部的にはWebhookの仕組みを利用しています。
+
+たとえるなら、Webhookは「電話の転送設定」のようなものです。GitHubで何かイベント（電話がかかってきた）が起きたとき、事前に登録しておいた番号（URL）に自動的に転送されます。転送先のサーバーは、受け取った情報をもとに好きな処理（通知を送る、ビルドを開始する、データベースを更新するなど）を行うことができます。
+
+具体的な流れは以下のとおりです。
+
+1. 開発者がGitHubにコードをプッシュする（イベント発生）
+2. GitHubが事前に登録されたURLにHTTP POSTリクエストを送信する
+3. リクエストのボディには、イベントの詳細情報（誰が、いつ、何をしたか）がJSON形式で含まれる
+4. 受信側のサーバーがリクエストを処理し、必要なアクションを実行する
+
+### 設定方法
+
+Webhookの設定は、リポジトリの Settings → **Webhooks** → 「Add webhook」から行います。
+
+| 設定項目 | 説明 |
+|---------|------|
+| **Payload URL** | リクエストの送信先URL。HTTPSである必要がある |
+| **Content type** | リクエストボディの形式。通常は `application/json` を選択する |
+| **Secret** | 署名検証用の秘密鍵。受信側がリクエストの正当性を検証するために使う |
+| **Events** | どのイベントでWebhookを発火させるか。個別に選択できる |
+
+<!-- screenshot: Webhook設定画面 -->
+
+Secretの設定は非常に重要です。Secretを設定すると、GitHubはリクエストのヘッダーに `X-Hub-Signature-256` というフィールドを追加します。受信側のサーバーはこの署名を検証することで、リクエストが本当にGitHubから送られたものであることを確認できます。Secretを設定しないと、悪意のある第三者がWebhook URLにリクエストを送りつける攻撃（リプレイ攻撃）に対して脆弱になります。
 
 ### よく使うイベント
 
-- `push` — コードがプッシュされた
-- `pull_request` — PRが作成・更新された
-- `issues` — Issueが作成・更新された
-- `release` — リリースが公開された
-- `workflow_run` — GitHub Actionsが完了した
+Webhookで使用できるイベントは数十種類ありますが、実際によく使われるのは以下のイベントです。
 
-## GitHub API
+| イベント | 発生タイミング | 用途の例 |
+|---------|-------------|---------|
+| `push` | コードがプッシュされた | 自動ビルド・デプロイのトリガー |
+| `pull_request` | PRが作成・更新・マージされた | コードレビュー通知、プレビュー環境の構築 |
+| `issues` | Issueが作成・更新・クローズされた | タスク管理ツールとの同期 |
+| `release` | リリースが公開された | 配布パッケージの作成、告知の自動投稿 |
+| `workflow_run` | GitHub Actionsワークフローが完了した | 後続の処理のトリガー |
+| `create` | ブランチやタグが作成された | 環境の自動構築 |
 
-プログラムからGitHubを操作できるREST API / GraphQL API。
+なお、GitHub Actionsが登場してからは、以前Webhookで実現していた自動化の多くをActions内で完結できるようになりました。外部サーバーを自前で用意する必要がない分、Actionsのほうが手軽です。ただし、GitHub外部のシステムと連携する場合や、GitHubの外にあるサーバーで処理を実行したい場合には、Webhookが依然として有用です。
 
-### REST API の使用
+---
+
+## 23.7　GitHub API
+
+### REST APIとGraphQL APIの概要
+
+GitHubは、プログラムからGitHubの機能を操作するためのAPIを2種類提供しています。
+
+**REST API**は、HTTPのGET/POST/PATCH/DELETEリクエストを使って、リソース（リポジトリ、Issue、PRなど）を操作する伝統的なAPI形式です。URLのパスでリソースを指定し、HTTPメソッドで操作を指定します。直感的でわかりやすいのが特徴です。
+
+**GraphQL API**は、クライアント側が「どのデータが欲しいか」を細かく指定できるクエリ言語ベースのAPIです。REST APIでは1つのリクエストで1つのリソースしか取得できませんが、GraphQL APIでは1回のリクエストで必要なデータだけをまとめて取得できます。複雑なデータ取得を効率的に行いたい場合に適しています。
+
+### gh apiコマンドでの使い方
+
+GitHub CLI（`gh`）を使うと、認証の処理を自動的に行ってくれるため、APIの呼び出しが非常に簡単になります。`curl` コマンドでトークンを手動で設定する必要がありません。
 
 ```bash
-# GitHub CLIで簡単に呼べる
+# リポジトリの情報を取得する
 gh api repos/owner/repo
-gh api repos/owner/repo/issues
 
-# curlの場合
-curl -H "Authorization: token YOUR_TOKEN" \
-  https://api.github.com/repos/owner/repo
-
-# リポジトリ情報
+# リポジトリのスター数だけを取得する（jqフィルタ）
 gh api repos/owner/repo --jq '.stargazers_count'
 
-# Issue一覧
+# Issue一覧のタイトルを取得する
 gh api repos/owner/repo/issues --jq '.[].title'
 
-# PRのコメント
+# PRのコメント一覧を取得する
 gh api repos/owner/repo/pulls/42/comments
+
+# 新しいIssueを作成する（POSTリクエスト）
+gh api repos/owner/repo/issues -f title="バグ報告" -f body="詳細な説明"
 ```
 
-### GraphQL API
+`--jq` オプションは、返却されるJSONデータから必要な部分だけを抽出するフィルタです。JSONの全体を見る必要がなく、必要なフィールドだけをピンポイントで取り出せます。
+
+`curl` コマンドを使う場合は、個人アクセストークン（PAT）を手動で指定する必要があります。
 
 ```bash
-# GraphQLクエリ
+curl -H "Authorization: token YOUR_TOKEN" \
+  https://api.github.com/repos/owner/repo
+```
+
+### GraphQL APIの使い方
+
+GraphQL APIは `gh api graphql` コマンドで呼び出します。REST APIとは異なり、クエリ文字列でどのデータが欲しいかを明示的に指定します。
+
+```bash
+# リポジトリのオープンなIssueを5件取得する
 gh api graphql -f query='
   query {
     repository(owner: "owner", name: "repo") {
@@ -185,6 +333,10 @@ gh api graphql -f query='
         nodes {
           title
           url
+          createdAt
+          author {
+            login
+          }
         }
       }
     }
@@ -192,29 +344,85 @@ gh api graphql -f query='
 '
 ```
 
-## Gist（コードスニペット共有）
+GraphQL APIの利点は、1回のリクエストで複数のリソースをまとめて取得できることです。たとえば、リポジトリの情報とIssueとPRを同時に取得することも可能です。REST APIでは3回のリクエストが必要になる処理を、GraphQLなら1回で済ませられます。
 
-短いコードや設定ファイルを手軽に共有する機能。
+### 実用例
+
+APIの実用的な使い方をいくつか紹介します。
 
 ```bash
-# Gistを作成
-gh gist create file.py --public --desc "Useful utility function"
+# 自分がアサインされたIssueを全リポジトリから一覧表示する
+gh api "/issues" --jq '.[].title'
 
-# 複数ファイル
-gh gist create file1.py file2.py
+# リポジトリのコントリビューター一覧を取得する
+gh api repos/owner/repo/contributors --jq '.[].login'
 
-# stdinから
-echo "print('hello')" | gh gist create --filename hello.py
+# 特定のラベルが付いたIssueだけを取得する
+gh api "repos/owner/repo/issues?labels=bug" --jq '.[].title'
 
-# Gist一覧
-gh gist list
-
-# Gistを表示
-gh gist view GIST_ID
+# リリースの最新バージョンを取得する
+gh api repos/owner/repo/releases/latest --jq '.tag_name'
 ```
 
-URL: `https://gist.github.com/username/gist_id`
+これらのコマンドをシェルスクリプトに組み込むことで、日次レポートの自動生成、古いIssueの自動クローズ、リリースノートの自動作成といった自動化が実現できます。
 
-## 次のステップ
+---
 
-→ [24. トラブルシューティング](24-troubleshooting.md) でよくある問題の解決法を学ぼう
+## 23.8　Gist
+
+### コードスニペット共有の仕組み
+
+**Gist**は、GitHubが提供する「ちょっとしたコードやテキストを手軽に共有する」サービスです。リポジトリを作るほどではない小さなコードの断片（スニペット）、設定ファイルのサンプル、メモなどを素早く共有するのに適しています。
+
+Gistには2種類あります。**Public Gist**は誰でも閲覧でき、検索にもヒットします。**Secret Gist**はURLを知っている人だけが閲覧でき、検索にはヒットしませんが、URLさえ知っていれば誰でもアクセスできるため、完全な非公開ではない点に注意が必要です。
+
+GistのURLは `https://gist.github.com/ユーザー名/Gist_ID` という形式になります。
+
+### 作成・一覧・表示のコマンド
+
+GitHub CLI（`gh`）を使うと、ターミナルからGistの操作が行えます。
+
+```bash
+# ファイルからGistを作成する（公開）
+gh gist create script.py --public --desc "便利なユーティリティ関数"
+
+# 複数ファイルをまとめて1つのGistにする
+gh gist create file1.py file2.py config.yaml
+
+# 標準入力からGistを作成する（パイプで渡す）
+echo "print('Hello, World!')" | gh gist create --filename hello.py
+
+# 自分のGist一覧を表示する
+gh gist list
+
+# 特定のGistの内容を表示する
+gh gist view GIST_ID
+
+# Gistをブラウザで開く
+gh gist view GIST_ID --web
+
+# 既存のGistを編集する
+gh gist edit GIST_ID
+```
+
+Gistはバージョン管理もされており、編集履歴を確認することもできます。内部的にはGitリポジトリとして管理されているため、`git clone` でローカルにクローンして編集し、`git push` で更新することも可能です。
+
+---
+
+## 23.9　まとめ
+
+この章では、GitHubと外部ツールの連携について幅広く学びました。
+
+- **VS Code**との連携では、ソース管理パネルやGitLensのインラインblameを使って、エディタ内でGit操作やコードの履歴確認ができることを学びました。github.devを使えば、ブラウザ上でも同様の編集体験が得られます。
+- **Claude Code**との連携では、AIの支援を受けながらコミットやPR作成を自然言語で依頼でき、開発の生産性を向上させられることを確認しました。
+- **GitHub Apps**では、Marketplaceを通じてCI/CD、コード品質、セキュリティなどの外部サービスをリポジトリに統合できることを学びました。
+- **Slack連携**では、`/github subscribe` コマンドひとつでリアルタイム通知を設定できることを確認しました。
+- **Webhook**では、GitHubのイベントを外部URLに転送する仕組みを理解し、独自の自動化を構築する方法を学びました。
+- **GitHub API**では、REST APIとGraphQL APIの2種類があり、`gh api` コマンドで手軽に呼び出せることを学びました。
+- **Gist**では、ちょっとしたコードスニペットを素早く共有できる仕組みを確認しました。
+
+GitHubを中心として開発ツールをつなげることで、チーム全体のワークフローがスムーズになります。次の章では、GitHubを使っていて遭遇するさまざまなトラブルとその解決法を見ていきましょう。
+
+---
+
+次の章: [第24章　トラブルシューティング — よくある問題の処方箋](24-troubleshooting.md)
