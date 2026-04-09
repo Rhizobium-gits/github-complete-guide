@@ -14,14 +14,16 @@
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
 \ProcessOptions\relax
-\LoadClass[twoside, openany]{report}
+\LoadClass[12pt, twoside, openany]{report}
 
 % SETUP: -----------------------------------------------------------------------
+\RequirePackage{luatexja}
+\RequirePackage{lltjp-listings}
 \RequirePackage[basics, code, cover, figures, formatting, header, headings, isbn, license, lists, math, metadata, publish, refs, size, tables]{lix}
 
 % OVERRIDES: -------------------------------------------------------------------
 \setlength\parindent{0pt}
-\usecompacttoc
+%\usecompacttoc % disabled for Japanese font compatibility
 \geometry{letterpaper, top=28mm, bottom=28mm, left=20mm, right=20mm}
 \setlength{\columnsep}{5mm}
 \setlength{\droptitle}{-110mm}%
@@ -35,14 +37,14 @@
 \titlespacing{\section}{0pt}{14pt}{4pt}
 \titlespacing{\subsection}{0pt}{14pt}{4pt}
 \titlespacing{\subsubsection}{0pt}{14pt}{4pt}
-\titleformat*{\section}{\LARGE\bfseries\scshape}
-\titleformat*{\subsection}{\Large\bfseries\scshape}
-\titleformat*{\subsubsection}{\large\bfseries\scshape}
-\titleformat*{\paragraph}{\bfseries\scshape}
+\titleformat*{\section}{\LARGE\bfseries}
+\titleformat*{\subsection}{\Large\bfseries}
+\titleformat*{\subsubsection}{\large\bfseries}
+\titleformat*{\paragraph}{\bfseries}
 \titleformat{\chapter}[display]{%
     \normalsize%
 }{% Prefix.
-    \hspace{1pt}\small\scshape\color{darkgray}\chaptertitlename \ \thechapter%
+    \hspace{1pt}\small\color{darkgray}\chaptertitlename \ \thechapter%
     \hfill Page \thepage\ of \pageref{LastPage}
 }{% Vertical space between.
     \ifnum\numColumns=1%
@@ -51,7 +53,7 @@
         -4pt%
     \fi
 }{% Chapter name.
-    \thispagestyle{empty}\LARGE\bfseries\scshape%
+    \thispagestyle{empty}\LARGE\bfseries%
 }
 
 % HEADER AND FOOTER: -----------------------------------------------------------
@@ -59,10 +61,10 @@
 \renewcommand{\headrulewidth}{0pt}%
 \renewcommand{\chaptermark}[1]{\markboth{#1}{#1}}%
 \fancyhead[L]{%
-    \small\scshape\color{darkgray} \chaptername\ \thechapter\ --\ \leftmark%
+    \small\color{darkgray} \chaptername\ \thechapter\ --\ \leftmark%
 }
 \fancyhead[R]{%
-    \small\scshape\color{darkgray} Page \thepage\ of \pageref{LastPage}%
+    \small\color{darkgray} Page \thepage\ of \pageref{LastPage}%
 }
 \fancyfoot{}%
 
@@ -73,7 +75,7 @@
             \oldtitle{\Huge\textbf{\textsc{\theTitle}}}%
         }{%
             \oldtitle{\Huge\textbf{\textsc{\theTitle}}\\[0.4ex]%
-            \large\scshape\theSubtitle}%
+            \large\theSubtitle}%
         }
     }
     \@ifundefined{theAuthor}{%

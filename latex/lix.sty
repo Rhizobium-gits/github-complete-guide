@@ -95,7 +95,8 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage[nottoc]{tocbibind}
 \RequirePackage[indent]{parskip}
-\RequirePackage{eso-pic, hyperref, lastpage, microtype, multicol, transparent, xcolor, xparse}
+\RequirePackage{eso-pic, hyperref, lastpage, multicol, transparent, xcolor, xparse}
+% microtype removed for LuaTeX+Japanese compatibility
 
 
 % ESSENTIAL SETUP: -------------------------------------------------------------
@@ -948,7 +949,7 @@
     }
 
     \lstdefinestyle{inline}{% Inline styling.
-        basicstyle=\ttfamily\small, breaklines=true%
+        basicstyle=\ttfamily\normalsize, breaklines=true%
     }
 
     \providecommand{\c}{}

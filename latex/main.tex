@@ -1,5 +1,5 @@
 % GitHub Complete Guide - LaTeX Source
-% Using LiX textbook class
+% Using LiX textbook class with enhanced colorful design
 % Compile with: lualatex main.tex (run twice for TOC)
 
 \documentclass{textbook}
@@ -19,38 +19,253 @@
 
 \blurb{「コードを書いたことはあるけれど、Gitって何？」という方から、チームで本格的に開発を始めたい方まで。本書を一冊読み通せば、GitとGitHubの全体像が手に取るように分かります。}
 
+% ============================================================
 % Japanese support
-\usepackage{luatexja}
-\usepackage{luatexja-fontspec}
-\setmainjfont{HiraginoSans-W3}[
-  BoldFont=HiraginoSans-W6,
-]
+% ============================================================
+% Japanese fonts - HaranoAji (OpenType, full size support)
+\usepackage[haranoaji]{luatexja-preset}
+\usepackage{lmodern}
 
-% Code listings
-\usepackage{listings}
+% ============================================================
+% Design packages
+% ============================================================
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+\usepackage{fontawesome5}
+\usepackage{tikz}
+\usetikzlibrary{calc, positioning, shadows.blur}
+\usepackage{enumitem}
 \usepackage{xcolor}
+\usepackage{etoolbox}
+\usepackage{hyperref}
 
+% ============================================================
+% Color Palette - GitHub inspired
+% ============================================================
+\definecolor{ghblack}{HTML}{24292f}
+\definecolor{ghblue}{HTML}{0969da}
+\definecolor{ghdarkblue}{HTML}{0550ae}
+\definecolor{ghgreen}{HTML}{1a7f37}
+\definecolor{ghlightgreen}{HTML}{dafbe1}
+\definecolor{ghred}{HTML}{cf222e}
+\definecolor{ghlightred}{HTML}{ffebe9}
+\definecolor{ghorange}{HTML}{bf8700}
+\definecolor{ghlightorange}{HTML}{fff8c5}
+\definecolor{ghpurple}{HTML}{8250df}
+\definecolor{ghlightpurple}{HTML}{fbefff}
+\definecolor{ghgray}{HTML}{656d76}
+\definecolor{ghlightgray}{HTML}{f6f8fa}
+\definecolor{ghborder}{HTML}{d0d7de}
+\definecolor{ghcodebg}{HTML}{f6f8fa}
+\definecolor{ghheader}{HTML}{0550ae}
+
+% ============================================================
+% Hyperref styling
+% ============================================================
+\hypersetup{
+  colorlinks=true,
+  linkcolor=ghblue,
+  urlcolor=ghpurple,
+  citecolor=ghgreen,
+  bookmarks=true,
+  bookmarksopen=true,
+  pdfauthor={Rhizobium-gits},
+  pdftitle={GitHub完全ガイド},
+}
+
+% Heading colors (applied via cls, minimal override to avoid font issues)
+
+% ============================================================
+% Code block styling - GitHub-like with colored frame
+% ============================================================
+% Code block styling
 \lstdefinestyle{codestyle}{
-  backgroundcolor=\color{gray!8},
-  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{ghcodebg},
+  basicstyle=\ttfamily\normalsize,
   breaklines=true,
   frame=single,
-  framerule=0.3pt,
-  rulecolor=\color{gray!40},
+  framerule=0.5pt,
+  rulecolor=\color{ghborder},
   numbers=none,
   tabsize=2,
   showstringspaces=false,
   captionpos=b,
-  aboveskip=8pt,
-  belowskip=8pt,
+  aboveskip=10pt,
+  belowskip=10pt,
+  xleftmargin=8pt,
+  xrightmargin=8pt,
+  framexleftmargin=5pt,
+  framexrightmargin=5pt,
+  framextopmargin=3pt,
+  framexbottommargin=3pt,
+  keywordstyle=\color{ghblue}\bfseries,
+  stringstyle=\color{ghgreen},
+  commentstyle=\color{ghgray}\itshape,
+  identifierstyle=\color{ghblack},
+  numberstyle=\small\color{ghgray},
 }
 \lstset{style=codestyle}
 
-% Custom commands for the book
-\newcommand{\term}[1]{\textbf{#1}}
-\newcommand{\cmd}[1]{\texttt{#1}}
-\newcommand{\file}[1]{\texttt{#1}}
-\newcommand{\screenshot}[1]{\vspace{6pt}\noindent\fbox{\parbox{0.95\textwidth}{\centering\small\itshape スクリーンショット: #1}}\vspace{6pt}}
+% ============================================================
+% Custom info/warning/tip boxes
+% ============================================================
+
+% Note box (blue)
+\newtcolorbox{notebox}{
+  enhanced,
+  breakable,
+  colback=blue!3,
+  colframe=ghblue,
+  arc=4pt,
+  boxrule=0pt,
+  borderline west={3pt}{0pt}{ghblue},
+  left=12pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt,
+  fonttitle=\bfseries\color{ghblue},
+  title={\faInfoCircle\hspace{6pt}ポイント},
+  attach title to upper={\par\vspace{4pt}},
+}
+
+% Warning box (orange)
+\newtcolorbox{warningbox}{
+  enhanced,
+  breakable,
+  colback=ghlightorange,
+  colframe=ghorange,
+  arc=4pt,
+  boxrule=0pt,
+  borderline west={3pt}{0pt}{ghorange},
+  left=12pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt,
+  fonttitle=\bfseries\color{ghorange},
+  title={\faExclamationTriangle\hspace{6pt}注意},
+  attach title to upper={\par\vspace{4pt}},
+}
+
+% Tip box (green)
+\newtcolorbox{tipbox}{
+  enhanced,
+  breakable,
+  colback=ghlightgreen,
+  colframe=ghgreen,
+  arc=4pt,
+  boxrule=0pt,
+  borderline west={3pt}{0pt}{ghgreen},
+  left=12pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt,
+  fonttitle=\bfseries\color{ghgreen},
+  title={\faLightbulb\hspace{6pt}ヒント},
+  attach title to upper={\par\vspace{4pt}},
+}
+
+% Important box (red)
+\newtcolorbox{importantbox}{
+  enhanced,
+  breakable,
+  colback=ghlightred,
+  colframe=ghred,
+  arc=4pt,
+  boxrule=0pt,
+  borderline west={3pt}{0pt}{ghred},
+  left=12pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt,
+  fonttitle=\bfseries\color{ghred},
+  title={\faExclamationCircle\hspace{6pt}重要},
+  attach title to upper={\par\vspace{4pt}},
+}
+
+% ============================================================
+% Custom commands
+% ============================================================
+\newcommand{\term}[1]{\textbf{\color{ghblue}#1}}
+\newcommand{\cmd}[1]{{\ttfamily\small\colorbox{ghcodebg}{\color{ghblack}\strut #1}}}
+\newcommand{\file}[1]{{\ttfamily\small\color{ghpurple}#1}}
+
+% Screenshot placeholder - beautiful styled box
+\newcommand{\screenshot}[1]{%
+  \begin{tcolorbox}[
+    enhanced,
+    colback=ghlightgray,
+    colframe=ghborder,
+    arc=6pt,
+    boxrule=0.5pt,
+    left=10pt, right=10pt, top=12pt, bottom=12pt,
+    shadow={1mm}{-1mm}{0mm}{black!15},
+  ]
+  \centering
+  {\color{ghgray}\faCamera\hspace{8pt}\textit{スクリーンショット: #1}}
+  \end{tcolorbox}
+}
+
+% Colored table environment
+\newenvironment{colortable}[1]{%
+  \begin{table}[htbp]
+  \centering
+  \rowcolors{2}{ghlightgray}{white}
+  \begin{tabular}{#1}
+  \hline
+  \rowcolor{ghblue}
+}{%
+  \hline
+  \end{tabular}
+  \end{table}
+}
+
+% ============================================================
+% Header/Footer redesign
+% ============================================================
+\fancyhead[L]{%
+  {\small\color{ghblue}\faGithub\hspace{4pt} \chaptername\ \thechapter\ --\ \leftmark}%
+}
+\fancyhead[R]{%
+  {\small\color{ghgray}\thepage}%
+}
+\fancyfoot[C]{%
+  {\normalsize\color{ghgray}GitHub Complete Guide}%
+}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{ghblue}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrulewidth}{0pt}
+
+% ============================================================
+% TOC styling
+% ============================================================
+\addtocontents{toc}{\protect\hypersetup{linkcolor=ghblack}}
+
+% ============================================================
+% List styling
+% ============================================================
+\setlist[itemize]{
+  leftmargin=*,
+  label={\color{ghblue}\textbullet},
+  itemsep=2pt,
+}
+\setlist[enumerate]{
+  leftmargin=*,
+  itemsep=2pt,
+}
+\setlist[itemize,2]{
+  label={\color{ghpurple}\textendash},
+}
+
+% ============================================================
+% Quote environment redesign
+% ============================================================
+\AtBeginEnvironment{quote}{%
+  \itshape\color{ghgray}%
+  \list{}{\leftmargin=20pt\rightmargin=10pt}%
+  \item\relax
+  \leavevmode\llap{\color{ghblue}\vrule width 3pt\hspace{10pt}}%
+}
+\AtEndEnvironment{quote}{\endlist}
 
 \begin{document}
 
