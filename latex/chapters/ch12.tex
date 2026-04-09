@@ -145,7 +145,11 @@ jobs:                              # (3) ジョブの定義
 
 このファイルをリポジトリにプッシュするだけで、GitHub Actionsが自動的にワークフローを認識し、次回のpushやPR作成時にテストが実行されるようになります。
 
-\screenshot{GitHub Actionsタブでワークフローの実行結果が表示されている状態。緑のチェックマークが付いたジョブ一覧}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{images/actions-results.png}
+\caption{GitHub Actionsタブでワークフローの実行結果が表示されている状態。緑のチェックマークが付いたジョブ一覧}
+\end{figure}
 
 \section{トリガー（Event）の種類}
 
@@ -211,7 +215,11 @@ on:
         default: true
 \end{lstlisting}
 
-\screenshot{workflow\_dispatchの手動実行画面。入力フィールドとRun workflowボタンが表示されている状態}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{images/actions-workflow-dispatch.png}
+\caption{workflow\_dispatchの手動実行画面。入力フィールドとRun workflowボタンが表示されている状態}
+\end{figure}
 
 \subsection{release --- リリース公開時}
 
@@ -455,7 +463,11 @@ gh run rerun 1234567890 --failed
 gh run view 1234567890 --web
 \end{lstlisting}
 
-\screenshot{GitHub ActionsタブでCIワークフローの実行結果が表示されている状態。各ステップの実行時間と成否が確認できる}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{images/actions-results.png}
+\caption{GitHub ActionsタブでCIワークフローの実行結果が表示されている状態。各ステップの実行時間と成否が確認できる}
+\end{figure}
 
 \subsection{デバッグのコツ}
 

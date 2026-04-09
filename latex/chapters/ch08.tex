@@ -146,7 +146,11 @@ def greet():
 
 このマーカーの読み方を理解しておけば、どんなに長いファイルでコンフリクトが発生しても、落ち着いて対処できます。なお、1つのファイル内に複数のコンフリクト箇所がある場合、マーカーのセットが複数回登場します。すべてのマーカーを解決しなければ、コンフリクトの解決は完了しません。
 
-\screenshot{テキストエディタで表示されたコンフリクトマーカーの例}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{images/vscode-conflict.png}
+\caption{テキストエディタで表示されたコンフリクトマーカーの例}
+\end{figure}
 
 \section{手動で解決する方法}
 
@@ -216,7 +220,11 @@ git commit -m "Merge feature/login: resolve all conflicts"
 
 VS Codeでコンフリクトが発生しているファイルを開くと、コンフリクトマーカーの部分が色分けして表示されます。通常、HEAD側（現在のブランチ）の変更は緑色の背景で、マージ元の変更は青色の背景でハイライトされます。
 
-\screenshot{VS Codeのコンフリクト解決UI（色分けされたコンフリクト箇所とボタン）}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{images/vscode-conflict.png}
+\caption{VS Codeのコンフリクト解決UI（色分けされたコンフリクト箇所とボタン）}
+\end{figure}
 
 \subsection{ワンクリック解決ボタン}
 

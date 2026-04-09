@@ -35,817 +35,817 @@
 \contentsline {section}{\numberline {2.1}この章で学ぶこと}{31}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Gitのインストール}{31}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}macOSの場合}{31}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Windowsの場合}{32}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Linux（Ubuntu/Debian系）の場合}{33}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Linux（Fedora/RHEL系）の場合}{33}{subsection.2.2.4}%
-\contentsline {section}{\numberline {2.3}インストールの確認}{34}{section.2.3}%
-\contentsline {section}{\numberline {2.4}初期設定の意味と方法}{34}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}なぜ名前とメールアドレスが必要なのか}{34}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}設定コマンド}{35}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}{\ttfamily \small \colorbox {ghcodebg}{\color {ghblack}\strut --global}} と {\ttfamily \small \colorbox {ghcodebg}{\color {ghblack}\strut --local}} の違い}{35}{subsection.2.4.3}%
-\contentsline {section}{\numberline {2.5}プライバシー保護：noreplyメールアドレス}{35}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}GitHubの「noreplyメールアドレス」機能}{36}{subsection.2.5.1}%
-\contentsline {section}{\numberline {2.6}追加の推奨設定}{36}{section.2.6}%
-\contentsline {subsection}{\numberline {2.6.1}デフォルトブランチ名の設定}{36}{subsection.2.6.1}%
-\contentsline {subsection}{\numberline {2.6.2}エディタの設定}{37}{subsection.2.6.2}%
-\contentsline {subsection}{\numberline {2.6.3}.DS\_Store の無視（macOSのみ）}{37}{subsection.2.6.3}%
-\contentsline {subsection}{\numberline {2.6.4}カラー表示の有効化}{37}{subsection.2.6.4}%
-\contentsline {subsection}{\numberline {2.6.5}プッシュのデフォルト動作}{38}{subsection.2.6.5}%
-\contentsline {subsection}{\numberline {2.6.6}プル時のリベース設定}{38}{subsection.2.6.6}%
-\contentsline {section}{\numberline {2.7}設定の確認と設定ファイルの階層}{38}{section.2.7}%
-\contentsline {subsection}{\numberline {2.7.1}現在の設定を確認する}{38}{subsection.2.7.1}%
-\contentsline {subsection}{\numberline {2.7.2}設定ファイルの3つの階層}{39}{subsection.2.7.2}%
-\contentsline {section}{\numberline {2.8}エディタとターミナルの準備}{40}{section.2.8}%
-\contentsline {subsection}{\numberline {2.8.1}Visual Studio Code（VS Code）の導入}{40}{subsection.2.8.1}%
-\contentsline {subsection}{\numberline {2.8.2}おすすめのVS Code拡張機能}{40}{subsection.2.8.2}%
-\contentsline {subsection}{\numberline {2.8.3}ターミナルの選び方}{41}{subsection.2.8.3}%
-\contentsline {section}{\numberline {2.9}まとめ}{41}{section.2.9}%
-\contentsline {chapter}{\numberline {3}GitHubアカウント — 開発者としての第一歩}{43}{chapter.3}%
-\contentsline {section}{\numberline {3.1}この章で学ぶこと}{43}{section.3.1}%
-\contentsline {section}{\numberline {3.2}アカウント作成の手順}{43}{section.3.2}%
-\contentsline {section}{\numberline {3.3}ユーザー名の選び方}{44}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}なぜユーザー名が重要なのか}{44}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}選び方のヒント}{45}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}ユーザー名は後から変更できるか}{45}{subsection.3.3.3}%
-\contentsline {section}{\numberline {3.4}二段階認証（2FA）— なぜ必要か}{45}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}二段階認証とは何か}{46}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}設定手順}{46}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}推奨認証アプリ}{46}{subsection.3.4.3}%
-\contentsline {subsection}{\numberline {3.4.4}リカバリーコードの重要性}{47}{subsection.3.4.4}%
-\contentsline {section}{\numberline {3.5}プロフィール設定 — 基本情報}{47}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}基本プロフィールの設定}{47}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}プロフィール写真の設定}{48}{subsection.3.5.2}%
-\contentsline {section}{\numberline {3.6}プロフィールREADME — 自分だけのページを作る}{48}{section.3.6}%
-\contentsline {subsection}{\numberline {3.6.1}作り方}{48}{subsection.3.6.1}%
-\contentsline {subsection}{\numberline {3.6.2}書き方の例}{49}{subsection.3.6.2}%
-\contentsline {subsection}{\numberline {3.6.3}よく使われるバッジとウィジェット}{49}{subsection.3.6.3}%
-\contentsline {section}{\numberline {3.7}GitHubの料金プラン}{50}{section.3.7}%
-\contentsline {subsection}{\numberline {3.7.1}各プランの概要}{50}{subsection.3.7.1}%
-\contentsline {subsection}{\numberline {3.7.2}GitHub Education（学生・教育者向け）}{51}{subsection.3.7.2}%
-\contentsline {section}{\numberline {3.8}通知設定のカスタマイズ}{51}{section.3.8}%
-\contentsline {subsection}{\numberline {3.8.1}通知設定の画面}{51}{subsection.3.8.1}%
-\contentsline {subsection}{\numberline {3.8.2}おすすめの設定}{51}{subsection.3.8.2}%
-\contentsline {section}{\numberline {3.9}Achievements（実績バッジ）— GitHubが認める功績}{52}{section.3.9}%
-\contentsline {subsection}{\numberline {3.9.1}Achievementsとは}{52}{subsection.3.9.1}%
-\contentsline {subsection}{\numberline {3.9.2}Achievementsの表示設定}{52}{subsection.3.9.2}%
-\contentsline {subsection}{\numberline {3.9.3}現在獲得できるAchievements一覧}{52}{subsection.3.9.3}%
-\contentsline {subsubsection}{\numberline {3.9.3.1}Pull Shark（プルシャーク）}{53}{subsubsection.3.9.3.1}%
-\contentsline {subsubsection}{\numberline {3.9.3.2}Galaxy Brain（ギャラクシーブレイン）}{53}{subsubsection.3.9.3.2}%
-\contentsline {subsubsection}{\numberline {3.9.3.3}Starstruck（スターストラック）}{53}{subsubsection.3.9.3.3}%
-\contentsline {subsubsection}{\numberline {3.9.3.4}Pair Extraordinaire（ペア・エクストラオーディネール）}{54}{subsubsection.3.9.3.4}%
-\contentsline {subsubsection}{\numberline {3.9.3.5}YOLO（ヨロ）}{54}{subsubsection.3.9.3.5}%
-\contentsline {subsubsection}{\numberline {3.9.3.6}Quickdraw（クイックドロー）}{54}{subsubsection.3.9.3.6}%
-\contentsline {subsubsection}{\numberline {3.9.3.7}Public Sponsor（パブリックスポンサー）}{54}{subsubsection.3.9.3.7}%
-\contentsline {subsection}{\numberline {3.9.4}引退したAchievements（もう獲得できないバッジ）}{54}{subsection.3.9.4}%
-\contentsline {subsection}{\numberline {3.9.5}Highlights（ハイライト）}{55}{subsection.3.9.5}%
-\contentsline {section}{\numberline {3.10}コントリビューショングラフ（草）— 活動の可視化}{55}{section.3.10}%
-\contentsline {subsection}{\numberline {3.10.1}「草」とは何か}{55}{subsection.3.10.1}%
-\contentsline {subsection}{\numberline {3.10.2}コントリビューションとしてカウントされる活動}{55}{subsection.3.10.2}%
-\contentsline {subsection}{\numberline {3.10.3}コントリビューションの見せ方}{56}{subsection.3.10.3}%
-\contentsline {section}{\numberline {3.11}まとめ}{56}{section.3.11}%
-\contentsline {chapter}{\numberline {4}認証と接続 — パソコンとGitHubを安全につなぐ}{58}{chapter.4}%
-\contentsline {section}{\numberline {4.1}この章で学ぶこと}{58}{section.4.1}%
-\contentsline {section}{\numberline {4.2}なぜ認証が必要なのか}{58}{section.4.2}%
-\contentsline {section}{\numberline {4.3}接続方式の比較}{59}{section.4.3}%
-\contentsline {section}{\numberline {4.4}SSH鍵による接続（推奨）}{59}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}公開鍵暗号の仕組み — 南京錠のたとえ}{59}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}SSH鍵の生成}{60}{subsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.4.3}SSHエージェントに鍵を登録する}{61}{subsection.4.4.3}%
-\contentsline {subsection}{\numberline {4.4.4}公開鍵をGitHubに登録する}{62}{subsection.4.4.4}%
-\contentsline {subsection}{\numberline {4.4.5}接続テスト}{62}{subsection.4.4.5}%
-\contentsline {subsection}{\numberline {4.4.6}SSH接続でリポジトリを操作する}{63}{subsection.4.4.6}%
-\contentsline {section}{\numberline {4.5}HTTPS + Personal Access Token}{63}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Personal Access Token（PAT）とは}{64}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}PATの作成手順}{64}{subsection.4.5.2}%
-\contentsline {subsection}{\numberline {4.5.3}スコープの選び方}{64}{subsection.4.5.3}%
-\contentsline {subsection}{\numberline {4.5.4}PATを使ったリポジトリ操作}{65}{subsection.4.5.4}%
-\contentsline {subsection}{\numberline {4.5.5}認証情報の保存（毎回入力しなくて済むように）}{65}{subsection.4.5.5}%
-\contentsline {subsection}{\numberline {4.5.6}Fine-grained PAT（きめ細かいPAT）}{65}{subsection.4.5.6}%
-\contentsline {section}{\numberline {4.6}GitHub CLI}{66}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}インストール}{66}{subsection.4.6.1}%
-\contentsline {subsection}{\numberline {4.6.2}認証の設定}{66}{subsection.4.6.2}%
-\contentsline {subsection}{\numberline {4.6.3}認証状態の確認}{67}{subsection.4.6.3}%
-\contentsline {section}{\numberline {4.7}GPG署名 — コミットの本人証明}{68}{section.4.7}%
-\contentsline {subsection}{\numberline {4.7.1}なぜ署名が必要なのか}{68}{subsection.4.7.1}%
-\contentsline {subsection}{\numberline {4.7.2}GPG鍵の生成}{68}{subsection.4.7.2}%
-\contentsline {subsection}{\numberline {4.7.3}GitHubにGPG鍵を登録する}{69}{subsection.4.7.3}%
-\contentsline {subsection}{\numberline {4.7.4}Gitで署名を有効化する}{70}{subsection.4.7.4}%
-\contentsline {section}{\numberline {4.8}複数アカウントの管理}{70}{section.4.8}%
-\contentsline {subsection}{\numberline {4.8.1}SSH configによるアカウントの使い分け}{70}{subsection.4.8.1}%
-\contentsline {subsection}{\numberline {4.8.2}使い方}{71}{subsection.4.8.2}%
-\contentsline {subsection}{\numberline {4.8.3}リポジトリごとのユーザー情報の切り替え}{72}{subsection.4.8.3}%
-\contentsline {section}{\numberline {4.9}まとめ}{72}{section.4.9}%
-\contentsline {chapter}{\numberline {5}リポジトリ — プロジェクトの器を作る}{74}{chapter.5}%
-\contentsline {section}{\numberline {5.1}この章で学ぶこと}{74}{section.5.1}%
-\contentsline {section}{\numberline {5.2}リポジトリの構造 — .gitフォルダの役割}{74}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}プロジェクトフォルダとリポジトリの関係}{74}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}.gitフォルダの中身}{75}{subsection.5.2.2}%
-\contentsline {section}{\numberline {5.3}リポジトリの作成方法}{75}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}方法1: GitHubで作成してからクローン（推奨）}{75}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}方法2: ローカルで作成してからGitHubにプッシュ}{77}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}方法3: GitHub CLIで一発作成}{78}{subsection.5.3.3}%
-\contentsline {section}{\numberline {5.4}クローン（clone）を深く理解する}{79}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}cloneが行うこと}{79}{subsection.5.4.1}%
-\contentsline {subsection}{\numberline {5.4.2}cloneの主要オプション}{79}{subsection.5.4.2}%
-\contentsline {subsubsection}{\numberline {5.4.2.1}--depth（浅いクローン）}{79}{subsubsection.5.4.2.1}%
-\contentsline {subsubsection}{\numberline {5.4.2.2}--branch（特定ブランチのクローン）}{80}{subsubsection.5.4.2.2}%
-\contentsline {subsubsection}{\numberline {5.4.2.3}--recursive（サブモジュール付きクローン）}{80}{subsubsection.5.4.2.3}%
-\contentsline {section}{\numberline {5.5}リモート（remote）の管理}{80}{section.5.5}%
-\contentsline {subsection}{\numberline {5.5.1}originとは何か}{80}{subsection.5.5.1}%
-\contentsline {subsection}{\numberline {5.5.2}upstreamとは何か}{81}{subsection.5.5.2}%
-\contentsline {subsection}{\numberline {5.5.3}リモートの追加・変更・削除}{81}{subsection.5.5.3}%
-\contentsline {section}{\numberline {5.6}.gitignoreの書き方と考え方}{82}{section.5.6}%
-\contentsline {subsection}{\numberline {5.6.1}なぜファイルの無視が必要なのか}{82}{subsection.5.6.1}%
-\contentsline {subsection}{\numberline {5.6.2}.gitignoreの書式ルール}{82}{subsection.5.6.2}%
-\contentsline {subsection}{\numberline {5.6.3}言語別テンプレート}{83}{subsection.5.6.3}%
-\contentsline {subsection}{\numberline {5.6.4}既に追跡されたファイルへの対処}{85}{subsection.5.6.4}%
-\contentsline {section}{\numberline {5.7}リポジトリの設定}{85}{section.5.7}%
-\contentsline {subsection}{\numberline {5.7.1}GitHub上のSettings}{85}{subsection.5.7.1}%
-\contentsline {subsubsection}{\numberline {5.7.1.1}リポジトリの可視性（Visibility）}{85}{subsubsection.5.7.1.1}%
-\contentsline {subsubsection}{\numberline {5.7.1.2}ブランチ保護（Branch Protection Rules）}{86}{subsubsection.5.7.1.2}%
-\contentsline {subsubsection}{\numberline {5.7.1.3}Collaborators（共同作業者）}{86}{subsubsection.5.7.1.3}%
-\contentsline {subsection}{\numberline {5.7.2}テンプレートリポジトリ}{87}{subsection.5.7.2}%
-\contentsline {subsection}{\numberline {5.7.3}リポジトリの削除}{87}{subsection.5.7.3}%
-\contentsline {section}{\numberline {5.8}まとめ}{88}{section.5.8}%
-\contentsline {chapter}{\numberline {6}基本ワークフロー — 変更を記録し共有する}{89}{chapter.6}%
-\contentsline {section}{\numberline {6.1}この章で学ぶこと}{89}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Gitの3つのエリアを理解する}{89}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}買い物にたとえて理解する}{90}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}なぜステージングエリアが必要なのか}{90}{subsection.6.2.2}%
-\contentsline {section}{\numberline {6.3}git status — 現在の状態を把握する}{91}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}出力の読み方}{91}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}短縮表示}{92}{subsection.6.3.2}%
-\contentsline {section}{\numberline {6.4}git add — ステージングの操作と考え方}{92}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}基本的な使い方}{92}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}なぜ全部addせず選ぶのか}{93}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {6.4.3}-pオプション：ファイルの一部だけをステージングする}{93}{subsection.6.4.3}%
-\contentsline {subsection}{\numberline {6.4.4}ステージングの取り消し}{93}{subsection.6.4.4}%
-\contentsline {section}{\numberline {6.5}git commit — 変更を記録する}{94}{section.6.5}%
-\contentsline {subsection}{\numberline {6.5.1}基本的な使い方}{94}{subsection.6.5.1}%
-\contentsline {subsection}{\numberline {6.5.2}コミットメッセージの書き方の哲学}{94}{subsection.6.5.2}%
-\contentsline {subsection}{\numberline {6.5.3}Conventional Commits}{95}{subsection.6.5.3}%
-\contentsline {subsection}{\numberline {6.5.4}--amend：直前のコミットを修正する}{96}{subsection.6.5.4}%
-\contentsline {section}{\numberline {6.6}git push — ローカルの記録をGitHubに送信する}{96}{section.6.6}%
-\contentsline {subsection}{\numberline {6.6.1}基本的な使い方}{96}{subsection.6.6.1}%
-\contentsline {subsection}{\numberline {6.6.2}-uオプション（--set-upstream）の意味}{97}{subsection.6.6.2}%
-\contentsline {subsection}{\numberline {6.6.3}プッシュできない場合の対処}{97}{subsection.6.6.3}%
-\contentsline {section}{\numberline {6.7}git pull — GitHubの変更をローカルに取り込む}{98}{section.6.7}%
-\contentsline {subsection}{\numberline {6.7.1}基本的な使い方}{98}{subsection.6.7.1}%
-\contentsline {subsection}{\numberline {6.7.2}pull = fetch + merge}{98}{subsection.6.7.2}%
-\contentsline {subsection}{\numberline {6.7.3}fetchだけを使う理由}{98}{subsection.6.7.3}%
-\contentsline {section}{\numberline {6.8}git log — 履歴を確認する}{99}{section.6.8}%
-\contentsline {subsection}{\numberline {6.8.1}基本的な使い方と各オプション}{99}{subsection.6.8.1}%
-\contentsline {subsection}{\numberline {6.8.2}きれいなログ表示のエイリアス}{100}{subsection.6.8.2}%
-\contentsline {section}{\numberline {6.9}git diff — 差分を確認する}{101}{section.6.9}%
-\contentsline {subsection}{\numberline {6.9.1}4つの差分比較パターン}{101}{subsection.6.9.1}%
-\contentsline {subsection}{\numberline {6.9.2}便利なオプション}{102}{subsection.6.9.2}%
-\contentsline {section}{\numberline {6.10}ファイルの移動・削除・変更取り消し}{102}{section.6.10}%
-\contentsline {subsection}{\numberline {6.10.1}ファイルの移動・名前変更（git mv）}{102}{subsection.6.10.1}%
-\contentsline {subsection}{\numberline {6.10.2}ファイルの削除（git rm）}{102}{subsection.6.10.2}%
-\contentsline {subsection}{\numberline {6.10.3}変更の取り消し}{103}{subsection.6.10.3}%
-\contentsline {section}{\numberline {6.11}実践：一連の開発フローを体験する}{103}{section.6.11}%
-\contentsline {section}{\numberline {6.12}まとめ}{105}{section.6.12}%
-\contentsline {chapter}{\numberline {7}ブランチ — 並行開発の技法}{106}{chapter.7}%
-\contentsline {section}{\numberline {7.1}この章で学ぶこと}{106}{section.7.1}%
-\contentsline {section}{\numberline {7.2}ブランチとは何か}{106}{section.7.2}%
-\contentsline {subsection}{\numberline {7.2.1}ポインタとしてのブランチ}{106}{subsection.7.2.1}%
-\contentsline {subsection}{\numberline {7.2.2}HEADとは何か}{107}{subsection.7.2.2}%
-\contentsline {subsection}{\numberline {7.2.3}なぜブランチが必要なのか}{107}{subsection.7.2.3}%
-\contentsline {section}{\numberline {7.3}ブランチの基本操作}{108}{section.7.3}%
-\contentsline {subsection}{\numberline {7.3.1}ブランチの一覧表示}{108}{subsection.7.3.1}%
-\contentsline {subsection}{\numberline {7.3.2}ブランチの作成}{109}{subsection.7.3.2}%
-\contentsline {subsection}{\numberline {7.3.3}ブランチの切り替え（switch vs checkout）}{109}{subsection.7.3.3}%
-\contentsline {subsubsection}{\numberline {7.3.3.1}switch と checkout の歴史的経緯}{109}{subsubsection.7.3.3.1}%
-\contentsline {subsection}{\numberline {7.3.4}ブランチの削除}{110}{subsection.7.3.4}%
-\contentsline {subsection}{\numberline {7.3.5}ブランチ名の変更}{110}{subsection.7.3.5}%
-\contentsline {section}{\numberline {7.4}ブランチの命名規則}{111}{section.7.4}%
-\contentsline {subsection}{\numberline {7.4.1}プレフィックスによる分類}{111}{subsection.7.4.1}%
-\contentsline {subsection}{\numberline {7.4.2}命名のベストプラクティス}{111}{subsection.7.4.2}%
-\contentsline {section}{\numberline {7.5}マージ（merge）}{112}{section.7.5}%
-\contentsline {subsection}{\numberline {7.5.1}Fast-forwardマージ}{112}{subsection.7.5.1}%
-\contentsline {subsection}{\numberline {7.5.2}3-wayマージ}{113}{subsection.7.5.2}%
-\contentsline {subsection}{\numberline {7.5.3}マージの取り消し}{113}{subsection.7.5.3}%
-\contentsline {section}{\numberline {7.6}リベース（rebase）}{114}{section.7.6}%
-\contentsline {subsection}{\numberline {7.6.1}リベースとは何をしているのか}{114}{subsection.7.6.1}%
-\contentsline {subsection}{\numberline {7.6.2}merge vs rebase の判断基準}{115}{subsection.7.6.2}%
-\contentsline {subsection}{\numberline {7.6.3}「push済みにはrebaseしない」ルール}{115}{subsection.7.6.3}%
-\contentsline {section}{\numberline {7.7}ブランチ戦略}{116}{section.7.7}%
-\contentsline {subsection}{\numberline {7.7.1}GitHub Flow — シンプルで始めやすい}{116}{subsection.7.7.1}%
-\contentsline {subsection}{\numberline {7.7.2}Git Flow — 大規模プロジェクト向けの体系的な戦略}{117}{subsection.7.7.2}%
-\contentsline {subsection}{\numberline {7.7.3}Trunk-based Development — 高速なイテレーション}{117}{subsection.7.7.3}%
-\contentsline {subsection}{\numberline {7.7.4}戦略の選び方}{118}{subsection.7.7.4}%
-\contentsline {section}{\numberline {7.8}実践：ブランチを使った開発の一連の流れ}{118}{section.7.8}%
-\contentsline {section}{\numberline {7.9}まとめ}{119}{section.7.9}%
-\contentsline {chapter}{\numberline {8}コンフリクト — 変更の衝突を解決する}{121}{chapter.8}%
-\contentsline {section}{\numberline {8.1}この章で学ぶこと}{121}{section.8.1}%
-\contentsline {section}{\numberline {8.2}コンフリクトとは何か}{121}{section.8.2}%
-\contentsline {subsection}{\numberline {8.2.1}日常のたとえで理解する}{121}{subsection.8.2.1}%
-\contentsline {subsection}{\numberline {8.2.2}Gitにおけるコンフリクトの仕組み}{121}{subsection.8.2.2}%
-\contentsline {subsection}{\numberline {8.2.3}コンフリクトは「エラー」ではない}{122}{subsection.8.2.3}%
-\contentsline {section}{\numberline {8.3}コンフリクトが発生する場面}{122}{section.8.3}%
-\contentsline {subsection}{\numberline {8.3.1}git merge でブランチを統合するとき}{122}{subsection.8.3.1}%
-\contentsline {subsection}{\numberline {8.3.2}git pull でリモートの変更を取り込むとき}{123}{subsection.8.3.2}%
-\contentsline {subsection}{\numberline {8.3.3}git rebase でブランチの基点を付け替えるとき}{123}{subsection.8.3.3}%
-\contentsline {subsection}{\numberline {8.3.4}git cherry-pick で特定のコミットを取り込むとき}{123}{subsection.8.3.4}%
-\contentsline {subsection}{\numberline {8.3.5}コンフリクト発生時のgit status}{123}{subsection.8.3.5}%
-\contentsline {section}{\numberline {8.4}コンフリクトマーカーの読み方}{123}{section.8.4}%
-\contentsline {subsection}{\numberline {8.4.1}マーカーの全体像}{124}{subsection.8.4.1}%
-\contentsline {subsection}{\numberline {8.4.2}各行の意味}{124}{subsection.8.4.2}%
-\contentsline {subsection}{\numberline {8.4.3}マーカーの構造を表にまとめると}{124}{subsection.8.4.3}%
-\contentsline {section}{\numberline {8.5}手動で解決する方法}{125}{section.8.5}%
-\contentsline {subsection}{\numberline {8.5.1}パターン1：片方の変更を採用する}{125}{subsection.8.5.1}%
-\contentsline {subsection}{\numberline {8.5.2}パターン2：両方の変更を統合する}{125}{subsection.8.5.2}%
-\contentsline {subsection}{\numberline {8.5.3}パターン3：完全に書き直す}{126}{subsection.8.5.3}%
-\contentsline {subsection}{\numberline {8.5.4}解決後の操作：add と commit}{126}{subsection.8.5.4}%
-\contentsline {section}{\numberline {8.6}VS Codeで解決する方法}{126}{section.8.6}%
-\contentsline {subsection}{\numberline {8.6.1}コンフリクト箇所の表示}{127}{subsection.8.6.1}%
-\contentsline {subsection}{\numberline {8.6.2}ワンクリック解決ボタン}{127}{subsection.8.6.2}%
-\contentsline {subsection}{\numberline {8.6.3}VS Codeのマージエディタ}{127}{subsection.8.6.3}%
-\contentsline {section}{\numberline {8.7}コマンドで一括解決する方法}{127}{section.8.7}%
-\contentsline {subsection}{\numberline {8.7.1}--ours：自分の変更をすべて採用}{128}{subsection.8.7.1}%
-\contentsline {subsection}{\numberline {8.7.2}--theirs：相手の変更をすべて採用}{128}{subsection.8.7.2}%
-\contentsline {subsection}{\numberline {8.7.3}注意点}{128}{subsection.8.7.3}%
-\contentsline {section}{\numberline {8.8}マージやリベースの中止方法}{128}{section.8.8}%
-\contentsline {subsection}{\numberline {8.8.1}マージの中止}{129}{subsection.8.8.1}%
-\contentsline {subsection}{\numberline {8.8.2}リベースの中止}{129}{subsection.8.8.2}%
-\contentsline {subsection}{\numberline {8.8.3}cherry-pickの中止}{129}{subsection.8.8.3}%
-\contentsline {subsection}{\numberline {8.8.4}中止した後にやるべきこと}{129}{subsection.8.8.4}%
-\contentsline {section}{\numberline {8.9}コンフリクトを予防するプラクティス}{129}{section.8.9}%
-\contentsline {subsection}{\numberline {8.9.1}こまめに pull / rebase する}{129}{subsection.8.9.1}%
-\contentsline {subsection}{\numberline {8.9.2}小さなプルリクエストを心がける}{130}{subsection.8.9.2}%
-\contentsline {subsection}{\numberline {8.9.3}担当ファイルを分ける}{130}{subsection.8.9.3}%
-\contentsline {subsection}{\numberline {8.9.4}rerere を有効にする}{130}{subsection.8.9.4}%
-\contentsline {subsection}{\numberline {8.9.5}チーム内でコミュニケーションをとる}{131}{subsection.8.9.5}%
-\contentsline {section}{\numberline {8.10}まとめ}{131}{section.8.10}%
-\contentsline {chapter}{\numberline {9}履歴の操作 — 過去を自在にたどる}{132}{chapter.9}%
-\contentsline {section}{\numberline {9.1}この章で学ぶこと}{132}{section.9.1}%
-\contentsline {section}{\numberline {9.2}なぜ履歴操作が必要か}{132}{section.9.2}%
-\contentsline {subsection}{\numberline {9.2.1}「間違えても大丈夫」という安心感}{132}{subsection.9.2.1}%
-\contentsline {subsection}{\numberline {9.2.2}安全な操作と危険な操作}{132}{subsection.9.2.2}%
-\contentsline {section}{\numberline {9.3}git revert — コミットを安全に打ち消す}{133}{section.9.3}%
-\contentsline {subsection}{\numberline {9.3.1}revertの考え方}{133}{subsection.9.3.1}%
-\contentsline {subsection}{\numberline {9.3.2}なぜrevertはpush済みでも安全なのか}{133}{subsection.9.3.2}%
-\contentsline {subsection}{\numberline {9.3.3}使い方}{133}{subsection.9.3.3}%
-\contentsline {section}{\numberline {9.4}git reset — コミットを巻き戻す}{134}{section.9.4}%
-\contentsline {subsection}{\numberline {9.4.1}resetの考え方}{134}{subsection.9.4.1}%
-\contentsline {subsection}{\numberline {9.4.2}3つのモード — アナロジーで理解する}{134}{subsection.9.4.2}%
-\contentsline {subsection}{\numberline {9.4.3}3つのモードの比較表}{135}{subsection.9.4.3}%
-\contentsline {subsection}{\numberline {9.4.4}HEAD\textasciitilde 1 の意味}{135}{subsection.9.4.4}%
-\contentsline {subsection}{\numberline {9.4.5}resetの注意点}{136}{subsection.9.4.5}%
-\contentsline {section}{\numberline {9.5}git restore — ファイル単位の変更取り消し}{136}{section.9.5}%
-\contentsline {subsection}{\numberline {9.5.1}restoreの位置づけ}{136}{subsection.9.5.1}%
-\contentsline {subsection}{\numberline {9.5.2}ワーキングツリーの変更を取り消す}{136}{subsection.9.5.2}%
-\contentsline {subsection}{\numberline {9.5.3}ステージングの取り消し}{136}{subsection.9.5.3}%
-\contentsline {subsection}{\numberline {9.5.4}特定のコミット時点の状態に戻す}{137}{subsection.9.5.4}%
-\contentsline {section}{\numberline {9.6}git stash — 作業の一時退避}{137}{section.9.6}%
-\contentsline {subsection}{\numberline {9.6.1}「引き出しにしまう」アナロジー}{137}{subsection.9.6.1}%
-\contentsline {subsection}{\numberline {9.6.2}基本的な使い方}{137}{subsection.9.6.2}%
-\contentsline {subsection}{\numberline {9.6.3}退避した内容の確認と復元}{138}{subsection.9.6.3}%
-\contentsline {subsection}{\numberline {9.6.4}退避の削除}{138}{subsection.9.6.4}%
-\contentsline {subsection}{\numberline {9.6.5}典型的な使い方シナリオ}{139}{subsection.9.6.5}%
-\contentsline {section}{\numberline {9.7}git cherry-pick — 特定のコミットだけ取り込む}{139}{section.9.7}%
-\contentsline {subsection}{\numberline {9.7.1}cherry-pickとは}{139}{subsection.9.7.1}%
-\contentsline {subsection}{\numberline {9.7.2}どんな場面で使うのか}{139}{subsection.9.7.2}%
-\contentsline {subsection}{\numberline {9.7.3}使い方}{140}{subsection.9.7.3}%
-\contentsline {section}{\numberline {9.8}git reflog — 「消えた」コミットを救出する}{140}{section.9.8}%
-\contentsline {subsection}{\numberline {9.8.1}reflogとは何か}{140}{subsection.9.8.1}%
-\contentsline {subsection}{\numberline {9.8.2}reflogの確認方法}{140}{subsection.9.8.2}%
-\contentsline {subsection}{\numberline {9.8.3}reset --hard からの復旧}{141}{subsection.9.8.3}%
-\contentsline {subsection}{\numberline {9.8.4}reflogの注意点}{141}{subsection.9.8.4}%
-\contentsline {section}{\numberline {9.9}git blame — 各行の変更者を特定する}{142}{section.9.9}%
-\contentsline {subsection}{\numberline {9.9.1}blameの目的}{142}{subsection.9.9.1}%
-\contentsline {subsection}{\numberline {9.9.2}使い方}{142}{subsection.9.9.2}%
-\contentsline {subsection}{\numberline {9.9.3}GitHub上でのblame}{143}{subsection.9.9.3}%
-\contentsline {section}{\numberline {9.10}まとめ}{143}{section.9.10}%
-\contentsline {chapter}{\numberline {10}プルリクエスト --- コードレビューの文化を作る}{144}{chapter.10}%
-\contentsline {section}{\numberline {10.1}この章で学ぶこと}{144}{section.10.1}%
-\contentsline {section}{\numberline {10.2}プルリクエストとは何か}{144}{section.10.2}%
-\contentsline {subsection}{\numberline {10.2.1}「取り込んでほしい」という提案}{144}{subsection.10.2.1}%
-\contentsline {subsection}{\numberline {10.2.2}なぜ直接pushしないのか}{145}{subsection.10.2.2}%
-\contentsline {section}{\numberline {10.3}PRの作成方法}{145}{section.10.3}%
-\contentsline {subsection}{\numberline {10.3.1}Web UIから作成する}{145}{subsection.10.3.1}%
-\contentsline {subsection}{\numberline {10.3.2}GitHub CLIから作成する}{146}{subsection.10.3.2}%
-\contentsline {subsection}{\numberline {10.3.3}pushと同時にURLを取得する}{146}{subsection.10.3.3}%
-\contentsline {section}{\numberline {10.4}PRの構成要素}{147}{section.10.4}%
-\contentsline {subsection}{\numberline {10.4.1}Title（タイトル）}{147}{subsection.10.4.1}%
-\contentsline {subsection}{\numberline {10.4.2}Description（説明）}{147}{subsection.10.4.2}%
-\contentsline {subsection}{\numberline {10.4.3}Reviewers（レビュアー）}{147}{subsection.10.4.3}%
-\contentsline {subsection}{\numberline {10.4.4}Assignees（担当者）}{147}{subsection.10.4.4}%
-\contentsline {subsection}{\numberline {10.4.5}Labels（ラベル）}{147}{subsection.10.4.5}%
-\contentsline {subsection}{\numberline {10.4.6}Projects（プロジェクト）}{147}{subsection.10.4.6}%
-\contentsline {subsection}{\numberline {10.4.7}Milestone（マイルストーン）}{148}{subsection.10.4.7}%
-\contentsline {subsection}{\numberline {10.4.8}Linked Issues（関連Issue）}{148}{subsection.10.4.8}%
-\contentsline {section}{\numberline {10.5}良いPR descriptionの書き方}{148}{section.10.5}%
-\contentsline {subsection}{\numberline {10.5.1}良いdescriptionの構成例}{148}{subsection.10.5.1}%
-\contentsline {subsection}{\numberline {10.5.2}Issueとの連携 --- 自動クローズ}{149}{subsection.10.5.2}%
-\contentsline {section}{\numberline {10.6}PRの確認とレビュー}{149}{section.10.6}%
-\contentsline {subsection}{\numberline {10.6.1}Files changedタブの使い方}{149}{subsection.10.6.1}%
-\contentsline {subsection}{\numberline {10.6.2}コメントの付け方}{150}{subsection.10.6.2}%
-\contentsline {subsection}{\numberline {10.6.3}suggestion機能 --- 修正提案をその場で}{150}{subsection.10.6.3}%
-\contentsline {subsection}{\numberline {10.6.4}レビューの3つのステータス}{150}{subsection.10.6.4}%
-\contentsline {subsection}{\numberline {10.6.5}CLIでのレビュー確認}{151}{subsection.10.6.5}%
-\contentsline {section}{\numberline {10.7}3つのマージ方法}{151}{section.10.7}%
-\contentsline {subsection}{\numberline {10.7.1}Create a merge commit（マージコミット）}{151}{subsection.10.7.1}%
-\contentsline {subsection}{\numberline {10.7.2}Squash and merge（スカッシュマージ）}{152}{subsection.10.7.2}%
-\contentsline {subsection}{\numberline {10.7.3}Rebase and merge（リベースマージ）}{152}{subsection.10.7.3}%
-\contentsline {subsection}{\numberline {10.7.4}3つの方法の比較}{152}{subsection.10.7.4}%
-\contentsline {subsection}{\numberline {10.7.5}CLIでのマージ}{152}{subsection.10.7.5}%
-\contentsline {section}{\numberline {10.8}ドラフトPR}{153}{section.10.8}%
-\contentsline {subsection}{\numberline {10.8.1}ドラフトPRとは}{153}{subsection.10.8.1}%
-\contentsline {subsection}{\numberline {10.8.2}どんな場面で使うのか}{153}{subsection.10.8.2}%
-\contentsline {subsection}{\numberline {10.8.3}作成と解除}{153}{subsection.10.8.3}%
-\contentsline {section}{\numberline {10.9}PRテンプレート}{154}{section.10.9}%
-\contentsline {subsection}{\numberline {10.9.1}テンプレートの目的}{154}{subsection.10.9.1}%
-\contentsline {subsection}{\numberline {10.9.2}テンプレートの作成方法}{154}{subsection.10.9.2}%
-\contentsline {subsection}{\numberline {10.9.3}テンプレートの運用Tips}{155}{subsection.10.9.3}%
-\contentsline {section}{\numberline {10.10}まとめ}{155}{section.10.10}%
-\contentsline {chapter}{\numberline {11}Issue --- タスクとバグを管理する}{157}{chapter.11}%
-\contentsline {section}{\numberline {11.1}この章で学ぶこと}{157}{section.11.1}%
-\contentsline {section}{\numberline {11.2}Issueとは何か}{157}{section.11.2}%
-\contentsline {subsection}{\numberline {11.2.1}チケットシステムとしてのIssue}{157}{subsection.11.2.1}%
-\contentsline {subsection}{\numberline {11.2.2}Issue番号の仕組み}{158}{subsection.11.2.2}%
-\contentsline {section}{\numberline {11.3}Issueの作成}{158}{section.11.3}%
-\contentsline {subsection}{\numberline {11.3.1}Web UIでの作成}{158}{subsection.11.3.1}%
-\contentsline {subsection}{\numberline {11.3.2}GitHub CLI（gh）での作成}{158}{subsection.11.3.2}%
-\contentsline {section}{\numberline {11.4}良いIssueの書き方}{159}{section.11.4}%
-\contentsline {subsection}{\numberline {11.4.1}バグ報告のテンプレート}{159}{subsection.11.4.1}%
-\contentsline {subsection}{\numberline {11.4.2}機能要望の書き方}{160}{subsection.11.4.2}%
-\contentsline {section}{\numberline {11.5}ラベル（Labels）}{161}{section.11.5}%
-\contentsline {subsection}{\numberline {11.5.1}ラベルの役割}{161}{subsection.11.5.1}%
-\contentsline {subsection}{\numberline {11.5.2}デフォルトラベル一覧}{161}{subsection.11.5.2}%
-\contentsline {subsection}{\numberline {11.5.3}カスタムラベルの作成}{161}{subsection.11.5.3}%
-\contentsline {section}{\numberline {11.6}マイルストーン（Milestones）}{162}{section.11.6}%
-\contentsline {subsection}{\numberline {11.6.1}マイルストーンとは}{162}{subsection.11.6.1}%
-\contentsline {subsection}{\numberline {11.6.2}マイルストーンの作成と管理}{162}{subsection.11.6.2}%
-\contentsline {section}{\numberline {11.7}IssueとPull Requestの連携}{163}{section.11.7}%
-\contentsline {subsection}{\numberline {11.7.1}自動クローズキーワード}{163}{subsection.11.7.1}%
-\contentsline {subsection}{\numberline {11.7.2}コミットメッセージでの参照}{164}{subsection.11.7.2}%
-\contentsline {section}{\numberline {11.8}Issueテンプレート}{164}{section.11.8}%
-\contentsline {subsection}{\numberline {11.8.1}テンプレートの必要性}{164}{subsection.11.8.1}%
-\contentsline {subsection}{\numberline {11.8.2}バグ報告テンプレートの作成}{164}{subsection.11.8.2}%
-\contentsline {subsection}{\numberline {11.8.3}機能要望テンプレートの作成}{166}{subsection.11.8.3}%
-\contentsline {section}{\numberline {11.9}Issueの管理}{167}{section.11.9}%
-\contentsline {subsection}{\numberline {11.9.1}CLIでの操作}{167}{subsection.11.9.1}%
-\contentsline {subsection}{\numberline {11.9.2}ピン留め（Pinned Issues）}{168}{subsection.11.9.2}%
-\contentsline {subsection}{\numberline {11.9.3}Issueの検索とフィルタリング}{168}{subsection.11.9.3}%
-\contentsline {section}{\numberline {11.10}まとめ}{168}{section.11.10}%
-\contentsline {chapter}{\numberline {12}GitHub Actions --- 自動化で開発を加速する}{170}{chapter.12}%
-\contentsline {section}{\numberline {12.1}この章で学ぶこと}{170}{section.12.1}%
-\contentsline {section}{\numberline {12.2}CI/CDとは何か}{170}{section.12.2}%
-\contentsline {subsection}{\numberline {12.2.1}手動テストの限界}{170}{subsection.12.2.1}%
-\contentsline {subsection}{\numberline {12.2.2}Continuous Integration（継続的インテグレーション）}{170}{subsection.12.2.2}%
-\contentsline {subsection}{\numberline {12.2.3}Continuous Delivery / Deployment（継続的デリバリー/デプロイ）}{171}{subsection.12.2.3}%
-\contentsline {section}{\numberline {12.3}GitHub Actionsの基本用語}{171}{section.12.3}%
-\contentsline {subsection}{\numberline {12.3.1}Workflow（ワークフロー）}{171}{subsection.12.3.1}%
-\contentsline {subsection}{\numberline {12.3.2}Event（イベント）}{171}{subsection.12.3.2}%
-\contentsline {subsection}{\numberline {12.3.3}Job（ジョブ）}{171}{subsection.12.3.3}%
-\contentsline {subsection}{\numberline {12.3.4}Step（ステップ）}{172}{subsection.12.3.4}%
-\contentsline {subsection}{\numberline {12.3.5}Action（アクション）}{172}{subsection.12.3.5}%
-\contentsline {subsection}{\numberline {12.3.6}Runner（ランナー）}{172}{subsection.12.3.6}%
-\contentsline {section}{\numberline {12.4}最初のワークフローを作ってみる}{172}{section.12.4}%
-\contentsline {section}{\numberline {12.5}トリガー（Event）の種類}{174}{section.12.5}%
-\contentsline {subsection}{\numberline {12.5.1}push --- コードがプッシュされた時}{174}{subsection.12.5.1}%
-\contentsline {subsection}{\numberline {12.5.2}pull\_request --- Pull Requestに関するイベント}{175}{subsection.12.5.2}%
-\contentsline {subsection}{\numberline {12.5.3}schedule --- 定期実行}{175}{subsection.12.5.3}%
-\contentsline {subsection}{\numberline {12.5.4}workflow\_dispatch --- 手動実行}{175}{subsection.12.5.4}%
-\contentsline {subsection}{\numberline {12.5.5}release --- リリース公開時}{176}{subsection.12.5.5}%
-\contentsline {section}{\numberline {12.6}実用的なワークフロー例}{176}{section.12.6}%
-\contentsline {subsection}{\numberline {12.6.1}Pythonプロジェクトの本格的なCI}{176}{subsection.12.6.1}%
-\contentsline {subsection}{\numberline {12.6.2}Node.jsプロジェクトのCI}{177}{subsection.12.6.2}%
-\contentsline {subsection}{\numberline {12.6.3}タグプッシュによる自動リリース}{178}{subsection.12.6.3}%
-\contentsline {section}{\numberline {12.7}Secrets（シークレット）}{179}{section.12.7}%
-\contentsline {subsection}{\numberline {12.7.1}なぜSecretsが必要か}{179}{subsection.12.7.1}%
-\contentsline {subsection}{\numberline {12.7.2}Secretsの設定方法}{179}{subsection.12.7.2}%
-\contentsline {subsection}{\numberline {12.7.3}ワークフローでの使い方}{180}{subsection.12.7.3}%
-\contentsline {section}{\numberline {12.8}料金と制限}{180}{section.12.8}%
-\contentsline {subsection}{\numberline {12.8.1}パブリックリポジトリ}{180}{subsection.12.8.1}%
-\contentsline {subsection}{\numberline {12.8.2}プライベートリポジトリ}{180}{subsection.12.8.2}%
-\contentsline {subsection}{\numberline {12.8.3}その他の制限}{181}{subsection.12.8.3}%
-\contentsline {section}{\numberline {12.9}ワークフローの確認とデバッグ}{181}{section.12.9}%
-\contentsline {subsection}{\numberline {12.9.1}CLIでの操作}{181}{subsection.12.9.1}%
-\contentsline {subsection}{\numberline {12.9.2}デバッグのコツ}{182}{subsection.12.9.2}%
-\contentsline {section}{\numberline {12.10}まとめ}{182}{section.12.10}%
-\contentsline {chapter}{\numberline {13}GitHub Pages --- Webサイトを無料で公開する}{184}{chapter.13}%
-\contentsline {section}{\numberline {13.1}この章で学ぶこと}{184}{section.13.1}%
-\contentsline {section}{\numberline {13.2}GitHub Pagesとは}{184}{section.13.2}%
-\contentsline {subsection}{\numberline {13.2.1}静的サイトホスティングの概念}{184}{subsection.13.2.1}%
-\contentsline {section}{\numberline {13.3}公開URLの形式}{185}{section.13.3}%
-\contentsline {subsection}{\numberline {13.3.1}ユーザーサイト（User Site）}{185}{subsection.13.3.1}%
-\contentsline {subsection}{\numberline {13.3.2}プロジェクトサイト（Project Site）}{185}{subsection.13.3.2}%
-\contentsline {subsection}{\numberline {13.3.3}カスタムドメイン}{185}{subsection.13.3.3}%
-\contentsline {section}{\numberline {13.4}セットアップ方法}{186}{section.13.4}%
-\contentsline {subsection}{\numberline {13.4.1}方法1: ブランチから公開（最もシンプル）}{186}{subsection.13.4.1}%
-\contentsline {subsection}{\numberline {13.4.2}方法2: GitHub Actionsから公開（柔軟な方法）}{186}{subsection.13.4.2}%
-\contentsline {subsection}{\numberline {13.4.3}方法3: ユーザーサイトの作成}{188}{subsection.13.4.3}%
-\contentsline {section}{\numberline {13.5}Jekyllテーマの適用}{189}{section.13.5}%
-\contentsline {subsection}{\numberline {13.5.1}Jekyllとは}{189}{subsection.13.5.1}%
-\contentsline {subsection}{\numberline {13.5.2}テーマの設定}{189}{subsection.13.5.2}%
-\contentsline {subsection}{\numberline {13.5.3}Markdownでページを作成する}{190}{subsection.13.5.3}%
-\contentsline {section}{\numberline {13.6}カスタムドメインの設定}{190}{section.13.6}%
-\contentsline {subsection}{\numberline {13.6.1}なぜカスタムドメインを使うのか}{190}{subsection.13.6.1}%
-\contentsline {subsection}{\numberline {13.6.2}DNSレコードの設定}{191}{subsection.13.6.2}%
-\contentsline {subsection}{\numberline {13.6.3}GitHub側の設定}{191}{subsection.13.6.3}%
-\contentsline {subsection}{\numberline {13.6.4}HTTPS対応}{192}{subsection.13.6.4}%
-\contentsline {section}{\numberline {13.7}まとめ}{192}{section.13.7}%
-\contentsline {chapter}{\numberline {14}リリース管理 --- ソフトウェアを世に届ける}{193}{chapter.14}%
-\contentsline {section}{\numberline {14.1}この章で学ぶこと}{193}{section.14.1}%
-\contentsline {section}{\numberline {14.2}タグ（Tag）とは}{193}{section.14.2}%
-\contentsline {subsection}{\numberline {14.2.1}コミットに名前を付ける}{193}{subsection.14.2.1}%
-\contentsline {subsection}{\numberline {14.2.2}軽量タグと注釈付きタグ}{193}{subsection.14.2.2}%
-\contentsline {subsection}{\numberline {14.2.3}タグの基本操作}{194}{subsection.14.2.3}%
-\contentsline {section}{\numberline {14.3}セマンティックバージョニング}{195}{section.14.3}%
-\contentsline {subsection}{\numberline {14.3.1}MAJOR.MINOR.PATCH の意味}{195}{subsection.14.3.1}%
-\contentsline {subsection}{\numberline {14.3.2}各桁の判断基準}{195}{subsection.14.3.2}%
-\contentsline {subsection}{\numberline {14.3.3}プレリリースバージョン}{196}{subsection.14.3.3}%
-\contentsline {subsection}{\numberline {14.3.4}v を付けるか付けないか}{196}{subsection.14.3.4}%
-\contentsline {section}{\numberline {14.4}リリースの作成}{196}{section.14.4}%
-\contentsline {subsection}{\numberline {14.4.1}Web UIでの作成}{197}{subsection.14.4.1}%
-\contentsline {subsection}{\numberline {14.4.2}CLIでの作成}{197}{subsection.14.4.2}%
-\contentsline {subsection}{\numberline {14.4.3}ドラフトリリースの活用}{198}{subsection.14.4.3}%
-\contentsline {section}{\numberline {14.5}リリースのカスタマイズ}{199}{section.14.5}%
-\contentsline {subsection}{\numberline {14.5.1}リリースノート自動生成のカテゴリ分け}{199}{subsection.14.5.1}%
-\contentsline {subsection}{\numberline {14.5.2}exclude セクション}{200}{subsection.14.5.2}%
-\contentsline {section}{\numberline {14.6}まとめ}{200}{section.14.6}%
-\contentsline {chapter}{\numberline {15}Fork --- オープンソースに貢献する}{202}{chapter.15}%
-\contentsline {section}{\numberline {15.1}この章で学ぶこと}{202}{section.15.1}%
-\contentsline {section}{\numberline {15.2}Forkとは何か}{202}{section.15.2}%
-\contentsline {subsection}{\numberline {15.2.1}他の人のリポジトリを自分のアカウントにコピーする}{202}{subsection.15.2.1}%
-\contentsline {subsection}{\numberline {15.2.2}cloneとの違い}{203}{subsection.15.2.2}%
-\contentsline {section}{\numberline {15.3}OSSへの貢献の全体像}{203}{section.15.3}%
-\contentsline {section}{\numberline {15.4}実践手順}{204}{section.15.4}%
-\contentsline {subsection}{\numberline {15.4.1}ステップ1: Forkする}{204}{subsection.15.4.1}%
-\contentsline {subsection}{\numberline {15.4.2}ステップ2: upstreamリモートを設定する}{205}{subsection.15.4.2}%
-\contentsline {subsection}{\numberline {15.4.3}ステップ3: Fork元の最新の状態と同期する}{205}{subsection.15.4.3}%
-\contentsline {subsection}{\numberline {15.4.4}ステップ4: ブランチを作成して作業する}{206}{subsection.15.4.4}%
-\contentsline {subsection}{\numberline {15.4.5}ステップ5: Pull Requestを送る}{206}{subsection.15.4.5}%
-\contentsline {subsection}{\numberline {15.4.6}ステップ6: レビュー対応}{207}{subsection.15.4.6}%
-\contentsline {section}{\numberline {15.5}貢献の前に確認すべきこと}{208}{section.15.5}%
-\contentsline {subsection}{\numberline {15.5.1}CONTRIBUTING.md}{208}{subsection.15.5.1}%
-\contentsline {subsection}{\numberline {15.5.2}Code of Conduct（行動規範）}{208}{subsection.15.5.2}%
-\contentsline {subsection}{\numberline {15.5.3}good first issue を探す}{208}{subsection.15.5.3}%
-\contentsline {subsection}{\numberline {15.5.4}ライセンスの確認}{209}{subsection.15.5.4}%
-\contentsline {section}{\numberline {15.6}コード以外のコントリビューション}{209}{section.15.6}%
-\contentsline {subsection}{\numberline {15.6.1}ドキュメントの改善}{209}{subsection.15.6.1}%
-\contentsline {subsection}{\numberline {15.6.2}翻訳}{209}{subsection.15.6.2}%
-\contentsline {subsection}{\numberline {15.6.3}Issue報告}{209}{subsection.15.6.3}%
-\contentsline {subsection}{\numberline {15.6.4}レビュー}{210}{subsection.15.6.4}%
-\contentsline {subsection}{\numberline {15.6.5}デザイン}{210}{subsection.15.6.5}%
-\contentsline {section}{\numberline {15.7}まとめ}{210}{section.15.7}%
-\contentsline {chapter}{\numberline {16}Organization --- チームでリポジトリを管理する}{211}{chapter.16}%
-\contentsline {section}{\numberline {16.1}この章で学ぶこと}{211}{section.16.1}%
-\contentsline {section}{\numberline {16.2}Organizationとは}{211}{section.16.2}%
-\contentsline {subsection}{\numberline {16.2.1}個人アカウントとの違い}{211}{subsection.16.2.1}%
-\contentsline {subsection}{\numberline {16.2.2}チーム管理の必要性}{212}{subsection.16.2.2}%
-\contentsline {section}{\numberline {16.3}Organizationの作成手順}{212}{section.16.3}%
-\contentsline {section}{\numberline {16.4}メンバーの管理}{213}{section.16.4}%
-\contentsline {subsection}{\numberline {16.4.1}権限ロールの詳細}{213}{subsection.16.4.1}%
-\contentsline {subsection}{\numberline {16.4.2}メンバーの招待方法}{214}{subsection.16.4.2}%
-\contentsline {section}{\numberline {16.5}Teams（チーム）}{214}{section.16.5}%
-\contentsline {subsection}{\numberline {16.5.1}なぜTeamsが必要なのか}{214}{subsection.16.5.1}%
-\contentsline {subsection}{\numberline {16.5.2}チームの作成}{214}{subsection.16.5.2}%
-\contentsline {subsection}{\numberline {16.5.3}チームの権限レベル}{215}{subsection.16.5.3}%
-\contentsline {subsection}{\numberline {16.5.4}ネストされたチーム}{215}{subsection.16.5.4}%
-\contentsline {section}{\numberline {16.6}CODEOWNERS}{216}{section.16.6}%
-\contentsline {subsection}{\numberline {16.6.1}ファイルやディレクトリの担当者を定義する仕組み}{216}{subsection.16.6.1}%
-\contentsline {subsection}{\numberline {16.6.2}CODEOWNERSファイルの書き方}{216}{subsection.16.6.2}%
-\contentsline {subsection}{\numberline {16.6.3}ブランチ保護ルールとの連携}{217}{subsection.16.6.3}%
-\contentsline {section}{\numberline {16.7}まとめ}{217}{section.16.7}%
-\contentsline {chapter}{\numberline {17}コードレビュー --- 品質を高め合う文化}{219}{chapter.17}%
-\contentsline {section}{\numberline {17.1}この章で学ぶこと}{219}{section.17.1}%
-\contentsline {section}{\numberline {17.2}コードレビューとは}{219}{section.17.2}%
-\contentsline {subsection}{\numberline {17.2.1}なぜレビューするのか}{219}{subsection.17.2.1}%
-\contentsline {subsection}{\numberline {17.2.2}コードレビューは「検査」ではなく「対話」}{220}{subsection.17.2.2}%
-\contentsline {section}{\numberline {17.3}レビューの進め方}{220}{section.17.3}%
-\contentsline {subsection}{\numberline {17.3.1}Files changedタブ}{220}{subsection.17.3.1}%
-\contentsline {subsection}{\numberline {17.3.2}コメントの追加方法}{220}{subsection.17.3.2}%
-\contentsline {subsection}{\numberline {17.3.3}コメントの種類}{220}{subsection.17.3.3}%
-\contentsline {subsection}{\numberline {17.3.4}レビュー結果の送信}{221}{subsection.17.3.4}%
-\contentsline {section}{\numberline {17.4}ブランチ保護ルール}{222}{section.17.4}%
-\contentsline {subsection}{\numberline {17.4.1}設定方法}{222}{subsection.17.4.1}%
-\contentsline {subsection}{\numberline {17.4.2}主な設定項目の解説}{222}{subsection.17.4.2}%
-\contentsline {subsection}{\numberline {17.4.3}CLIでの設定}{223}{subsection.17.4.3}%
-\contentsline {section}{\numberline {17.5}レビュアーとしてのベストプラクティス}{224}{section.17.5}%
-\contentsline {subsection}{\numberline {17.5.1}建設的なフィードバックを心がける}{224}{subsection.17.5.1}%
-\contentsline {subsection}{\numberline {17.5.2}コメントのプレフィックスを活用する}{224}{subsection.17.5.2}%
-\contentsline {subsection}{\numberline {17.5.3}迅速にレビューする}{225}{subsection.17.5.3}%
-\contentsline {subsection}{\numberline {17.5.4}全体像を把握してからレビューする}{225}{subsection.17.5.4}%
-\contentsline {section}{\numberline {17.6}PR作成者としてのベストプラクティス}{225}{section.17.6}%
-\contentsline {subsection}{\numberline {17.6.1}小さなPull Requestを作る}{225}{subsection.17.6.1}%
-\contentsline {subsection}{\numberline {17.6.2}セルフレビューを行う}{225}{subsection.17.6.2}%
-\contentsline {subsection}{\numberline {17.6.3}テストを含める}{226}{subsection.17.6.3}%
-\contentsline {subsection}{\numberline {17.6.4}説明文を丁寧に書く}{226}{subsection.17.6.4}%
-\contentsline {subsection}{\numberline {17.6.5}コンテキストを共有する}{226}{subsection.17.6.5}%
-\contentsline {section}{\numberline {17.7}まとめ}{226}{section.17.7}%
-\contentsline {chapter}{\numberline {18}Projects --- プロジェクトの進捗を可視化する}{227}{chapter.18}%
-\contentsline {section}{\numberline {18.1}この章で学ぶこと}{227}{section.18.1}%
-\contentsline {section}{\numberline {18.2}GitHub Projectsとは}{227}{section.18.2}%
-\contentsline {subsection}{\numberline {18.2.1}プロジェクト管理ツールとしての位置づけ}{227}{subsection.18.2.1}%
-\contentsline {section}{\numberline {18.3}Projectの作成}{228}{section.18.3}%
-\contentsline {subsection}{\numberline {18.3.1}作成手順}{228}{subsection.18.3.1}%
-\contentsline {subsection}{\numberline {18.3.2}3つのビュー}{228}{subsection.18.3.2}%
-\contentsline {subsubsection}{\numberline {18.3.2.1}Board（ボード）ビュー}{228}{subsubsection.18.3.2.1}%
-\contentsline {subsubsection}{\numberline {18.3.2.2}Table（テーブル）ビュー}{229}{subsubsection.18.3.2.2}%
-\contentsline {subsubsection}{\numberline {18.3.2.3}Roadmap（ロードマップ）ビュー}{229}{subsubsection.18.3.2.3}%
-\contentsline {subsection}{\numberline {18.3.3}複数のビューを組み合わせる}{229}{subsection.18.3.3}%
-\contentsline {section}{\numberline {18.4}カスタムフィールド}{230}{section.18.4}%
-\contentsline {subsection}{\numberline {18.4.1}Text（テキスト）}{230}{subsection.18.4.1}%
-\contentsline {subsection}{\numberline {18.4.2}Number（数値）}{230}{subsection.18.4.2}%
-\contentsline {subsection}{\numberline {18.4.3}Date（日付）}{230}{subsection.18.4.3}%
-\contentsline {subsection}{\numberline {18.4.4}Single select（単一選択）}{230}{subsection.18.4.4}%
-\contentsline {subsection}{\numberline {18.4.5}Iteration（イテレーション）}{231}{subsection.18.4.5}%
-\contentsline {subsection}{\numberline {18.4.6}フィールド設計のヒント}{231}{subsection.18.4.6}%
-\contentsline {section}{\numberline {18.5}ワークフロー自動化}{231}{section.18.5}%
-\contentsline {subsection}{\numberline {18.5.1}設定方法}{231}{subsection.18.5.1}%
-\contentsline {subsection}{\numberline {18.5.2}主なワークフロー}{232}{subsection.18.5.2}%
-\contentsline {subsection}{\numberline {18.5.3}より高度な自動化}{232}{subsection.18.5.3}%
-\contentsline {section}{\numberline {18.6}フィルタリングとソート}{232}{section.18.6}%
-\contentsline {subsection}{\numberline {18.6.1}フィルタの記法}{232}{subsection.18.6.1}%
-\contentsline {subsection}{\numberline {18.6.2}ソート}{233}{subsection.18.6.2}%
-\contentsline {subsection}{\numberline {18.6.3}ビューの保存}{233}{subsection.18.6.3}%
-\contentsline {subsection}{\numberline {18.6.4}グループ化}{234}{subsection.18.6.4}%
-\contentsline {section}{\numberline {18.7}Organizationレベルのプロジェクト}{234}{section.18.7}%
-\contentsline {subsection}{\numberline {18.7.1}複数リポジトリにまたがるプロジェクト管理}{234}{subsection.18.7.1}%
-\contentsline {subsection}{\numberline {18.7.2}Organizationプロジェクトの作成}{234}{subsection.18.7.2}%
-\contentsline {subsection}{\numberline {18.7.3}実践的な活用パターン}{235}{subsection.18.7.3}%
-\contentsline {section}{\numberline {18.8}まとめ}{235}{section.18.8}%
-\contentsline {chapter}{\numberline {19}ファイルの扱い方 --- Raw URL・画像・LFS}{236}{chapter.19}%
-\contentsline {section}{\numberline {19.1}この章で学ぶこと}{236}{section.19.1}%
-\contentsline {section}{\numberline {19.2}GitHub上のファイルURL構造 --- blob/tree/raw/blame/commitsの違いを詳しく}{236}{section.19.2}%
-\contentsline {section}{\numberline {19.3}特定行へのリンクとパーマリンク}{237}{section.19.3}%
-\contentsline {subsection}{\numberline {19.3.1}行番号リンク}{237}{subsection.19.3.1}%
-\contentsline {subsection}{\numberline {19.3.2}パーマリンク --- なぜ永続リンクが重要なのか}{238}{subsection.19.3.2}%
-\contentsline {section}{\numberline {19.4}Raw URL --- 生データの取得}{238}{section.19.4}%
-\contentsline {subsection}{\numberline {19.4.1}Raw URLとは}{238}{subsection.19.4.1}%
-\contentsline {subsection}{\numberline {19.4.2}curlでのダウンロード}{239}{subsection.19.4.2}%
-\contentsline {subsection}{\numberline {19.4.3}プログラムからの読み込み}{239}{subsection.19.4.3}%
-\contentsline {section}{\numberline {19.5}画像の保存と表示}{239}{section.19.5}%
-\contentsline {subsection}{\numberline {19.5.1}方法1: リポジトリに画像ファイルを保存する}{240}{subsection.19.5.1}%
-\contentsline {subsection}{\numberline {19.5.2}方法2: IssueにドラッグアンドドロップしてCDNを利用する}{240}{subsection.19.5.2}%
-\contentsline {subsection}{\numberline {19.5.3}HTMLタグでのサイズ指定}{241}{subsection.19.5.3}%
-\contentsline {section}{\numberline {19.6}Git LFS --- 大容量ファイルの管理}{241}{section.19.6}%
-\contentsline {subsection}{\numberline {19.6.1}なぜ大きなファイルが問題になるのか}{241}{subsection.19.6.1}%
-\contentsline {subsection}{\numberline {19.6.2}LFSの仕組み --- ポインタファイル}{242}{subsection.19.6.2}%
-\contentsline {subsection}{\numberline {19.6.3}セットアップ手順}{242}{subsection.19.6.3}%
-\contentsline {subsection}{\numberline {19.6.4}容量制限}{243}{subsection.19.6.4}%
-\contentsline {section}{\numberline {19.7}サブモジュール --- リポジトリの中に別リポジトリを含める}{243}{section.19.7}%
-\contentsline {subsection}{\numberline {19.7.1}サブモジュールとは}{243}{subsection.19.7.1}%
-\contentsline {subsection}{\numberline {19.7.2}サブモジュールの追加}{244}{subsection.19.7.2}%
-\contentsline {subsection}{\numberline {19.7.3}サブモジュール付きリポジトリのクローン}{244}{subsection.19.7.3}%
-\contentsline {subsection}{\numberline {19.7.4}サブモジュールの更新}{244}{subsection.19.7.4}%
-\contentsline {section}{\numberline {19.8}GitHub上でのファイル操作}{245}{section.19.8}%
-\contentsline {subsection}{\numberline {19.8.1}ファイルの作成}{245}{subsection.19.8.1}%
-\contentsline {subsection}{\numberline {19.8.2}ファイルの編集}{245}{subsection.19.8.2}%
-\contentsline {subsection}{\numberline {19.8.3}キーボードショートカットによる検索}{246}{subsection.19.8.3}%
-\contentsline {section}{\numberline {19.9}まとめ}{246}{section.19.9}%
-\contentsline {chapter}{\numberline {20}READMEとドキュメント --- プロジェクトの顔を作る}{247}{chapter.20}%
-\contentsline {section}{\numberline {20.1}この章で学ぶこと}{247}{section.20.1}%
-\contentsline {section}{\numberline {20.2}READMEとは何か}{247}{section.20.2}%
-\contentsline {subsection}{\numberline {20.2.1}名前の由来 --- 1970年代からの伝統}{247}{subsection.20.2.1}%
-\contentsline {subsection}{\numberline {20.2.2}GitHubでの役割 --- 自動表示の仕組み}{247}{subsection.20.2.2}%
-\contentsline {subsection}{\numberline {20.2.3}{\ttfamily \small \colorbox {ghcodebg}{\color {ghblack}\strut .md}} の意味 --- Markdown形式}{248}{subsection.20.2.3}%
-\contentsline {subsection}{\numberline {20.2.4}READMEが表示される場所一覧}{248}{subsection.20.2.4}%
-\contentsline {section}{\numberline {20.3}READMEの書き方}{249}{section.20.3}%
-\contentsline {subsection}{\numberline {20.3.1}最低限のREADME}{249}{subsection.20.3.1}%
-\contentsline {subsection}{\numberline {20.3.2}標準的なREADMEの構成}{249}{subsection.20.3.2}%
-\contentsline {section}{\numberline {20.4}Markdown記法}{251}{section.20.4}%
-\contentsline {subsection}{\numberline {20.4.1}見出し}{251}{subsection.20.4.1}%
-\contentsline {subsection}{\numberline {20.4.2}太字・斜体・取り消し線}{251}{subsection.20.4.2}%
-\contentsline {subsection}{\numberline {20.4.3}リスト}{251}{subsection.20.4.3}%
-\contentsline {subsection}{\numberline {20.4.4}リンクと画像}{252}{subsection.20.4.4}%
-\contentsline {subsection}{\numberline {20.4.5}テーブル}{252}{subsection.20.4.5}%
-\contentsline {subsection}{\numberline {20.4.6}コードブロック}{252}{subsection.20.4.6}%
-\contentsline {subsection}{\numberline {20.4.7}タスクリスト}{253}{subsection.20.4.7}%
-\contentsline {subsection}{\numberline {20.4.8}折りたたみ（details/summary）}{253}{subsection.20.4.8}%
-\contentsline {subsection}{\numberline {20.4.9}注意・警告（Alerts）}{253}{subsection.20.4.9}%
-\contentsline {subsection}{\numberline {20.4.10}Mermaid図}{254}{subsection.20.4.10}%
-\contentsline {subsection}{\numberline {20.4.11}数式（LaTeX）}{254}{subsection.20.4.11}%
-\contentsline {section}{\numberline {20.5}ジャンル別READMEテンプレート}{255}{section.20.5}%
-\contentsline {subsection}{\numberline {20.5.1}CLIツール}{255}{subsection.20.5.1}%
-\contentsline {subsection}{\numberline {20.5.2}Webアプリ / API}{256}{subsection.20.5.2}%
-\contentsline {subsection}{\numberline {20.5.3}ライブラリ / パッケージ}{257}{subsection.20.5.3}%
-\contentsline {subsection}{\numberline {20.5.4}研究プロジェクト}{258}{subsection.20.5.4}%
-\contentsline {section}{\numberline {20.6}README作成のコツ}{259}{section.20.6}%
-\contentsline {subsection}{\numberline {20.6.1}最初の3秒で勝負が決まる}{259}{subsection.20.6.1}%
-\contentsline {subsection}{\numberline {20.6.2}コピーアンドペーストで動くコードを載せる}{260}{subsection.20.6.2}%
-\contentsline {subsection}{\numberline {20.6.3}スクリーンショットやGIFを使う}{260}{subsection.20.6.3}%
-\contentsline {subsection}{\numberline {20.6.4}目次を付ける（長いREADMEの場合）}{260}{subsection.20.6.4}%
-\contentsline {section}{\numberline {20.7}バッジの付け方}{260}{section.20.7}%
-\contentsline {subsection}{\numberline {20.7.1}shields.io --- 動的バッジ}{260}{subsection.20.7.1}%
-\contentsline {subsection}{\numberline {20.7.2}技術スタックバッジ}{261}{subsection.20.7.2}%
-\contentsline {section}{\numberline {20.8}Wiki}{262}{section.20.8}%
-\contentsline {subsection}{\numberline {20.8.1}有効化}{262}{subsection.20.8.1}%
-\contentsline {subsection}{\numberline {20.8.2}クローンと編集}{262}{subsection.20.8.2}%
-\contentsline {section}{\numberline {20.9}よく使うファイル}{262}{section.20.9}%
-\contentsline {section}{\numberline {20.10}ライセンスの選び方}{263}{section.20.10}%
-\contentsline {subsection}{\numberline {20.10.1}判断基準}{263}{subsection.20.10.1}%
-\contentsline {section}{\numberline {20.11}まとめ}{264}{section.20.11}%
-\contentsline {chapter}{\numberline {21}カスタマイズ --- GitHubを自分好みに整える}{266}{chapter.21}%
-\contentsline {section}{\numberline {21.1}この章で学ぶこと}{266}{section.21.1}%
-\contentsline {section}{\numberline {21.2}テーマ設定 --- ダークモード/ライトモード}{266}{section.21.2}%
-\contentsline {section}{\numberline {21.3}キーボードショートカット}{267}{section.21.3}%
-\contentsline {subsection}{\numberline {21.3.1}グローバルショートカット（どのページでも使える）}{267}{subsection.21.3.1}%
-\contentsline {subsection}{\numberline {21.3.2}リポジトリ内ショートカット}{267}{subsection.21.3.2}%
-\contentsline {subsection}{\numberline {21.3.3}ファイル表示時のショートカット}{267}{subsection.21.3.3}%
-\contentsline {subsection}{\numberline {21.3.4}Pull RequestとIssueのショートカット}{267}{subsection.21.3.4}%
-\contentsline {section}{\numberline {21.4}GitHub CLI (gh) のカスタマイズ --- エイリアスの設定と活用例}{268}{section.21.4}%
-\contentsline {subsection}{\numberline {21.4.1}エイリアスの設定}{268}{subsection.21.4.1}%
-\contentsline {subsection}{\numberline {21.4.2}ghの設定}{269}{subsection.21.4.2}%
-\contentsline {section}{\numberline {21.5}Gitのカスタマイズ --- エイリアスと.gitconfig}{270}{section.21.5}%
-\contentsline {subsection}{\numberline {21.5.1}エイリアスの設定}{270}{subsection.21.5.1}%
-\contentsline {subsection}{\numberline {21.5.2}.gitconfig の直接編集}{271}{subsection.21.5.2}%
-\contentsline {section}{\numberline {21.6}通知のカスタマイズ}{272}{section.21.6}%
-\contentsline {subsection}{\numberline {21.6.1}通知設定の場所}{272}{subsection.21.6.1}%
-\contentsline {subsection}{\numberline {21.6.2}リポジトリごとの通知設定}{273}{subsection.21.6.2}%
-\contentsline {section}{\numberline {21.7}GitHub Mobile}{273}{section.21.7}%
-\contentsline {section}{\numberline {21.8}Saved Replies}{274}{section.21.8}%
-\contentsline {subsection}{\numberline {21.8.1}設定方法}{274}{subsection.21.8.1}%
-\contentsline {subsection}{\numberline {21.8.2}便利なテンプレート例}{274}{subsection.21.8.2}%
-\contentsline {section}{\numberline {21.9}まとめ}{275}{section.21.9}%
-\contentsline {chapter}{\numberline {22}セキュリティ --- リポジトリを安全に保つ}{276}{chapter.22}%
-\contentsline {section}{\numberline {22.1}この章で学ぶこと}{276}{section.22.1}%
-\contentsline {section}{\numberline {22.2}絶対にコミットしてはいけないもの}{276}{section.22.2}%
-\contentsline {subsection}{\numberline {22.2.1}なぜ秘密情報のコミットが危険なのか}{276}{subsection.22.2.1}%
-\contentsline {subsection}{\numberline {22.2.2}コミットしてはならない情報の一覧}{276}{subsection.22.2.2}%
-\contentsline {section}{\numberline {22.3}万が一コミットしてしまったときの対処}{277}{section.22.3}%
-\contentsline {subsection}{\numberline {22.3.1}最優先事項：秘密情報を無効化する}{277}{subsection.22.3.1}%
-\contentsline {subsection}{\numberline {22.3.2}履歴からの完全削除}{278}{subsection.22.3.2}%
-\contentsline {section}{\numberline {22.4}Dependabot --- 依存パッケージの脆弱性を自動検出する}{279}{section.22.4}%
-\contentsline {subsection}{\numberline {22.4.1}なぜ依存パッケージの管理が重要なのか}{279}{subsection.22.4.1}%
-\contentsline {subsection}{\numberline {22.4.2}Dependabotとは}{279}{subsection.22.4.2}%
-\contentsline {subsection}{\numberline {22.4.3}有効化の手順}{279}{subsection.22.4.3}%
-\contentsline {subsection}{\numberline {22.4.4}設定ファイルによるカスタマイズ}{280}{subsection.22.4.4}%
-\contentsline {section}{\numberline {22.5}Secret Scanning --- リポジトリ内の秘密情報を自動検出する}{281}{section.22.5}%
-\contentsline {subsection}{\numberline {22.5.1}Secret Scanningとは}{281}{subsection.22.5.1}%
-\contentsline {subsection}{\numberline {22.5.2}検出できる秘密情報の種類}{281}{subsection.22.5.2}%
-\contentsline {subsection}{\numberline {22.5.3}有効化と動作}{281}{subsection.22.5.3}%
-\contentsline {subsection}{\numberline {22.5.4}Push protection}{281}{subsection.22.5.4}%
-\contentsline {section}{\numberline {22.6}セキュリティポリシー --- SECURITY.mdの作成}{282}{section.22.6}%
-\contentsline {subsection}{\numberline {22.6.1}なぜセキュリティポリシーが必要か}{282}{subsection.22.6.1}%
-\contentsline {subsection}{\numberline {22.6.2}SECURITY.mdの書き方}{282}{subsection.22.6.2}%
-\contentsline {section}{\numberline {22.7}セキュリティのベストプラクティス7箇条}{283}{section.22.7}%
-\contentsline {subsection}{\numberline {22.7.1}第1条：二段階認証（2FA）を必ず有効にする}{283}{subsection.22.7.1}%
-\contentsline {subsection}{\numberline {22.7.2}第2条：.gitignoreを徹底する}{283}{subsection.22.7.2}%
-\contentsline {subsection}{\numberline {22.7.3}第3条：GitHub Secretsで秘密情報を管理する}{283}{subsection.22.7.3}%
-\contentsline {subsection}{\numberline {22.7.4}第4条：最小権限の原則を守る}{283}{subsection.22.7.4}%
-\contentsline {subsection}{\numberline {22.7.5}第5条：Dependabotのアラートに迅速に対応する}{284}{subsection.22.7.5}%
-\contentsline {subsection}{\numberline {22.7.6}第6条：ブランチ保護ルールを設定する}{284}{subsection.22.7.6}%
-\contentsline {subsection}{\numberline {22.7.7}第7条：定期的にアクセス権限を見直す}{284}{subsection.22.7.7}%
-\contentsline {section}{\numberline {22.8}まとめ}{284}{section.22.8}%
-\contentsline {chapter}{\numberline {23}外部連携 --- 開発ツールとつなげる}{285}{chapter.23}%
-\contentsline {section}{\numberline {23.1}この章で学ぶこと}{285}{section.23.1}%
-\contentsline {section}{\numberline {23.2}VS Codeとの連携}{285}{section.23.2}%
-\contentsline {subsection}{\numberline {23.2.1}なぜVS CodeとGitHubの連携が重要なのか}{285}{subsection.23.2.1}%
-\contentsline {subsection}{\numberline {23.2.2}拡張機能一覧と用途}{285}{subsection.23.2.2}%
-\contentsline {subsection}{\numberline {23.2.3}ソース管理パネルの使い方}{286}{subsection.23.2.3}%
-\contentsline {subsection}{\numberline {23.2.4}インラインblame}{286}{subsection.23.2.4}%
-\contentsline {subsection}{\numberline {23.2.5}github.dev --- ブラウザ版VS Code}{287}{subsection.23.2.5}%
-\contentsline {section}{\numberline {23.3}Claude Codeとの連携}{287}{section.23.3}%
-\contentsline {subsection}{\numberline {23.3.1}Claude Codeとは何か}{287}{subsection.23.3.1}%
-\contentsline {subsection}{\numberline {23.3.2}インストールと認証}{287}{subsection.23.3.2}%
-\contentsline {subsection}{\numberline {23.3.3}GitHubリポジトリでの使用方法}{288}{subsection.23.3.3}%
-\contentsline {subsection}{\numberline {23.3.4}Git操作の対話的な依頼}{288}{subsection.23.3.4}%
-\contentsline {subsection}{\numberline {23.3.5}VS Code拡張としての使用}{289}{subsection.23.3.5}%
-\contentsline {section}{\numberline {23.4}GitHub Apps / OAuth Apps}{289}{section.23.4}%
-\contentsline {subsection}{\numberline {23.4.1}GitHub Marketplaceの概要}{289}{subsection.23.4.1}%
-\contentsline {subsection}{\numberline {23.4.2}カテゴリ別の代表的なアプリ}{289}{subsection.23.4.2}%
-\contentsline {subsection}{\numberline {23.4.3}インストール方法}{290}{subsection.23.4.3}%
-\contentsline {subsection}{\numberline {23.4.4}管理方法}{290}{subsection.23.4.4}%
-\contentsline {section}{\numberline {23.5}Slack連携}{290}{section.23.5}%
-\contentsline {subsection}{\numberline {23.5.1}なぜSlack連携が必要なのか}{290}{subsection.23.5.1}%
-\contentsline {subsection}{\numberline {23.5.2}GitHub for Slackの設定}{290}{subsection.23.5.2}%
-\contentsline {subsection}{\numberline {23.5.3}通知カスタマイズ}{291}{subsection.23.5.3}%
-\contentsline {section}{\numberline {23.6}Webhook}{291}{section.23.6}%
-\contentsline {subsection}{\numberline {23.6.1}仕組みの解説}{291}{subsection.23.6.1}%
-\contentsline {subsection}{\numberline {23.6.2}設定方法}{292}{subsection.23.6.2}%
-\contentsline {subsection}{\numberline {23.6.3}よく使うイベント}{292}{subsection.23.6.3}%
-\contentsline {section}{\numberline {23.7}GitHub API}{293}{section.23.7}%
-\contentsline {subsection}{\numberline {23.7.1}REST APIとGraphQL APIの概要}{293}{subsection.23.7.1}%
-\contentsline {subsection}{\numberline {23.7.2}gh apiコマンドでの使い方}{293}{subsection.23.7.2}%
-\contentsline {subsection}{\numberline {23.7.3}GraphQL APIの使い方}{294}{subsection.23.7.3}%
-\contentsline {subsection}{\numberline {23.7.4}実用例}{294}{subsection.23.7.4}%
-\contentsline {section}{\numberline {23.8}Gist}{295}{section.23.8}%
-\contentsline {subsection}{\numberline {23.8.1}コードスニペット共有の仕組み}{295}{subsection.23.8.1}%
-\contentsline {subsection}{\numberline {23.8.2}作成・一覧・表示のコマンド}{295}{subsection.23.8.2}%
-\contentsline {section}{\numberline {23.9}まとめ}{296}{section.23.9}%
-\contentsline {chapter}{\numberline {24}トラブルシューティング --- よくある問題の処方箋}{297}{chapter.24}%
-\contentsline {section}{\numberline {24.1}この章で学ぶこと}{297}{section.24.1}%
-\contentsline {section}{\numberline {24.2}認証エラー}{297}{section.24.2}%
-\contentsline {subsection}{\numberline {24.2.1}Permission denied (publickey) の原因と解決法}{297}{subsection.24.2.1}%
-\contentsline {subsection}{\numberline {24.2.2}Invalid username or password の原因と解決法}{298}{subsection.24.2.2}%
-\contentsline {subsection}{\numberline {24.2.3}403 Forbidden の原因と解決法}{299}{subsection.24.2.3}%
-\contentsline {section}{\numberline {24.3}push/pullエラー}{299}{section.24.3}%
-\contentsline {subsection}{\numberline {24.3.1}rejected non-fast-forward の原因と解決法}{299}{subsection.24.3.1}%
-\contentsline {subsection}{\numberline {24.3.2}refusing to merge unrelated histories の原因と解決法}{300}{subsection.24.3.2}%
-\contentsline {subsection}{\numberline {24.3.3}Your branch is behind}{301}{subsection.24.3.3}%
-\contentsline {section}{\numberline {24.4}ブランチ関連の問題}{301}{section.24.4}%
-\contentsline {subsection}{\numberline {24.4.1}local changes would be overwritten（未コミット変更時のブランチ切替）}{301}{subsection.24.4.1}%
-\contentsline {subsection}{\numberline {24.4.2}branch not found（リモートブランチの取得）}{302}{subsection.24.4.2}%
-\contentsline {section}{\numberline {24.5}コミット関連の問題}{303}{section.24.5}%
-\contentsline {subsection}{\numberline {24.5.1}間違ったブランチにコミットした場合}{303}{subsection.24.5.1}%
-\contentsline {subsection}{\numberline {24.5.2}コミットメッセージを間違えた場合}{304}{subsection.24.5.2}%
-\contentsline {subsection}{\numberline {24.5.3}大きなファイルをコミットしてしまった場合}{304}{subsection.24.5.3}%
-\contentsline {section}{\numberline {24.6}.gitignoreが効かない問題}{305}{section.24.6}%
-\contentsline {subsection}{\numberline {24.6.1}既に追跡されたファイルの対処}{305}{subsection.24.6.1}%
-\contentsline {section}{\numberline {24.7}ネットワーク関連}{306}{section.24.7}%
-\contentsline {subsection}{\numberline {24.7.1}Connection timed out（ポート443の使用）}{306}{subsection.24.7.1}%
-\contentsline {subsection}{\numberline {24.7.2}クローンが遅い（shallow clone）}{306}{subsection.24.7.2}%
-\contentsline {section}{\numberline {24.8}その他の問題}{307}{section.24.8}%
-\contentsline {subsection}{\numberline {24.8.1}detached HEAD}{307}{subsection.24.8.1}%
-\contentsline {subsection}{\numberline {24.8.2}LF/CRLFの改行コード問題}{307}{subsection.24.8.2}%
-\contentsline {subsection}{\numberline {24.8.3}not a git repository}{308}{subsection.24.8.3}%
-\contentsline {section}{\numberline {24.9}困ったときのコマンド集}{309}{section.24.9}%
-\contentsline {section}{\numberline {24.10}まとめ}{310}{section.24.10}%
-\contentsline {chapter}{\numberline {25}ファイル拡張子とプログラミング言語}{312}{chapter.25}%
-\contentsline {section}{\numberline {25.1}この章で学ぶこと}{312}{section.25.1}%
-\contentsline {section}{\numberline {25.2}拡張子とは何か}{312}{section.25.2}%
-\contentsline {subsection}{\numberline {25.2.1}ファイル名の末尾の .xxx の役割}{312}{subsection.25.2.1}%
-\contentsline {subsection}{\numberline {25.2.2}GitHubでのシンタックスハイライト}{313}{subsection.25.2.2}%
-\contentsline {section}{\numberline {25.3}プログラミング言語と拡張子}{313}{section.25.3}%
-\contentsline {subsection}{\numberline {25.3.1}Web開発の拡張子}{313}{subsection.25.3.1}%
-\contentsline {subsection}{\numberline {25.3.2}汎用プログラミング言語の拡張子}{314}{subsection.25.3.2}%
-\contentsline {subsection}{\numberline {25.3.3}データサイエンス・科学計算の拡張子}{314}{subsection.25.3.3}%
-\contentsline {subsection}{\numberline {25.3.4}シェルスクリプトの拡張子}{315}{subsection.25.3.4}%
-\contentsline {section}{\numberline {25.4}データ・設定ファイルの拡張子}{315}{section.25.4}%
-\contentsline {section}{\numberline {25.5}ドキュメントファイルの拡張子}{316}{section.25.5}%
-\contentsline {section}{\numberline {25.6}ビルド・パッケージ管理ファイル}{316}{section.25.6}%
-\contentsline {section}{\numberline {25.7}GitHub特有のファイルとフォルダ}{317}{section.25.7}%
-\contentsline {subsection}{\numberline {25.7.1}リポジトリルートの特別なファイル}{317}{subsection.25.7.1}%
-\contentsline {subsection}{\numberline {25.7.2}.github/ ディレクトリ内の各種ファイル}{318}{subsection.25.7.2}%
-\contentsline {section}{\numberline {25.8}GitHubの言語判定の仕組み}{318}{section.25.8}%
-\contentsline {subsection}{\numberline {25.8.1}linguistによる自動判定}{318}{subsection.25.8.1}%
-\contentsline {subsection}{\numberline {25.8.2}.gitattributesでのカスタマイズ}{319}{subsection.25.8.2}%
-\contentsline {section}{\numberline {25.9}ファイルの文字コード}{319}{section.25.9}%
-\contentsline {subsection}{\numberline {25.9.1}UTF-8が標準}{319}{subsection.25.9.1}%
-\contentsline {subsection}{\numberline {25.9.2}.editorconfig}{320}{subsection.25.9.2}%
-\contentsline {section}{\numberline {25.10}拡張子のないファイル}{320}{section.25.10}%
-\contentsline {section}{\numberline {25.11}まとめ}{321}{section.25.11}%
-\contentsline {chapter}{\numberline {26}GitHubアプリの比較 --- Web・Desktop・CLI・Mobile・IDE}{323}{chapter.26}%
-\contentsline {section}{\numberline {26.1}この章で学ぶこと}{323}{section.26.1}%
-\contentsline {section}{\numberline {26.2}GitHubを操作する5つの方法の概観}{323}{section.26.2}%
-\contentsline {section}{\numberline {26.3}GitHub Web UI}{324}{section.26.3}%
-\contentsline {subsection}{\numberline {26.3.1}できること（全機能）}{324}{subsection.26.3.1}%
-\contentsline {subsection}{\numberline {26.3.2}Web上でのコード編集}{324}{subsection.26.3.2}%
-\contentsline {subsection}{\numberline {26.3.3}向いている人}{325}{subsection.26.3.3}%
-\contentsline {section}{\numberline {26.4}GitHub Desktop}{325}{section.26.4}%
-\contentsline {subsection}{\numberline {26.4.1}インストール}{325}{subsection.26.4.1}%
-\contentsline {subsection}{\numberline {26.4.2}特徴（GUIでGit操作）}{325}{subsection.26.4.2}%
-\contentsline {subsection}{\numberline {26.4.3}画面の見方}{326}{subsection.26.4.3}%
-\contentsline {subsection}{\numberline {26.4.4}他のGit GUIツールとの比較}{326}{subsection.26.4.4}%
-\contentsline {subsection}{\numberline {26.4.5}向いている人}{327}{subsection.26.4.5}%
-\contentsline {section}{\numberline {26.5}GitHub CLI (gh)}{327}{section.26.5}%
-\contentsline {subsection}{\numberline {26.5.1}gitコマンドとghコマンドの違い}{327}{subsection.26.5.1}%
-\contentsline {subsection}{\numberline {26.5.2}インストール}{328}{subsection.26.5.2}%
-\contentsline {subsection}{\numberline {26.5.3}よく使うコマンド集}{328}{subsection.26.5.3}%
-\contentsline {subsection}{\numberline {26.5.4}エイリアス}{329}{subsection.26.5.4}%
-\contentsline {subsection}{\numberline {26.5.5}向いている人}{330}{subsection.26.5.5}%
-\contentsline {section}{\numberline {26.6}GitHub Mobile}{330}{section.26.6}%
-\contentsline {subsection}{\numberline {26.6.1}インストール}{330}{subsection.26.6.1}%
-\contentsline {subsection}{\numberline {26.6.2}できること（通知/Issue/PR/コード閲覧）}{330}{subsection.26.6.2}%
-\contentsline {subsection}{\numberline {26.6.3}できないこと（編集/設定）}{330}{subsection.26.6.3}%
-\contentsline {subsection}{\numberline {26.6.4}向いている人}{331}{subsection.26.6.4}%
-\contentsline {section}{\numberline {26.7}IDE拡張機能}{331}{section.26.7}%
-\contentsline {subsection}{\numberline {26.7.1}VS Code標準Git機能の解説}{331}{subsection.26.7.1}%
-\contentsline {subsection}{\numberline {26.7.2}おすすめ拡張機能}{331}{subsection.26.7.2}%
-\contentsline {subsection}{\numberline {26.7.3}Claude Code}{332}{subsection.26.7.3}%
-\contentsline {subsection}{\numberline {26.7.4}JetBrains IDEのGit連携}{332}{subsection.26.7.4}%
-\contentsline {subsection}{\numberline {26.7.5}向いている人}{333}{subsection.26.7.5}%
-\contentsline {section}{\numberline {26.8}どれを使うべきか}{333}{section.26.8}%
-\contentsline {subsection}{\numberline {26.8.1}初心者の場合}{333}{subsection.26.8.1}%
-\contentsline {subsection}{\numberline {26.8.2}開発者の日常}{333}{subsection.26.8.2}%
-\contentsline {subsection}{\numberline {26.8.3}レベル別おすすめ組み合わせ}{334}{subsection.26.8.3}%
-\contentsline {section}{\numberline {26.9}まとめ}{334}{section.26.9}%
-\contentsline {chapter}{\numberline {A}Gitコマンド早見表}{336}{appendix.A}%
-\contentsline {section}{この付録の使い方}{336}{section*.64}%
-\contentsline {section}{\numberline {A.1}初期設定（→ 第2章）}{336}{section.A.1}%
-\contentsline {section}{\numberline {A.2}リポジトリの作成と取得（→ 第5章）}{336}{section.A.2}%
-\contentsline {section}{\numberline {A.3}基本操作（→ 第6章）}{337}{section.A.3}%
-\contentsline {section}{\numberline {A.4}差分と履歴の確認（→ 第6章、第9章）}{338}{section.A.4}%
-\contentsline {section}{\numberline {A.5}ブランチ操作（→ 第7章）}{339}{section.A.5}%
-\contentsline {section}{\numberline {A.6}リモート操作（→ 第5章、第6章）}{340}{section.A.6}%
-\contentsline {section}{\numberline {A.7}変更の取り消しと復元（→ 第9章）}{341}{section.A.7}%
-\contentsline {section}{\numberline {A.8}一時退避（→ 第9章）}{342}{section.A.8}%
-\contentsline {section}{\numberline {A.9}タグ（→ 第14章）}{342}{section.A.9}%
-\contentsline {section}{\numberline {A.10}ファイル操作（→ 第6章）}{343}{section.A.10}%
-\contentsline {section}{\numberline {A.11}GitHub CLI（gh）コマンド（→ 第23章）}{343}{section.A.11}%
-\contentsline {section}{\numberline {A.12}逆引きリファレンス --- 「やりたいこと」から探す}{344}{section.A.12}%
-\contentsline {chapter}{\numberline {B}用語集}{346}{appendix.B}%
-\contentsline {section}{この付録の使い方}{346}{section*.66}%
-\contentsline {section}{A}{346}{section*.66}%
-\contentsline {section}{B}{346}{section*.66}%
-\contentsline {section}{C}{347}{section*.66}%
-\contentsline {section}{D}{348}{section*.66}%
-\contentsline {section}{F}{349}{section*.66}%
-\contentsline {section}{G}{349}{section*.66}%
-\contentsline {section}{H}{350}{section*.66}%
-\contentsline {section}{I}{350}{section*.66}%
-\contentsline {section}{L}{350}{section*.66}%
-\contentsline {section}{M}{351}{section*.66}%
-\contentsline {section}{O}{351}{section*.66}%
-\contentsline {section}{P}{352}{section*.66}%
-\contentsline {section}{R}{352}{section*.66}%
-\contentsline {section}{S}{354}{section*.66}%
-\contentsline {section}{T}{355}{section*.66}%
-\contentsline {section}{U}{355}{section*.66}%
-\contentsline {section}{V}{355}{section*.66}%
-\contentsline {section}{W}{355}{section*.66}%
+\contentsline {subsection}{\numberline {2.2.2}Windowsの場合}{33}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Linux（Ubuntu/Debian系）の場合}{34}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Linux（Fedora/RHEL系）の場合}{34}{subsection.2.2.4}%
+\contentsline {section}{\numberline {2.3}インストールの確認}{35}{section.2.3}%
+\contentsline {section}{\numberline {2.4}初期設定の意味と方法}{35}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}なぜ名前とメールアドレスが必要なのか}{35}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}設定コマンド}{36}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}{\ttfamily \small \colorbox {ghcodebg}{\color {ghblack}\strut --global}} と {\ttfamily \small \colorbox {ghcodebg}{\color {ghblack}\strut --local}} の違い}{36}{subsection.2.4.3}%
+\contentsline {section}{\numberline {2.5}プライバシー保護：noreplyメールアドレス}{36}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}GitHubの「noreplyメールアドレス」機能}{37}{subsection.2.5.1}%
+\contentsline {section}{\numberline {2.6}追加の推奨設定}{37}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}デフォルトブランチ名の設定}{37}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}エディタの設定}{39}{subsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.6.3}.DS\_Store の無視（macOSのみ）}{39}{subsection.2.6.3}%
+\contentsline {subsection}{\numberline {2.6.4}カラー表示の有効化}{39}{subsection.2.6.4}%
+\contentsline {subsection}{\numberline {2.6.5}プッシュのデフォルト動作}{40}{subsection.2.6.5}%
+\contentsline {subsection}{\numberline {2.6.6}プル時のリベース設定}{40}{subsection.2.6.6}%
+\contentsline {section}{\numberline {2.7}設定の確認と設定ファイルの階層}{40}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}現在の設定を確認する}{40}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}設定ファイルの3つの階層}{41}{subsection.2.7.2}%
+\contentsline {section}{\numberline {2.8}エディタとターミナルの準備}{42}{section.2.8}%
+\contentsline {subsection}{\numberline {2.8.1}Visual Studio Code（VS Code）の導入}{42}{subsection.2.8.1}%
+\contentsline {subsection}{\numberline {2.8.2}おすすめのVS Code拡張機能}{43}{subsection.2.8.2}%
+\contentsline {subsection}{\numberline {2.8.3}ターミナルの選び方}{43}{subsection.2.8.3}%
+\contentsline {section}{\numberline {2.9}まとめ}{43}{section.2.9}%
+\contentsline {chapter}{\numberline {3}GitHubアカウント — 開発者としての第一歩}{46}{chapter.3}%
+\contentsline {section}{\numberline {3.1}この章で学ぶこと}{46}{section.3.1}%
+\contentsline {section}{\numberline {3.2}アカウント作成の手順}{46}{section.3.2}%
+\contentsline {section}{\numberline {3.3}ユーザー名の選び方}{48}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}なぜユーザー名が重要なのか}{48}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}選び方のヒント}{49}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}ユーザー名は後から変更できるか}{50}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}二段階認証（2FA）— なぜ必要か}{50}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}二段階認証とは何か}{50}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}設定手順}{50}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}推奨認証アプリ}{52}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}リカバリーコードの重要性}{52}{subsection.3.4.4}%
+\contentsline {section}{\numberline {3.5}プロフィール設定 — 基本情報}{52}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}基本プロフィールの設定}{53}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}プロフィール写真の設定}{53}{subsection.3.5.2}%
+\contentsline {section}{\numberline {3.6}プロフィールREADME — 自分だけのページを作る}{53}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}作り方}{55}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}書き方の例}{55}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.6.3}よく使われるバッジとウィジェット}{57}{subsection.3.6.3}%
+\contentsline {section}{\numberline {3.7}GitHubの料金プラン}{57}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}各プランの概要}{57}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}GitHub Education（学生・教育者向け）}{58}{subsection.3.7.2}%
+\contentsline {section}{\numberline {3.8}通知設定のカスタマイズ}{58}{section.3.8}%
+\contentsline {subsection}{\numberline {3.8.1}通知設定の画面}{58}{subsection.3.8.1}%
+\contentsline {subsection}{\numberline {3.8.2}おすすめの設定}{59}{subsection.3.8.2}%
+\contentsline {section}{\numberline {3.9}Achievements（実績バッジ）— GitHubが認める功績}{59}{section.3.9}%
+\contentsline {subsection}{\numberline {3.9.1}Achievementsとは}{59}{subsection.3.9.1}%
+\contentsline {subsection}{\numberline {3.9.2}Achievementsの表示設定}{59}{subsection.3.9.2}%
+\contentsline {subsection}{\numberline {3.9.3}現在獲得できるAchievements一覧}{61}{subsection.3.9.3}%
+\contentsline {subsubsection}{\numberline {3.9.3.1}Pull Shark（プルシャーク）}{61}{subsubsection.3.9.3.1}%
+\contentsline {subsubsection}{\numberline {3.9.3.2}Galaxy Brain（ギャラクシーブレイン）}{61}{subsubsection.3.9.3.2}%
+\contentsline {subsubsection}{\numberline {3.9.3.3}Starstruck（スターストラック）}{61}{subsubsection.3.9.3.3}%
+\contentsline {subsubsection}{\numberline {3.9.3.4}Pair Extraordinaire（ペア・エクストラオーディネール）}{62}{subsubsection.3.9.3.4}%
+\contentsline {subsubsection}{\numberline {3.9.3.5}YOLO（ヨロ）}{62}{subsubsection.3.9.3.5}%
+\contentsline {subsubsection}{\numberline {3.9.3.6}Quickdraw（クイックドロー）}{62}{subsubsection.3.9.3.6}%
+\contentsline {subsubsection}{\numberline {3.9.3.7}Public Sponsor（パブリックスポンサー）}{62}{subsubsection.3.9.3.7}%
+\contentsline {subsection}{\numberline {3.9.4}引退したAchievements（もう獲得できないバッジ）}{63}{subsection.3.9.4}%
+\contentsline {subsection}{\numberline {3.9.5}Highlights（ハイライト）}{63}{subsection.3.9.5}%
+\contentsline {section}{\numberline {3.10}コントリビューショングラフ（草）— 活動の可視化}{63}{section.3.10}%
+\contentsline {subsection}{\numberline {3.10.1}「草」とは何か}{63}{subsection.3.10.1}%
+\contentsline {subsection}{\numberline {3.10.2}コントリビューションとしてカウントされる活動}{64}{subsection.3.10.2}%
+\contentsline {subsection}{\numberline {3.10.3}コントリビューションの見せ方}{64}{subsection.3.10.3}%
+\contentsline {section}{\numberline {3.11}まとめ}{64}{section.3.11}%
+\contentsline {chapter}{\numberline {4}認証と接続 — パソコンとGitHubを安全につなぐ}{66}{chapter.4}%
+\contentsline {section}{\numberline {4.1}この章で学ぶこと}{66}{section.4.1}%
+\contentsline {section}{\numberline {4.2}なぜ認証が必要なのか}{66}{section.4.2}%
+\contentsline {section}{\numberline {4.3}接続方式の比較}{67}{section.4.3}%
+\contentsline {section}{\numberline {4.4}SSH鍵による接続（推奨）}{67}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}公開鍵暗号の仕組み — 南京錠のたとえ}{67}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}SSH鍵の生成}{68}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}SSHエージェントに鍵を登録する}{69}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}公開鍵をGitHubに登録する}{70}{subsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.4.5}接続テスト}{70}{subsection.4.4.5}%
+\contentsline {subsection}{\numberline {4.4.6}SSH接続でリポジトリを操作する}{72}{subsection.4.4.6}%
+\contentsline {section}{\numberline {4.5}HTTPS + Personal Access Token}{72}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Personal Access Token（PAT）とは}{73}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}PATの作成手順}{73}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}スコープの選び方}{73}{subsection.4.5.3}%
+\contentsline {subsection}{\numberline {4.5.4}PATを使ったリポジトリ操作}{73}{subsection.4.5.4}%
+\contentsline {subsection}{\numberline {4.5.5}認証情報の保存（毎回入力しなくて済むように）}{75}{subsection.4.5.5}%
+\contentsline {subsection}{\numberline {4.5.6}Fine-grained PAT（きめ細かいPAT）}{75}{subsection.4.5.6}%
+\contentsline {section}{\numberline {4.6}GitHub CLI}{76}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}インストール}{76}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}認証の設定}{76}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}認証状態の確認}{78}{subsection.4.6.3}%
+\contentsline {section}{\numberline {4.7}GPG署名 — コミットの本人証明}{78}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}なぜ署名が必要なのか}{78}{subsection.4.7.1}%
+\contentsline {subsection}{\numberline {4.7.2}GPG鍵の生成}{78}{subsection.4.7.2}%
+\contentsline {subsection}{\numberline {4.7.3}GitHubにGPG鍵を登録する}{80}{subsection.4.7.3}%
+\contentsline {subsection}{\numberline {4.7.4}Gitで署名を有効化する}{81}{subsection.4.7.4}%
+\contentsline {section}{\numberline {4.8}複数アカウントの管理}{82}{section.4.8}%
+\contentsline {subsection}{\numberline {4.8.1}SSH configによるアカウントの使い分け}{82}{subsection.4.8.1}%
+\contentsline {subsection}{\numberline {4.8.2}使い方}{83}{subsection.4.8.2}%
+\contentsline {subsection}{\numberline {4.8.3}リポジトリごとのユーザー情報の切り替え}{83}{subsection.4.8.3}%
+\contentsline {section}{\numberline {4.9}まとめ}{84}{section.4.9}%
+\contentsline {chapter}{\numberline {5}リポジトリ — プロジェクトの器を作る}{85}{chapter.5}%
+\contentsline {section}{\numberline {5.1}この章で学ぶこと}{85}{section.5.1}%
+\contentsline {section}{\numberline {5.2}リポジトリの構造 — .gitフォルダの役割}{85}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}プロジェクトフォルダとリポジトリの関係}{85}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}.gitフォルダの中身}{86}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}リポジトリの作成方法}{86}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}方法1: GitHubで作成してからクローン（推奨）}{86}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}方法2: ローカルで作成してからGitHubにプッシュ}{87}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}方法3: GitHub CLIで一発作成}{91}{subsection.5.3.3}%
+\contentsline {section}{\numberline {5.4}クローン（clone）を深く理解する}{92}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}cloneが行うこと}{92}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}cloneの主要オプション}{92}{subsection.5.4.2}%
+\contentsline {subsubsection}{\numberline {5.4.2.1}--depth（浅いクローン）}{92}{subsubsection.5.4.2.1}%
+\contentsline {subsubsection}{\numberline {5.4.2.2}--branch（特定ブランチのクローン）}{93}{subsubsection.5.4.2.2}%
+\contentsline {subsubsection}{\numberline {5.4.2.3}--recursive（サブモジュール付きクローン）}{93}{subsubsection.5.4.2.3}%
+\contentsline {section}{\numberline {5.5}リモート（remote）の管理}{93}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}originとは何か}{93}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}upstreamとは何か}{94}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}リモートの追加・変更・削除}{94}{subsection.5.5.3}%
+\contentsline {section}{\numberline {5.6}.gitignoreの書き方と考え方}{95}{section.5.6}%
+\contentsline {subsection}{\numberline {5.6.1}なぜファイルの無視が必要なのか}{95}{subsection.5.6.1}%
+\contentsline {subsection}{\numberline {5.6.2}.gitignoreの書式ルール}{95}{subsection.5.6.2}%
+\contentsline {subsection}{\numberline {5.6.3}言語別テンプレート}{96}{subsection.5.6.3}%
+\contentsline {subsection}{\numberline {5.6.4}既に追跡されたファイルへの対処}{98}{subsection.5.6.4}%
+\contentsline {section}{\numberline {5.7}リポジトリの設定}{99}{section.5.7}%
+\contentsline {subsection}{\numberline {5.7.1}GitHub上のSettings}{99}{subsection.5.7.1}%
+\contentsline {subsubsection}{\numberline {5.7.1.1}リポジトリの可視性（Visibility）}{99}{subsubsection.5.7.1.1}%
+\contentsline {subsubsection}{\numberline {5.7.1.2}ブランチ保護（Branch Protection Rules）}{99}{subsubsection.5.7.1.2}%
+\contentsline {subsubsection}{\numberline {5.7.1.3}Collaborators（共同作業者）}{101}{subsubsection.5.7.1.3}%
+\contentsline {subsection}{\numberline {5.7.2}テンプレートリポジトリ}{101}{subsection.5.7.2}%
+\contentsline {subsection}{\numberline {5.7.3}リポジトリの削除}{101}{subsection.5.7.3}%
+\contentsline {section}{\numberline {5.8}まとめ}{103}{section.5.8}%
+\contentsline {chapter}{\numberline {6}基本ワークフロー — 変更を記録し共有する}{104}{chapter.6}%
+\contentsline {section}{\numberline {6.1}この章で学ぶこと}{104}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Gitの3つのエリアを理解する}{104}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}買い物にたとえて理解する}{105}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}なぜステージングエリアが必要なのか}{105}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}git status — 現在の状態を把握する}{106}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}出力の読み方}{106}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}短縮表示}{107}{subsection.6.3.2}%
+\contentsline {section}{\numberline {6.4}git add — ステージングの操作と考え方}{107}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}基本的な使い方}{107}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}なぜ全部addせず選ぶのか}{108}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}-pオプション：ファイルの一部だけをステージングする}{108}{subsection.6.4.3}%
+\contentsline {subsection}{\numberline {6.4.4}ステージングの取り消し}{108}{subsection.6.4.4}%
+\contentsline {section}{\numberline {6.5}git commit — 変更を記録する}{109}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}基本的な使い方}{109}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {6.5.2}コミットメッセージの書き方の哲学}{109}{subsection.6.5.2}%
+\contentsline {subsection}{\numberline {6.5.3}Conventional Commits}{110}{subsection.6.5.3}%
+\contentsline {subsection}{\numberline {6.5.4}--amend：直前のコミットを修正する}{111}{subsection.6.5.4}%
+\contentsline {section}{\numberline {6.6}git push — ローカルの記録をGitHubに送信する}{111}{section.6.6}%
+\contentsline {subsection}{\numberline {6.6.1}基本的な使い方}{111}{subsection.6.6.1}%
+\contentsline {subsection}{\numberline {6.6.2}-uオプション（--set-upstream）の意味}{112}{subsection.6.6.2}%
+\contentsline {subsection}{\numberline {6.6.3}プッシュできない場合の対処}{112}{subsection.6.6.3}%
+\contentsline {section}{\numberline {6.7}git pull — GitHubの変更をローカルに取り込む}{113}{section.6.7}%
+\contentsline {subsection}{\numberline {6.7.1}基本的な使い方}{113}{subsection.6.7.1}%
+\contentsline {subsection}{\numberline {6.7.2}pull = fetch + merge}{113}{subsection.6.7.2}%
+\contentsline {subsection}{\numberline {6.7.3}fetchだけを使う理由}{113}{subsection.6.7.3}%
+\contentsline {section}{\numberline {6.8}git log — 履歴を確認する}{114}{section.6.8}%
+\contentsline {subsection}{\numberline {6.8.1}基本的な使い方と各オプション}{114}{subsection.6.8.1}%
+\contentsline {subsection}{\numberline {6.8.2}きれいなログ表示のエイリアス}{115}{subsection.6.8.2}%
+\contentsline {section}{\numberline {6.9}git diff — 差分を確認する}{116}{section.6.9}%
+\contentsline {subsection}{\numberline {6.9.1}4つの差分比較パターン}{116}{subsection.6.9.1}%
+\contentsline {subsection}{\numberline {6.9.2}便利なオプション}{117}{subsection.6.9.2}%
+\contentsline {section}{\numberline {6.10}ファイルの移動・削除・変更取り消し}{117}{section.6.10}%
+\contentsline {subsection}{\numberline {6.10.1}ファイルの移動・名前変更（git mv）}{117}{subsection.6.10.1}%
+\contentsline {subsection}{\numberline {6.10.2}ファイルの削除（git rm）}{117}{subsection.6.10.2}%
+\contentsline {subsection}{\numberline {6.10.3}変更の取り消し}{118}{subsection.6.10.3}%
+\contentsline {section}{\numberline {6.11}実践：一連の開発フローを体験する}{118}{section.6.11}%
+\contentsline {section}{\numberline {6.12}まとめ}{120}{section.6.12}%
+\contentsline {chapter}{\numberline {7}ブランチ — 並行開発の技法}{121}{chapter.7}%
+\contentsline {section}{\numberline {7.1}この章で学ぶこと}{121}{section.7.1}%
+\contentsline {section}{\numberline {7.2}ブランチとは何か}{121}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}ポインタとしてのブランチ}{121}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}HEADとは何か}{122}{subsection.7.2.2}%
+\contentsline {subsection}{\numberline {7.2.3}なぜブランチが必要なのか}{122}{subsection.7.2.3}%
+\contentsline {section}{\numberline {7.3}ブランチの基本操作}{123}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}ブランチの一覧表示}{123}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}ブランチの作成}{124}{subsection.7.3.2}%
+\contentsline {subsection}{\numberline {7.3.3}ブランチの切り替え（switch vs checkout）}{124}{subsection.7.3.3}%
+\contentsline {subsubsection}{\numberline {7.3.3.1}switch と checkout の歴史的経緯}{124}{subsubsection.7.3.3.1}%
+\contentsline {subsection}{\numberline {7.3.4}ブランチの削除}{125}{subsection.7.3.4}%
+\contentsline {subsection}{\numberline {7.3.5}ブランチ名の変更}{125}{subsection.7.3.5}%
+\contentsline {section}{\numberline {7.4}ブランチの命名規則}{126}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}プレフィックスによる分類}{126}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}命名のベストプラクティス}{126}{subsection.7.4.2}%
+\contentsline {section}{\numberline {7.5}マージ（merge）}{127}{section.7.5}%
+\contentsline {subsection}{\numberline {7.5.1}Fast-forwardマージ}{127}{subsection.7.5.1}%
+\contentsline {subsection}{\numberline {7.5.2}3-wayマージ}{128}{subsection.7.5.2}%
+\contentsline {subsection}{\numberline {7.5.3}マージの取り消し}{128}{subsection.7.5.3}%
+\contentsline {section}{\numberline {7.6}リベース（rebase）}{129}{section.7.6}%
+\contentsline {subsection}{\numberline {7.6.1}リベースとは何をしているのか}{129}{subsection.7.6.1}%
+\contentsline {subsection}{\numberline {7.6.2}merge vs rebase の判断基準}{130}{subsection.7.6.2}%
+\contentsline {subsection}{\numberline {7.6.3}「push済みにはrebaseしない」ルール}{130}{subsection.7.6.3}%
+\contentsline {section}{\numberline {7.7}ブランチ戦略}{131}{section.7.7}%
+\contentsline {subsection}{\numberline {7.7.1}GitHub Flow — シンプルで始めやすい}{131}{subsection.7.7.1}%
+\contentsline {subsection}{\numberline {7.7.2}Git Flow — 大規模プロジェクト向けの体系的な戦略}{132}{subsection.7.7.2}%
+\contentsline {subsection}{\numberline {7.7.3}Trunk-based Development — 高速なイテレーション}{132}{subsection.7.7.3}%
+\contentsline {subsection}{\numberline {7.7.4}戦略の選び方}{133}{subsection.7.7.4}%
+\contentsline {section}{\numberline {7.8}実践：ブランチを使った開発の一連の流れ}{133}{section.7.8}%
+\contentsline {section}{\numberline {7.9}まとめ}{134}{section.7.9}%
+\contentsline {chapter}{\numberline {8}コンフリクト — 変更の衝突を解決する}{136}{chapter.8}%
+\contentsline {section}{\numberline {8.1}この章で学ぶこと}{136}{section.8.1}%
+\contentsline {section}{\numberline {8.2}コンフリクトとは何か}{136}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}日常のたとえで理解する}{136}{subsection.8.2.1}%
+\contentsline {subsection}{\numberline {8.2.2}Gitにおけるコンフリクトの仕組み}{136}{subsection.8.2.2}%
+\contentsline {subsection}{\numberline {8.2.3}コンフリクトは「エラー」ではない}{137}{subsection.8.2.3}%
+\contentsline {section}{\numberline {8.3}コンフリクトが発生する場面}{137}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}git merge でブランチを統合するとき}{137}{subsection.8.3.1}%
+\contentsline {subsection}{\numberline {8.3.2}git pull でリモートの変更を取り込むとき}{138}{subsection.8.3.2}%
+\contentsline {subsection}{\numberline {8.3.3}git rebase でブランチの基点を付け替えるとき}{138}{subsection.8.3.3}%
+\contentsline {subsection}{\numberline {8.3.4}git cherry-pick で特定のコミットを取り込むとき}{138}{subsection.8.3.4}%
+\contentsline {subsection}{\numberline {8.3.5}コンフリクト発生時のgit status}{138}{subsection.8.3.5}%
+\contentsline {section}{\numberline {8.4}コンフリクトマーカーの読み方}{138}{section.8.4}%
+\contentsline {subsection}{\numberline {8.4.1}マーカーの全体像}{139}{subsection.8.4.1}%
+\contentsline {subsection}{\numberline {8.4.2}各行の意味}{139}{subsection.8.4.2}%
+\contentsline {subsection}{\numberline {8.4.3}マーカーの構造を表にまとめると}{139}{subsection.8.4.3}%
+\contentsline {section}{\numberline {8.5}手動で解決する方法}{141}{section.8.5}%
+\contentsline {subsection}{\numberline {8.5.1}パターン1：片方の変更を採用する}{141}{subsection.8.5.1}%
+\contentsline {subsection}{\numberline {8.5.2}パターン2：両方の変更を統合する}{141}{subsection.8.5.2}%
+\contentsline {subsection}{\numberline {8.5.3}パターン3：完全に書き直す}{141}{subsection.8.5.3}%
+\contentsline {subsection}{\numberline {8.5.4}解決後の操作：add と commit}{142}{subsection.8.5.4}%
+\contentsline {section}{\numberline {8.6}VS Codeで解決する方法}{142}{section.8.6}%
+\contentsline {subsection}{\numberline {8.6.1}コンフリクト箇所の表示}{142}{subsection.8.6.1}%
+\contentsline {subsection}{\numberline {8.6.2}ワンクリック解決ボタン}{142}{subsection.8.6.2}%
+\contentsline {subsection}{\numberline {8.6.3}VS Codeのマージエディタ}{144}{subsection.8.6.3}%
+\contentsline {section}{\numberline {8.7}コマンドで一括解決する方法}{144}{section.8.7}%
+\contentsline {subsection}{\numberline {8.7.1}--ours：自分の変更をすべて採用}{144}{subsection.8.7.1}%
+\contentsline {subsection}{\numberline {8.7.2}--theirs：相手の変更をすべて採用}{144}{subsection.8.7.2}%
+\contentsline {subsection}{\numberline {8.7.3}注意点}{145}{subsection.8.7.3}%
+\contentsline {section}{\numberline {8.8}マージやリベースの中止方法}{145}{section.8.8}%
+\contentsline {subsection}{\numberline {8.8.1}マージの中止}{145}{subsection.8.8.1}%
+\contentsline {subsection}{\numberline {8.8.2}リベースの中止}{145}{subsection.8.8.2}%
+\contentsline {subsection}{\numberline {8.8.3}cherry-pickの中止}{145}{subsection.8.8.3}%
+\contentsline {subsection}{\numberline {8.8.4}中止した後にやるべきこと}{146}{subsection.8.8.4}%
+\contentsline {section}{\numberline {8.9}コンフリクトを予防するプラクティス}{146}{section.8.9}%
+\contentsline {subsection}{\numberline {8.9.1}こまめに pull / rebase する}{146}{subsection.8.9.1}%
+\contentsline {subsection}{\numberline {8.9.2}小さなプルリクエストを心がける}{146}{subsection.8.9.2}%
+\contentsline {subsection}{\numberline {8.9.3}担当ファイルを分ける}{147}{subsection.8.9.3}%
+\contentsline {subsection}{\numberline {8.9.4}rerere を有効にする}{147}{subsection.8.9.4}%
+\contentsline {subsection}{\numberline {8.9.5}チーム内でコミュニケーションをとる}{147}{subsection.8.9.5}%
+\contentsline {section}{\numberline {8.10}まとめ}{147}{section.8.10}%
+\contentsline {chapter}{\numberline {9}履歴の操作 — 過去を自在にたどる}{149}{chapter.9}%
+\contentsline {section}{\numberline {9.1}この章で学ぶこと}{149}{section.9.1}%
+\contentsline {section}{\numberline {9.2}なぜ履歴操作が必要か}{149}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}「間違えても大丈夫」という安心感}{149}{subsection.9.2.1}%
+\contentsline {subsection}{\numberline {9.2.2}安全な操作と危険な操作}{149}{subsection.9.2.2}%
+\contentsline {section}{\numberline {9.3}git revert — コミットを安全に打ち消す}{150}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}revertの考え方}{150}{subsection.9.3.1}%
+\contentsline {subsection}{\numberline {9.3.2}なぜrevertはpush済みでも安全なのか}{150}{subsection.9.3.2}%
+\contentsline {subsection}{\numberline {9.3.3}使い方}{150}{subsection.9.3.3}%
+\contentsline {section}{\numberline {9.4}git reset — コミットを巻き戻す}{151}{section.9.4}%
+\contentsline {subsection}{\numberline {9.4.1}resetの考え方}{151}{subsection.9.4.1}%
+\contentsline {subsection}{\numberline {9.4.2}3つのモード — アナロジーで理解する}{151}{subsection.9.4.2}%
+\contentsline {subsection}{\numberline {9.4.3}3つのモードの比較表}{152}{subsection.9.4.3}%
+\contentsline {subsection}{\numberline {9.4.4}HEAD\textasciitilde 1 の意味}{152}{subsection.9.4.4}%
+\contentsline {subsection}{\numberline {9.4.5}resetの注意点}{153}{subsection.9.4.5}%
+\contentsline {section}{\numberline {9.5}git restore — ファイル単位の変更取り消し}{153}{section.9.5}%
+\contentsline {subsection}{\numberline {9.5.1}restoreの位置づけ}{153}{subsection.9.5.1}%
+\contentsline {subsection}{\numberline {9.5.2}ワーキングツリーの変更を取り消す}{153}{subsection.9.5.2}%
+\contentsline {subsection}{\numberline {9.5.3}ステージングの取り消し}{153}{subsection.9.5.3}%
+\contentsline {subsection}{\numberline {9.5.4}特定のコミット時点の状態に戻す}{154}{subsection.9.5.4}%
+\contentsline {section}{\numberline {9.6}git stash — 作業の一時退避}{154}{section.9.6}%
+\contentsline {subsection}{\numberline {9.6.1}「引き出しにしまう」アナロジー}{154}{subsection.9.6.1}%
+\contentsline {subsection}{\numberline {9.6.2}基本的な使い方}{154}{subsection.9.6.2}%
+\contentsline {subsection}{\numberline {9.6.3}退避した内容の確認と復元}{155}{subsection.9.6.3}%
+\contentsline {subsection}{\numberline {9.6.4}退避の削除}{155}{subsection.9.6.4}%
+\contentsline {subsection}{\numberline {9.6.5}典型的な使い方シナリオ}{156}{subsection.9.6.5}%
+\contentsline {section}{\numberline {9.7}git cherry-pick — 特定のコミットだけ取り込む}{156}{section.9.7}%
+\contentsline {subsection}{\numberline {9.7.1}cherry-pickとは}{156}{subsection.9.7.1}%
+\contentsline {subsection}{\numberline {9.7.2}どんな場面で使うのか}{156}{subsection.9.7.2}%
+\contentsline {subsection}{\numberline {9.7.3}使い方}{157}{subsection.9.7.3}%
+\contentsline {section}{\numberline {9.8}git reflog — 「消えた」コミットを救出する}{157}{section.9.8}%
+\contentsline {subsection}{\numberline {9.8.1}reflogとは何か}{157}{subsection.9.8.1}%
+\contentsline {subsection}{\numberline {9.8.2}reflogの確認方法}{157}{subsection.9.8.2}%
+\contentsline {subsection}{\numberline {9.8.3}reset --hard からの復旧}{158}{subsection.9.8.3}%
+\contentsline {subsection}{\numberline {9.8.4}reflogの注意点}{158}{subsection.9.8.4}%
+\contentsline {section}{\numberline {9.9}git blame — 各行の変更者を特定する}{159}{section.9.9}%
+\contentsline {subsection}{\numberline {9.9.1}blameの目的}{159}{subsection.9.9.1}%
+\contentsline {subsection}{\numberline {9.9.2}使い方}{159}{subsection.9.9.2}%
+\contentsline {subsection}{\numberline {9.9.3}GitHub上でのblame}{160}{subsection.9.9.3}%
+\contentsline {section}{\numberline {9.10}まとめ}{160}{section.9.10}%
+\contentsline {chapter}{\numberline {10}プルリクエスト --- コードレビューの文化を作る}{162}{chapter.10}%
+\contentsline {section}{\numberline {10.1}この章で学ぶこと}{162}{section.10.1}%
+\contentsline {section}{\numberline {10.2}プルリクエストとは何か}{162}{section.10.2}%
+\contentsline {subsection}{\numberline {10.2.1}「取り込んでほしい」という提案}{162}{subsection.10.2.1}%
+\contentsline {subsection}{\numberline {10.2.2}なぜ直接pushしないのか}{163}{subsection.10.2.2}%
+\contentsline {section}{\numberline {10.3}PRの作成方法}{163}{section.10.3}%
+\contentsline {subsection}{\numberline {10.3.1}Web UIから作成する}{163}{subsection.10.3.1}%
+\contentsline {subsection}{\numberline {10.3.2}GitHub CLIから作成する}{165}{subsection.10.3.2}%
+\contentsline {subsection}{\numberline {10.3.3}pushと同時にURLを取得する}{165}{subsection.10.3.3}%
+\contentsline {section}{\numberline {10.4}PRの構成要素}{166}{section.10.4}%
+\contentsline {subsection}{\numberline {10.4.1}Title（タイトル）}{166}{subsection.10.4.1}%
+\contentsline {subsection}{\numberline {10.4.2}Description（説明）}{166}{subsection.10.4.2}%
+\contentsline {subsection}{\numberline {10.4.3}Reviewers（レビュアー）}{166}{subsection.10.4.3}%
+\contentsline {subsection}{\numberline {10.4.4}Assignees（担当者）}{166}{subsection.10.4.4}%
+\contentsline {subsection}{\numberline {10.4.5}Labels（ラベル）}{166}{subsection.10.4.5}%
+\contentsline {subsection}{\numberline {10.4.6}Projects（プロジェクト）}{166}{subsection.10.4.6}%
+\contentsline {subsection}{\numberline {10.4.7}Milestone（マイルストーン）}{167}{subsection.10.4.7}%
+\contentsline {subsection}{\numberline {10.4.8}Linked Issues（関連Issue）}{167}{subsection.10.4.8}%
+\contentsline {section}{\numberline {10.5}良いPR descriptionの書き方}{167}{section.10.5}%
+\contentsline {subsection}{\numberline {10.5.1}良いdescriptionの構成例}{167}{subsection.10.5.1}%
+\contentsline {subsection}{\numberline {10.5.2}Issueとの連携 --- 自動クローズ}{168}{subsection.10.5.2}%
+\contentsline {section}{\numberline {10.6}PRの確認とレビュー}{168}{section.10.6}%
+\contentsline {subsection}{\numberline {10.6.1}Files changedタブの使い方}{168}{subsection.10.6.1}%
+\contentsline {subsection}{\numberline {10.6.2}コメントの付け方}{170}{subsection.10.6.2}%
+\contentsline {subsection}{\numberline {10.6.3}suggestion機能 --- 修正提案をその場で}{170}{subsection.10.6.3}%
+\contentsline {subsection}{\numberline {10.6.4}レビューの3つのステータス}{170}{subsection.10.6.4}%
+\contentsline {subsection}{\numberline {10.6.5}CLIでのレビュー確認}{170}{subsection.10.6.5}%
+\contentsline {section}{\numberline {10.7}3つのマージ方法}{172}{section.10.7}%
+\contentsline {subsection}{\numberline {10.7.1}Create a merge commit（マージコミット）}{172}{subsection.10.7.1}%
+\contentsline {subsection}{\numberline {10.7.2}Squash and merge（スカッシュマージ）}{172}{subsection.10.7.2}%
+\contentsline {subsection}{\numberline {10.7.3}Rebase and merge（リベースマージ）}{173}{subsection.10.7.3}%
+\contentsline {subsection}{\numberline {10.7.4}3つの方法の比較}{173}{subsection.10.7.4}%
+\contentsline {subsection}{\numberline {10.7.5}CLIでのマージ}{173}{subsection.10.7.5}%
+\contentsline {section}{\numberline {10.8}ドラフトPR}{174}{section.10.8}%
+\contentsline {subsection}{\numberline {10.8.1}ドラフトPRとは}{174}{subsection.10.8.1}%
+\contentsline {subsection}{\numberline {10.8.2}どんな場面で使うのか}{174}{subsection.10.8.2}%
+\contentsline {subsection}{\numberline {10.8.3}作成と解除}{174}{subsection.10.8.3}%
+\contentsline {section}{\numberline {10.9}PRテンプレート}{176}{section.10.9}%
+\contentsline {subsection}{\numberline {10.9.1}テンプレートの目的}{176}{subsection.10.9.1}%
+\contentsline {subsection}{\numberline {10.9.2}テンプレートの作成方法}{176}{subsection.10.9.2}%
+\contentsline {subsection}{\numberline {10.9.3}テンプレートの運用Tips}{177}{subsection.10.9.3}%
+\contentsline {section}{\numberline {10.10}まとめ}{177}{section.10.10}%
+\contentsline {chapter}{\numberline {11}Issue --- タスクとバグを管理する}{179}{chapter.11}%
+\contentsline {section}{\numberline {11.1}この章で学ぶこと}{179}{section.11.1}%
+\contentsline {section}{\numberline {11.2}Issueとは何か}{179}{section.11.2}%
+\contentsline {subsection}{\numberline {11.2.1}チケットシステムとしてのIssue}{179}{subsection.11.2.1}%
+\contentsline {subsection}{\numberline {11.2.2}Issue番号の仕組み}{180}{subsection.11.2.2}%
+\contentsline {section}{\numberline {11.3}Issueの作成}{180}{section.11.3}%
+\contentsline {subsection}{\numberline {11.3.1}Web UIでの作成}{180}{subsection.11.3.1}%
+\contentsline {subsection}{\numberline {11.3.2}GitHub CLI（gh）での作成}{180}{subsection.11.3.2}%
+\contentsline {section}{\numberline {11.4}良いIssueの書き方}{182}{section.11.4}%
+\contentsline {subsection}{\numberline {11.4.1}バグ報告のテンプレート}{182}{subsection.11.4.1}%
+\contentsline {subsection}{\numberline {11.4.2}機能要望の書き方}{183}{subsection.11.4.2}%
+\contentsline {section}{\numberline {11.5}ラベル（Labels）}{184}{section.11.5}%
+\contentsline {subsection}{\numberline {11.5.1}ラベルの役割}{184}{subsection.11.5.1}%
+\contentsline {subsection}{\numberline {11.5.2}デフォルトラベル一覧}{184}{subsection.11.5.2}%
+\contentsline {subsection}{\numberline {11.5.3}カスタムラベルの作成}{184}{subsection.11.5.3}%
+\contentsline {section}{\numberline {11.6}マイルストーン（Milestones）}{185}{section.11.6}%
+\contentsline {subsection}{\numberline {11.6.1}マイルストーンとは}{185}{subsection.11.6.1}%
+\contentsline {subsection}{\numberline {11.6.2}マイルストーンの作成と管理}{186}{subsection.11.6.2}%
+\contentsline {section}{\numberline {11.7}IssueとPull Requestの連携}{186}{section.11.7}%
+\contentsline {subsection}{\numberline {11.7.1}自動クローズキーワード}{186}{subsection.11.7.1}%
+\contentsline {subsection}{\numberline {11.7.2}コミットメッセージでの参照}{188}{subsection.11.7.2}%
+\contentsline {section}{\numberline {11.8}Issueテンプレート}{188}{section.11.8}%
+\contentsline {subsection}{\numberline {11.8.1}テンプレートの必要性}{188}{subsection.11.8.1}%
+\contentsline {subsection}{\numberline {11.8.2}バグ報告テンプレートの作成}{188}{subsection.11.8.2}%
+\contentsline {subsection}{\numberline {11.8.3}機能要望テンプレートの作成}{191}{subsection.11.8.3}%
+\contentsline {section}{\numberline {11.9}Issueの管理}{192}{section.11.9}%
+\contentsline {subsection}{\numberline {11.9.1}CLIでの操作}{192}{subsection.11.9.1}%
+\contentsline {subsection}{\numberline {11.9.2}ピン留め（Pinned Issues）}{193}{subsection.11.9.2}%
+\contentsline {subsection}{\numberline {11.9.3}Issueの検索とフィルタリング}{194}{subsection.11.9.3}%
+\contentsline {section}{\numberline {11.10}まとめ}{194}{section.11.10}%
+\contentsline {chapter}{\numberline {12}GitHub Actions --- 自動化で開発を加速する}{195}{chapter.12}%
+\contentsline {section}{\numberline {12.1}この章で学ぶこと}{195}{section.12.1}%
+\contentsline {section}{\numberline {12.2}CI/CDとは何か}{195}{section.12.2}%
+\contentsline {subsection}{\numberline {12.2.1}手動テストの限界}{195}{subsection.12.2.1}%
+\contentsline {subsection}{\numberline {12.2.2}Continuous Integration（継続的インテグレーション）}{195}{subsection.12.2.2}%
+\contentsline {subsection}{\numberline {12.2.3}Continuous Delivery / Deployment（継続的デリバリー/デプロイ）}{196}{subsection.12.2.3}%
+\contentsline {section}{\numberline {12.3}GitHub Actionsの基本用語}{196}{section.12.3}%
+\contentsline {subsection}{\numberline {12.3.1}Workflow（ワークフロー）}{196}{subsection.12.3.1}%
+\contentsline {subsection}{\numberline {12.3.2}Event（イベント）}{196}{subsection.12.3.2}%
+\contentsline {subsection}{\numberline {12.3.3}Job（ジョブ）}{196}{subsection.12.3.3}%
+\contentsline {subsection}{\numberline {12.3.4}Step（ステップ）}{197}{subsection.12.3.4}%
+\contentsline {subsection}{\numberline {12.3.5}Action（アクション）}{197}{subsection.12.3.5}%
+\contentsline {subsection}{\numberline {12.3.6}Runner（ランナー）}{197}{subsection.12.3.6}%
+\contentsline {section}{\numberline {12.4}最初のワークフローを作ってみる}{197}{section.12.4}%
+\contentsline {section}{\numberline {12.5}トリガー（Event）の種類}{200}{section.12.5}%
+\contentsline {subsection}{\numberline {12.5.1}push --- コードがプッシュされた時}{200}{subsection.12.5.1}%
+\contentsline {subsection}{\numberline {12.5.2}pull\_request --- Pull Requestに関するイベント}{200}{subsection.12.5.2}%
+\contentsline {subsection}{\numberline {12.5.3}schedule --- 定期実行}{200}{subsection.12.5.3}%
+\contentsline {subsection}{\numberline {12.5.4}workflow\_dispatch --- 手動実行}{201}{subsection.12.5.4}%
+\contentsline {subsection}{\numberline {12.5.5}release --- リリース公開時}{201}{subsection.12.5.5}%
+\contentsline {section}{\numberline {12.6}実用的なワークフロー例}{201}{section.12.6}%
+\contentsline {subsection}{\numberline {12.6.1}Pythonプロジェクトの本格的なCI}{201}{subsection.12.6.1}%
+\contentsline {subsection}{\numberline {12.6.2}Node.jsプロジェクトのCI}{204}{subsection.12.6.2}%
+\contentsline {subsection}{\numberline {12.6.3}タグプッシュによる自動リリース}{205}{subsection.12.6.3}%
+\contentsline {section}{\numberline {12.7}Secrets（シークレット）}{205}{section.12.7}%
+\contentsline {subsection}{\numberline {12.7.1}なぜSecretsが必要か}{205}{subsection.12.7.1}%
+\contentsline {subsection}{\numberline {12.7.2}Secretsの設定方法}{205}{subsection.12.7.2}%
+\contentsline {subsection}{\numberline {12.7.3}ワークフローでの使い方}{206}{subsection.12.7.3}%
+\contentsline {section}{\numberline {12.8}料金と制限}{206}{section.12.8}%
+\contentsline {subsection}{\numberline {12.8.1}パブリックリポジトリ}{207}{subsection.12.8.1}%
+\contentsline {subsection}{\numberline {12.8.2}プライベートリポジトリ}{207}{subsection.12.8.2}%
+\contentsline {subsection}{\numberline {12.8.3}その他の制限}{207}{subsection.12.8.3}%
+\contentsline {section}{\numberline {12.9}ワークフローの確認とデバッグ}{207}{section.12.9}%
+\contentsline {subsection}{\numberline {12.9.1}CLIでの操作}{207}{subsection.12.9.1}%
+\contentsline {subsection}{\numberline {12.9.2}デバッグのコツ}{209}{subsection.12.9.2}%
+\contentsline {section}{\numberline {12.10}まとめ}{209}{section.12.10}%
+\contentsline {chapter}{\numberline {13}GitHub Pages --- Webサイトを無料で公開する}{211}{chapter.13}%
+\contentsline {section}{\numberline {13.1}この章で学ぶこと}{211}{section.13.1}%
+\contentsline {section}{\numberline {13.2}GitHub Pagesとは}{211}{section.13.2}%
+\contentsline {subsection}{\numberline {13.2.1}静的サイトホスティングの概念}{211}{subsection.13.2.1}%
+\contentsline {section}{\numberline {13.3}公開URLの形式}{212}{section.13.3}%
+\contentsline {subsection}{\numberline {13.3.1}ユーザーサイト（User Site）}{212}{subsection.13.3.1}%
+\contentsline {subsection}{\numberline {13.3.2}プロジェクトサイト（Project Site）}{212}{subsection.13.3.2}%
+\contentsline {subsection}{\numberline {13.3.3}カスタムドメイン}{212}{subsection.13.3.3}%
+\contentsline {section}{\numberline {13.4}セットアップ方法}{213}{section.13.4}%
+\contentsline {subsection}{\numberline {13.4.1}方法1: ブランチから公開（最もシンプル）}{213}{subsection.13.4.1}%
+\contentsline {subsection}{\numberline {13.4.2}方法2: GitHub Actionsから公開（柔軟な方法）}{213}{subsection.13.4.2}%
+\contentsline {subsection}{\numberline {13.4.3}方法3: ユーザーサイトの作成}{216}{subsection.13.4.3}%
+\contentsline {section}{\numberline {13.5}Jekyllテーマの適用}{217}{section.13.5}%
+\contentsline {subsection}{\numberline {13.5.1}Jekyllとは}{217}{subsection.13.5.1}%
+\contentsline {subsection}{\numberline {13.5.2}テーマの設定}{217}{subsection.13.5.2}%
+\contentsline {subsection}{\numberline {13.5.3}Markdownでページを作成する}{217}{subsection.13.5.3}%
+\contentsline {section}{\numberline {13.6}カスタムドメインの設定}{219}{section.13.6}%
+\contentsline {subsection}{\numberline {13.6.1}なぜカスタムドメインを使うのか}{219}{subsection.13.6.1}%
+\contentsline {subsection}{\numberline {13.6.2}DNSレコードの設定}{219}{subsection.13.6.2}%
+\contentsline {subsection}{\numberline {13.6.3}GitHub側の設定}{220}{subsection.13.6.3}%
+\contentsline {subsection}{\numberline {13.6.4}HTTPS対応}{220}{subsection.13.6.4}%
+\contentsline {section}{\numberline {13.7}まとめ}{222}{section.13.7}%
+\contentsline {chapter}{\numberline {14}リリース管理 --- ソフトウェアを世に届ける}{223}{chapter.14}%
+\contentsline {section}{\numberline {14.1}この章で学ぶこと}{223}{section.14.1}%
+\contentsline {section}{\numberline {14.2}タグ（Tag）とは}{223}{section.14.2}%
+\contentsline {subsection}{\numberline {14.2.1}コミットに名前を付ける}{223}{subsection.14.2.1}%
+\contentsline {subsection}{\numberline {14.2.2}軽量タグと注釈付きタグ}{223}{subsection.14.2.2}%
+\contentsline {subsection}{\numberline {14.2.3}タグの基本操作}{224}{subsection.14.2.3}%
+\contentsline {section}{\numberline {14.3}セマンティックバージョニング}{225}{section.14.3}%
+\contentsline {subsection}{\numberline {14.3.1}MAJOR.MINOR.PATCH の意味}{225}{subsection.14.3.1}%
+\contentsline {subsection}{\numberline {14.3.2}各桁の判断基準}{225}{subsection.14.3.2}%
+\contentsline {subsection}{\numberline {14.3.3}プレリリースバージョン}{226}{subsection.14.3.3}%
+\contentsline {subsection}{\numberline {14.3.4}v を付けるか付けないか}{226}{subsection.14.3.4}%
+\contentsline {section}{\numberline {14.4}リリースの作成}{226}{section.14.4}%
+\contentsline {subsection}{\numberline {14.4.1}Web UIでの作成}{227}{subsection.14.4.1}%
+\contentsline {subsection}{\numberline {14.4.2}CLIでの作成}{227}{subsection.14.4.2}%
+\contentsline {subsection}{\numberline {14.4.3}ドラフトリリースの活用}{229}{subsection.14.4.3}%
+\contentsline {section}{\numberline {14.5}リリースのカスタマイズ}{230}{section.14.5}%
+\contentsline {subsection}{\numberline {14.5.1}リリースノート自動生成のカテゴリ分け}{230}{subsection.14.5.1}%
+\contentsline {subsection}{\numberline {14.5.2}exclude セクション}{231}{subsection.14.5.2}%
+\contentsline {section}{\numberline {14.6}まとめ}{231}{section.14.6}%
+\contentsline {chapter}{\numberline {15}Fork --- オープンソースに貢献する}{233}{chapter.15}%
+\contentsline {section}{\numberline {15.1}この章で学ぶこと}{233}{section.15.1}%
+\contentsline {section}{\numberline {15.2}Forkとは何か}{233}{section.15.2}%
+\contentsline {subsection}{\numberline {15.2.1}他の人のリポジトリを自分のアカウントにコピーする}{233}{subsection.15.2.1}%
+\contentsline {subsection}{\numberline {15.2.2}cloneとの違い}{234}{subsection.15.2.2}%
+\contentsline {section}{\numberline {15.3}OSSへの貢献の全体像}{234}{section.15.3}%
+\contentsline {section}{\numberline {15.4}実践手順}{235}{section.15.4}%
+\contentsline {subsection}{\numberline {15.4.1}ステップ1: Forkする}{235}{subsection.15.4.1}%
+\contentsline {subsection}{\numberline {15.4.2}ステップ2: upstreamリモートを設定する}{236}{subsection.15.4.2}%
+\contentsline {subsection}{\numberline {15.4.3}ステップ3: Fork元の最新の状態と同期する}{237}{subsection.15.4.3}%
+\contentsline {subsection}{\numberline {15.4.4}ステップ4: ブランチを作成して作業する}{237}{subsection.15.4.4}%
+\contentsline {subsection}{\numberline {15.4.5}ステップ5: Pull Requestを送る}{238}{subsection.15.4.5}%
+\contentsline {subsection}{\numberline {15.4.6}ステップ6: レビュー対応}{238}{subsection.15.4.6}%
+\contentsline {section}{\numberline {15.5}貢献の前に確認すべきこと}{239}{section.15.5}%
+\contentsline {subsection}{\numberline {15.5.1}CONTRIBUTING.md}{239}{subsection.15.5.1}%
+\contentsline {subsection}{\numberline {15.5.2}Code of Conduct（行動規範）}{239}{subsection.15.5.2}%
+\contentsline {subsection}{\numberline {15.5.3}good first issue を探す}{240}{subsection.15.5.3}%
+\contentsline {subsection}{\numberline {15.5.4}ライセンスの確認}{241}{subsection.15.5.4}%
+\contentsline {section}{\numberline {15.6}コード以外のコントリビューション}{241}{section.15.6}%
+\contentsline {subsection}{\numberline {15.6.1}ドキュメントの改善}{241}{subsection.15.6.1}%
+\contentsline {subsection}{\numberline {15.6.2}翻訳}{241}{subsection.15.6.2}%
+\contentsline {subsection}{\numberline {15.6.3}Issue報告}{241}{subsection.15.6.3}%
+\contentsline {subsection}{\numberline {15.6.4}レビュー}{241}{subsection.15.6.4}%
+\contentsline {subsection}{\numberline {15.6.5}デザイン}{242}{subsection.15.6.5}%
+\contentsline {section}{\numberline {15.7}まとめ}{242}{section.15.7}%
+\contentsline {chapter}{\numberline {16}Organization --- チームでリポジトリを管理する}{243}{chapter.16}%
+\contentsline {section}{\numberline {16.1}この章で学ぶこと}{243}{section.16.1}%
+\contentsline {section}{\numberline {16.2}Organizationとは}{243}{section.16.2}%
+\contentsline {subsection}{\numberline {16.2.1}個人アカウントとの違い}{243}{subsection.16.2.1}%
+\contentsline {subsection}{\numberline {16.2.2}チーム管理の必要性}{244}{subsection.16.2.2}%
+\contentsline {section}{\numberline {16.3}Organizationの作成手順}{244}{section.16.3}%
+\contentsline {section}{\numberline {16.4}メンバーの管理}{246}{section.16.4}%
+\contentsline {subsection}{\numberline {16.4.1}権限ロールの詳細}{246}{subsection.16.4.1}%
+\contentsline {subsection}{\numberline {16.4.2}メンバーの招待方法}{247}{subsection.16.4.2}%
+\contentsline {section}{\numberline {16.5}Teams（チーム）}{248}{section.16.5}%
+\contentsline {subsection}{\numberline {16.5.1}なぜTeamsが必要なのか}{248}{subsection.16.5.1}%
+\contentsline {subsection}{\numberline {16.5.2}チームの作成}{248}{subsection.16.5.2}%
+\contentsline {subsection}{\numberline {16.5.3}チームの権限レベル}{248}{subsection.16.5.3}%
+\contentsline {subsection}{\numberline {16.5.4}ネストされたチーム}{250}{subsection.16.5.4}%
+\contentsline {section}{\numberline {16.6}CODEOWNERS}{250}{section.16.6}%
+\contentsline {subsection}{\numberline {16.6.1}ファイルやディレクトリの担当者を定義する仕組み}{250}{subsection.16.6.1}%
+\contentsline {subsection}{\numberline {16.6.2}CODEOWNERSファイルの書き方}{251}{subsection.16.6.2}%
+\contentsline {subsection}{\numberline {16.6.3}ブランチ保護ルールとの連携}{252}{subsection.16.6.3}%
+\contentsline {section}{\numberline {16.7}まとめ}{252}{section.16.7}%
+\contentsline {chapter}{\numberline {17}コードレビュー --- 品質を高め合う文化}{253}{chapter.17}%
+\contentsline {section}{\numberline {17.1}この章で学ぶこと}{253}{section.17.1}%
+\contentsline {section}{\numberline {17.2}コードレビューとは}{253}{section.17.2}%
+\contentsline {subsection}{\numberline {17.2.1}なぜレビューするのか}{253}{subsection.17.2.1}%
+\contentsline {subsection}{\numberline {17.2.2}コードレビューは「検査」ではなく「対話」}{254}{subsection.17.2.2}%
+\contentsline {section}{\numberline {17.3}レビューの進め方}{254}{section.17.3}%
+\contentsline {subsection}{\numberline {17.3.1}Files changedタブ}{254}{subsection.17.3.1}%
+\contentsline {subsection}{\numberline {17.3.2}コメントの追加方法}{254}{subsection.17.3.2}%
+\contentsline {subsection}{\numberline {17.3.3}コメントの種類}{254}{subsection.17.3.3}%
+\contentsline {subsection}{\numberline {17.3.4}レビュー結果の送信}{256}{subsection.17.3.4}%
+\contentsline {section}{\numberline {17.4}ブランチ保護ルール}{258}{section.17.4}%
+\contentsline {subsection}{\numberline {17.4.1}設定方法}{258}{subsection.17.4.1}%
+\contentsline {subsection}{\numberline {17.4.2}主な設定項目の解説}{258}{subsection.17.4.2}%
+\contentsline {subsection}{\numberline {17.4.3}CLIでの設定}{260}{subsection.17.4.3}%
+\contentsline {section}{\numberline {17.5}レビュアーとしてのベストプラクティス}{260}{section.17.5}%
+\contentsline {subsection}{\numberline {17.5.1}建設的なフィードバックを心がける}{260}{subsection.17.5.1}%
+\contentsline {subsection}{\numberline {17.5.2}コメントのプレフィックスを活用する}{261}{subsection.17.5.2}%
+\contentsline {subsection}{\numberline {17.5.3}迅速にレビューする}{261}{subsection.17.5.3}%
+\contentsline {subsection}{\numberline {17.5.4}全体像を把握してからレビューする}{262}{subsection.17.5.4}%
+\contentsline {section}{\numberline {17.6}PR作成者としてのベストプラクティス}{262}{section.17.6}%
+\contentsline {subsection}{\numberline {17.6.1}小さなPull Requestを作る}{262}{subsection.17.6.1}%
+\contentsline {subsection}{\numberline {17.6.2}セルフレビューを行う}{262}{subsection.17.6.2}%
+\contentsline {subsection}{\numberline {17.6.3}テストを含める}{262}{subsection.17.6.3}%
+\contentsline {subsection}{\numberline {17.6.4}説明文を丁寧に書く}{263}{subsection.17.6.4}%
+\contentsline {subsection}{\numberline {17.6.5}コンテキストを共有する}{263}{subsection.17.6.5}%
+\contentsline {section}{\numberline {17.7}まとめ}{263}{section.17.7}%
+\contentsline {chapter}{\numberline {18}Projects --- プロジェクトの進捗を可視化する}{264}{chapter.18}%
+\contentsline {section}{\numberline {18.1}この章で学ぶこと}{264}{section.18.1}%
+\contentsline {section}{\numberline {18.2}GitHub Projectsとは}{264}{section.18.2}%
+\contentsline {subsection}{\numberline {18.2.1}プロジェクト管理ツールとしての位置づけ}{264}{subsection.18.2.1}%
+\contentsline {section}{\numberline {18.3}Projectの作成}{265}{section.18.3}%
+\contentsline {subsection}{\numberline {18.3.1}作成手順}{265}{subsection.18.3.1}%
+\contentsline {subsection}{\numberline {18.3.2}3つのビュー}{265}{subsection.18.3.2}%
+\contentsline {subsubsection}{\numberline {18.3.2.1}Board（ボード）ビュー}{265}{subsubsection.18.3.2.1}%
+\contentsline {subsubsection}{\numberline {18.3.2.2}Table（テーブル）ビュー}{266}{subsubsection.18.3.2.2}%
+\contentsline {subsubsection}{\numberline {18.3.2.3}Roadmap（ロードマップ）ビュー}{266}{subsubsection.18.3.2.3}%
+\contentsline {subsection}{\numberline {18.3.3}複数のビューを組み合わせる}{269}{subsection.18.3.3}%
+\contentsline {section}{\numberline {18.4}カスタムフィールド}{269}{section.18.4}%
+\contentsline {subsection}{\numberline {18.4.1}Text（テキスト）}{269}{subsection.18.4.1}%
+\contentsline {subsection}{\numberline {18.4.2}Number（数値）}{269}{subsection.18.4.2}%
+\contentsline {subsection}{\numberline {18.4.3}Date（日付）}{269}{subsection.18.4.3}%
+\contentsline {subsection}{\numberline {18.4.4}Single select（単一選択）}{269}{subsection.18.4.4}%
+\contentsline {subsection}{\numberline {18.4.5}Iteration（イテレーション）}{270}{subsection.18.4.5}%
+\contentsline {subsection}{\numberline {18.4.6}フィールド設計のヒント}{271}{subsection.18.4.6}%
+\contentsline {section}{\numberline {18.5}ワークフロー自動化}{271}{section.18.5}%
+\contentsline {subsection}{\numberline {18.5.1}設定方法}{271}{subsection.18.5.1}%
+\contentsline {subsection}{\numberline {18.5.2}主なワークフロー}{271}{subsection.18.5.2}%
+\contentsline {subsection}{\numberline {18.5.3}より高度な自動化}{272}{subsection.18.5.3}%
+\contentsline {section}{\numberline {18.6}フィルタリングとソート}{272}{section.18.6}%
+\contentsline {subsection}{\numberline {18.6.1}フィルタの記法}{273}{subsection.18.6.1}%
+\contentsline {subsection}{\numberline {18.6.2}ソート}{273}{subsection.18.6.2}%
+\contentsline {subsection}{\numberline {18.6.3}ビューの保存}{273}{subsection.18.6.3}%
+\contentsline {subsection}{\numberline {18.6.4}グループ化}{274}{subsection.18.6.4}%
+\contentsline {section}{\numberline {18.7}Organizationレベルのプロジェクト}{274}{section.18.7}%
+\contentsline {subsection}{\numberline {18.7.1}複数リポジトリにまたがるプロジェクト管理}{274}{subsection.18.7.1}%
+\contentsline {subsection}{\numberline {18.7.2}Organizationプロジェクトの作成}{274}{subsection.18.7.2}%
+\contentsline {subsection}{\numberline {18.7.3}実践的な活用パターン}{275}{subsection.18.7.3}%
+\contentsline {section}{\numberline {18.8}まとめ}{275}{section.18.8}%
+\contentsline {chapter}{\numberline {19}ファイルの扱い方 --- Raw URL・画像・LFS}{276}{chapter.19}%
+\contentsline {section}{\numberline {19.1}この章で学ぶこと}{276}{section.19.1}%
+\contentsline {section}{\numberline {19.2}GitHub上のファイルURL構造 --- blob/tree/raw/blame/commitsの違いを詳しく}{276}{section.19.2}%
+\contentsline {section}{\numberline {19.3}特定行へのリンクとパーマリンク}{277}{section.19.3}%
+\contentsline {subsection}{\numberline {19.3.1}行番号リンク}{277}{subsection.19.3.1}%
+\contentsline {subsection}{\numberline {19.3.2}パーマリンク --- なぜ永続リンクが重要なのか}{277}{subsection.19.3.2}%
+\contentsline {section}{\numberline {19.4}Raw URL --- 生データの取得}{280}{section.19.4}%
+\contentsline {subsection}{\numberline {19.4.1}Raw URLとは}{280}{subsection.19.4.1}%
+\contentsline {subsection}{\numberline {19.4.2}curlでのダウンロード}{280}{subsection.19.4.2}%
+\contentsline {subsection}{\numberline {19.4.3}プログラムからの読み込み}{281}{subsection.19.4.3}%
+\contentsline {section}{\numberline {19.5}画像の保存と表示}{281}{section.19.5}%
+\contentsline {subsection}{\numberline {19.5.1}方法1: リポジトリに画像ファイルを保存する}{281}{subsection.19.5.1}%
+\contentsline {subsection}{\numberline {19.5.2}方法2: IssueにドラッグアンドドロップしてCDNを利用する}{282}{subsection.19.5.2}%
+\contentsline {subsection}{\numberline {19.5.3}HTMLタグでのサイズ指定}{284}{subsection.19.5.3}%
+\contentsline {section}{\numberline {19.6}Git LFS --- 大容量ファイルの管理}{284}{section.19.6}%
+\contentsline {subsection}{\numberline {19.6.1}なぜ大きなファイルが問題になるのか}{284}{subsection.19.6.1}%
+\contentsline {subsection}{\numberline {19.6.2}LFSの仕組み --- ポインタファイル}{284}{subsection.19.6.2}%
+\contentsline {subsection}{\numberline {19.6.3}セットアップ手順}{285}{subsection.19.6.3}%
+\contentsline {subsection}{\numberline {19.6.4}容量制限}{286}{subsection.19.6.4}%
+\contentsline {section}{\numberline {19.7}サブモジュール --- リポジトリの中に別リポジトリを含める}{286}{section.19.7}%
+\contentsline {subsection}{\numberline {19.7.1}サブモジュールとは}{286}{subsection.19.7.1}%
+\contentsline {subsection}{\numberline {19.7.2}サブモジュールの追加}{286}{subsection.19.7.2}%
+\contentsline {subsection}{\numberline {19.7.3}サブモジュール付きリポジトリのクローン}{287}{subsection.19.7.3}%
+\contentsline {subsection}{\numberline {19.7.4}サブモジュールの更新}{287}{subsection.19.7.4}%
+\contentsline {section}{\numberline {19.8}GitHub上でのファイル操作}{288}{section.19.8}%
+\contentsline {subsection}{\numberline {19.8.1}ファイルの作成}{288}{subsection.19.8.1}%
+\contentsline {subsection}{\numberline {19.8.2}ファイルの編集}{288}{subsection.19.8.2}%
+\contentsline {subsection}{\numberline {19.8.3}キーボードショートカットによる検索}{288}{subsection.19.8.3}%
+\contentsline {section}{\numberline {19.9}まとめ}{290}{section.19.9}%
+\contentsline {chapter}{\numberline {20}READMEとドキュメント --- プロジェクトの顔を作る}{292}{chapter.20}%
+\contentsline {section}{\numberline {20.1}この章で学ぶこと}{292}{section.20.1}%
+\contentsline {section}{\numberline {20.2}READMEとは何か}{292}{section.20.2}%
+\contentsline {subsection}{\numberline {20.2.1}名前の由来 --- 1970年代からの伝統}{292}{subsection.20.2.1}%
+\contentsline {subsection}{\numberline {20.2.2}GitHubでの役割 --- 自動表示の仕組み}{292}{subsection.20.2.2}%
+\contentsline {subsection}{\numberline {20.2.3}{\ttfamily \small \colorbox {ghcodebg}{\color {ghblack}\strut .md}} の意味 --- Markdown形式}{293}{subsection.20.2.3}%
+\contentsline {subsection}{\numberline {20.2.4}READMEが表示される場所一覧}{293}{subsection.20.2.4}%
+\contentsline {section}{\numberline {20.3}READMEの書き方}{295}{section.20.3}%
+\contentsline {subsection}{\numberline {20.3.1}最低限のREADME}{295}{subsection.20.3.1}%
+\contentsline {subsection}{\numberline {20.3.2}標準的なREADMEの構成}{295}{subsection.20.3.2}%
+\contentsline {section}{\numberline {20.4}Markdown記法}{297}{section.20.4}%
+\contentsline {subsection}{\numberline {20.4.1}見出し}{297}{subsection.20.4.1}%
+\contentsline {subsection}{\numberline {20.4.2}太字・斜体・取り消し線}{297}{subsection.20.4.2}%
+\contentsline {subsection}{\numberline {20.4.3}リスト}{297}{subsection.20.4.3}%
+\contentsline {subsection}{\numberline {20.4.4}リンクと画像}{298}{subsection.20.4.4}%
+\contentsline {subsection}{\numberline {20.4.5}テーブル}{298}{subsection.20.4.5}%
+\contentsline {subsection}{\numberline {20.4.6}コードブロック}{298}{subsection.20.4.6}%
+\contentsline {subsection}{\numberline {20.4.7}タスクリスト}{299}{subsection.20.4.7}%
+\contentsline {subsection}{\numberline {20.4.8}折りたたみ（details/summary）}{299}{subsection.20.4.8}%
+\contentsline {subsection}{\numberline {20.4.9}注意・警告（Alerts）}{299}{subsection.20.4.9}%
+\contentsline {subsection}{\numberline {20.4.10}Mermaid図}{301}{subsection.20.4.10}%
+\contentsline {subsection}{\numberline {20.4.11}数式（LaTeX）}{301}{subsection.20.4.11}%
+\contentsline {section}{\numberline {20.5}ジャンル別READMEテンプレート}{302}{section.20.5}%
+\contentsline {subsection}{\numberline {20.5.1}CLIツール}{302}{subsection.20.5.1}%
+\contentsline {subsection}{\numberline {20.5.2}Webアプリ / API}{303}{subsection.20.5.2}%
+\contentsline {subsection}{\numberline {20.5.3}ライブラリ / パッケージ}{304}{subsection.20.5.3}%
+\contentsline {subsection}{\numberline {20.5.4}研究プロジェクト}{305}{subsection.20.5.4}%
+\contentsline {section}{\numberline {20.6}README作成のコツ}{306}{section.20.6}%
+\contentsline {subsection}{\numberline {20.6.1}最初の3秒で勝負が決まる}{306}{subsection.20.6.1}%
+\contentsline {subsection}{\numberline {20.6.2}コピーアンドペーストで動くコードを載せる}{307}{subsection.20.6.2}%
+\contentsline {subsection}{\numberline {20.6.3}スクリーンショットやGIFを使う}{307}{subsection.20.6.3}%
+\contentsline {subsection}{\numberline {20.6.4}目次を付ける（長いREADMEの場合）}{307}{subsection.20.6.4}%
+\contentsline {section}{\numberline {20.7}バッジの付け方}{307}{section.20.7}%
+\contentsline {subsection}{\numberline {20.7.1}shields.io --- 動的バッジ}{307}{subsection.20.7.1}%
+\contentsline {subsection}{\numberline {20.7.2}技術スタックバッジ}{308}{subsection.20.7.2}%
+\contentsline {section}{\numberline {20.8}Wiki}{308}{section.20.8}%
+\contentsline {subsection}{\numberline {20.8.1}有効化}{309}{subsection.20.8.1}%
+\contentsline {subsection}{\numberline {20.8.2}クローンと編集}{309}{subsection.20.8.2}%
+\contentsline {section}{\numberline {20.9}よく使うファイル}{309}{section.20.9}%
+\contentsline {section}{\numberline {20.10}ライセンスの選び方}{311}{section.20.10}%
+\contentsline {subsection}{\numberline {20.10.1}判断基準}{311}{subsection.20.10.1}%
+\contentsline {section}{\numberline {20.11}まとめ}{312}{section.20.11}%
+\contentsline {chapter}{\numberline {21}カスタマイズ --- GitHubを自分好みに整える}{314}{chapter.21}%
+\contentsline {section}{\numberline {21.1}この章で学ぶこと}{314}{section.21.1}%
+\contentsline {section}{\numberline {21.2}テーマ設定 --- ダークモード/ライトモード}{314}{section.21.2}%
+\contentsline {section}{\numberline {21.3}キーボードショートカット}{315}{section.21.3}%
+\contentsline {subsection}{\numberline {21.3.1}グローバルショートカット（どのページでも使える）}{315}{subsection.21.3.1}%
+\contentsline {subsection}{\numberline {21.3.2}リポジトリ内ショートカット}{315}{subsection.21.3.2}%
+\contentsline {subsection}{\numberline {21.3.3}ファイル表示時のショートカット}{315}{subsection.21.3.3}%
+\contentsline {subsection}{\numberline {21.3.4}Pull RequestとIssueのショートカット}{315}{subsection.21.3.4}%
+\contentsline {section}{\numberline {21.4}GitHub CLI (gh) のカスタマイズ --- エイリアスの設定と活用例}{316}{section.21.4}%
+\contentsline {subsection}{\numberline {21.4.1}エイリアスの設定}{316}{subsection.21.4.1}%
+\contentsline {subsection}{\numberline {21.4.2}ghの設定}{317}{subsection.21.4.2}%
+\contentsline {section}{\numberline {21.5}Gitのカスタマイズ --- エイリアスと.gitconfig}{318}{section.21.5}%
+\contentsline {subsection}{\numberline {21.5.1}エイリアスの設定}{318}{subsection.21.5.1}%
+\contentsline {subsection}{\numberline {21.5.2}.gitconfig の直接編集}{319}{subsection.21.5.2}%
+\contentsline {section}{\numberline {21.6}通知のカスタマイズ}{320}{section.21.6}%
+\contentsline {subsection}{\numberline {21.6.1}通知設定の場所}{320}{subsection.21.6.1}%
+\contentsline {subsection}{\numberline {21.6.2}リポジトリごとの通知設定}{322}{subsection.21.6.2}%
+\contentsline {section}{\numberline {21.7}GitHub Mobile}{322}{section.21.7}%
+\contentsline {section}{\numberline {21.8}Saved Replies}{323}{section.21.8}%
+\contentsline {subsection}{\numberline {21.8.1}設定方法}{323}{subsection.21.8.1}%
+\contentsline {subsection}{\numberline {21.8.2}便利なテンプレート例}{323}{subsection.21.8.2}%
+\contentsline {section}{\numberline {21.9}まとめ}{324}{section.21.9}%
+\contentsline {chapter}{\numberline {22}セキュリティ --- リポジトリを安全に保つ}{325}{chapter.22}%
+\contentsline {section}{\numberline {22.1}この章で学ぶこと}{325}{section.22.1}%
+\contentsline {section}{\numberline {22.2}絶対にコミットしてはいけないもの}{325}{section.22.2}%
+\contentsline {subsection}{\numberline {22.2.1}なぜ秘密情報のコミットが危険なのか}{325}{subsection.22.2.1}%
+\contentsline {subsection}{\numberline {22.2.2}コミットしてはならない情報の一覧}{325}{subsection.22.2.2}%
+\contentsline {section}{\numberline {22.3}万が一コミットしてしまったときの対処}{326}{section.22.3}%
+\contentsline {subsection}{\numberline {22.3.1}最優先事項：秘密情報を無効化する}{326}{subsection.22.3.1}%
+\contentsline {subsection}{\numberline {22.3.2}履歴からの完全削除}{327}{subsection.22.3.2}%
+\contentsline {section}{\numberline {22.4}Dependabot --- 依存パッケージの脆弱性を自動検出する}{328}{section.22.4}%
+\contentsline {subsection}{\numberline {22.4.1}なぜ依存パッケージの管理が重要なのか}{328}{subsection.22.4.1}%
+\contentsline {subsection}{\numberline {22.4.2}Dependabotとは}{328}{subsection.22.4.2}%
+\contentsline {subsection}{\numberline {22.4.3}有効化の手順}{328}{subsection.22.4.3}%
+\contentsline {subsection}{\numberline {22.4.4}設定ファイルによるカスタマイズ}{329}{subsection.22.4.4}%
+\contentsline {section}{\numberline {22.5}Secret Scanning --- リポジトリ内の秘密情報を自動検出する}{330}{section.22.5}%
+\contentsline {subsection}{\numberline {22.5.1}Secret Scanningとは}{330}{subsection.22.5.1}%
+\contentsline {subsection}{\numberline {22.5.2}検出できる秘密情報の種類}{330}{subsection.22.5.2}%
+\contentsline {subsection}{\numberline {22.5.3}有効化と動作}{330}{subsection.22.5.3}%
+\contentsline {subsection}{\numberline {22.5.4}Push protection}{330}{subsection.22.5.4}%
+\contentsline {section}{\numberline {22.6}セキュリティポリシー --- SECURITY.mdの作成}{331}{section.22.6}%
+\contentsline {subsection}{\numberline {22.6.1}なぜセキュリティポリシーが必要か}{331}{subsection.22.6.1}%
+\contentsline {subsection}{\numberline {22.6.2}SECURITY.mdの書き方}{331}{subsection.22.6.2}%
+\contentsline {section}{\numberline {22.7}セキュリティのベストプラクティス7箇条}{332}{section.22.7}%
+\contentsline {subsection}{\numberline {22.7.1}第1条：二段階認証（2FA）を必ず有効にする}{332}{subsection.22.7.1}%
+\contentsline {subsection}{\numberline {22.7.2}第2条：.gitignoreを徹底する}{332}{subsection.22.7.2}%
+\contentsline {subsection}{\numberline {22.7.3}第3条：GitHub Secretsで秘密情報を管理する}{332}{subsection.22.7.3}%
+\contentsline {subsection}{\numberline {22.7.4}第4条：最小権限の原則を守る}{332}{subsection.22.7.4}%
+\contentsline {subsection}{\numberline {22.7.5}第5条：Dependabotのアラートに迅速に対応する}{333}{subsection.22.7.5}%
+\contentsline {subsection}{\numberline {22.7.6}第6条：ブランチ保護ルールを設定する}{333}{subsection.22.7.6}%
+\contentsline {subsection}{\numberline {22.7.7}第7条：定期的にアクセス権限を見直す}{333}{subsection.22.7.7}%
+\contentsline {section}{\numberline {22.8}まとめ}{333}{section.22.8}%
+\contentsline {chapter}{\numberline {23}外部連携 --- 開発ツールとつなげる}{334}{chapter.23}%
+\contentsline {section}{\numberline {23.1}この章で学ぶこと}{334}{section.23.1}%
+\contentsline {section}{\numberline {23.2}VS Codeとの連携}{334}{section.23.2}%
+\contentsline {subsection}{\numberline {23.2.1}なぜVS CodeとGitHubの連携が重要なのか}{334}{subsection.23.2.1}%
+\contentsline {subsection}{\numberline {23.2.2}拡張機能一覧と用途}{334}{subsection.23.2.2}%
+\contentsline {subsection}{\numberline {23.2.3}ソース管理パネルの使い方}{335}{subsection.23.2.3}%
+\contentsline {subsection}{\numberline {23.2.4}インラインblame}{335}{subsection.23.2.4}%
+\contentsline {subsection}{\numberline {23.2.5}github.dev --- ブラウザ版VS Code}{337}{subsection.23.2.5}%
+\contentsline {section}{\numberline {23.3}Claude Codeとの連携}{337}{section.23.3}%
+\contentsline {subsection}{\numberline {23.3.1}Claude Codeとは何か}{337}{subsection.23.3.1}%
+\contentsline {subsection}{\numberline {23.3.2}インストールと認証}{337}{subsection.23.3.2}%
+\contentsline {subsection}{\numberline {23.3.3}GitHubリポジトリでの使用方法}{338}{subsection.23.3.3}%
+\contentsline {subsection}{\numberline {23.3.4}Git操作の対話的な依頼}{338}{subsection.23.3.4}%
+\contentsline {subsection}{\numberline {23.3.5}VS Code拡張としての使用}{339}{subsection.23.3.5}%
+\contentsline {section}{\numberline {23.4}GitHub Apps / OAuth Apps}{339}{section.23.4}%
+\contentsline {subsection}{\numberline {23.4.1}GitHub Marketplaceの概要}{339}{subsection.23.4.1}%
+\contentsline {subsection}{\numberline {23.4.2}カテゴリ別の代表的なアプリ}{340}{subsection.23.4.2}%
+\contentsline {subsection}{\numberline {23.4.3}インストール方法}{340}{subsection.23.4.3}%
+\contentsline {subsection}{\numberline {23.4.4}管理方法}{340}{subsection.23.4.4}%
+\contentsline {section}{\numberline {23.5}Slack連携}{341}{section.23.5}%
+\contentsline {subsection}{\numberline {23.5.1}なぜSlack連携が必要なのか}{341}{subsection.23.5.1}%
+\contentsline {subsection}{\numberline {23.5.2}GitHub for Slackの設定}{341}{subsection.23.5.2}%
+\contentsline {subsection}{\numberline {23.5.3}通知カスタマイズ}{341}{subsection.23.5.3}%
+\contentsline {section}{\numberline {23.6}Webhook}{342}{section.23.6}%
+\contentsline {subsection}{\numberline {23.6.1}仕組みの解説}{342}{subsection.23.6.1}%
+\contentsline {subsection}{\numberline {23.6.2}設定方法}{342}{subsection.23.6.2}%
+\contentsline {subsection}{\numberline {23.6.3}よく使うイベント}{343}{subsection.23.6.3}%
+\contentsline {section}{\numberline {23.7}GitHub API}{343}{section.23.7}%
+\contentsline {subsection}{\numberline {23.7.1}REST APIとGraphQL APIの概要}{343}{subsection.23.7.1}%
+\contentsline {subsection}{\numberline {23.7.2}gh apiコマンドでの使い方}{343}{subsection.23.7.2}%
+\contentsline {subsection}{\numberline {23.7.3}GraphQL APIの使い方}{344}{subsection.23.7.3}%
+\contentsline {subsection}{\numberline {23.7.4}実用例}{345}{subsection.23.7.4}%
+\contentsline {section}{\numberline {23.8}Gist}{345}{section.23.8}%
+\contentsline {subsection}{\numberline {23.8.1}コードスニペット共有の仕組み}{345}{subsection.23.8.1}%
+\contentsline {subsection}{\numberline {23.8.2}作成・一覧・表示のコマンド}{346}{subsection.23.8.2}%
+\contentsline {section}{\numberline {23.9}まとめ}{346}{section.23.9}%
+\contentsline {chapter}{\numberline {24}トラブルシューティング --- よくある問題の処方箋}{348}{chapter.24}%
+\contentsline {section}{\numberline {24.1}この章で学ぶこと}{348}{section.24.1}%
+\contentsline {section}{\numberline {24.2}認証エラー}{348}{section.24.2}%
+\contentsline {subsection}{\numberline {24.2.1}Permission denied (publickey) の原因と解決法}{348}{subsection.24.2.1}%
+\contentsline {subsection}{\numberline {24.2.2}Invalid username or password の原因と解決法}{349}{subsection.24.2.2}%
+\contentsline {subsection}{\numberline {24.2.3}403 Forbidden の原因と解決法}{350}{subsection.24.2.3}%
+\contentsline {section}{\numberline {24.3}push/pullエラー}{350}{section.24.3}%
+\contentsline {subsection}{\numberline {24.3.1}rejected non-fast-forward の原因と解決法}{350}{subsection.24.3.1}%
+\contentsline {subsection}{\numberline {24.3.2}refusing to merge unrelated histories の原因と解決法}{351}{subsection.24.3.2}%
+\contentsline {subsection}{\numberline {24.3.3}Your branch is behind}{352}{subsection.24.3.3}%
+\contentsline {section}{\numberline {24.4}ブランチ関連の問題}{352}{section.24.4}%
+\contentsline {subsection}{\numberline {24.4.1}local changes would be overwritten（未コミット変更時のブランチ切替）}{352}{subsection.24.4.1}%
+\contentsline {subsection}{\numberline {24.4.2}branch not found（リモートブランチの取得）}{353}{subsection.24.4.2}%
+\contentsline {section}{\numberline {24.5}コミット関連の問題}{354}{section.24.5}%
+\contentsline {subsection}{\numberline {24.5.1}間違ったブランチにコミットした場合}{354}{subsection.24.5.1}%
+\contentsline {subsection}{\numberline {24.5.2}コミットメッセージを間違えた場合}{355}{subsection.24.5.2}%
+\contentsline {subsection}{\numberline {24.5.3}大きなファイルをコミットしてしまった場合}{355}{subsection.24.5.3}%
+\contentsline {section}{\numberline {24.6}.gitignoreが効かない問題}{356}{section.24.6}%
+\contentsline {subsection}{\numberline {24.6.1}既に追跡されたファイルの対処}{356}{subsection.24.6.1}%
+\contentsline {section}{\numberline {24.7}ネットワーク関連}{357}{section.24.7}%
+\contentsline {subsection}{\numberline {24.7.1}Connection timed out（ポート443の使用）}{357}{subsection.24.7.1}%
+\contentsline {subsection}{\numberline {24.7.2}クローンが遅い（shallow clone）}{357}{subsection.24.7.2}%
+\contentsline {section}{\numberline {24.8}その他の問題}{358}{section.24.8}%
+\contentsline {subsection}{\numberline {24.8.1}detached HEAD}{358}{subsection.24.8.1}%
+\contentsline {subsection}{\numberline {24.8.2}LF/CRLFの改行コード問題}{358}{subsection.24.8.2}%
+\contentsline {subsection}{\numberline {24.8.3}not a git repository}{359}{subsection.24.8.3}%
+\contentsline {section}{\numberline {24.9}困ったときのコマンド集}{360}{section.24.9}%
+\contentsline {section}{\numberline {24.10}まとめ}{361}{section.24.10}%
+\contentsline {chapter}{\numberline {25}ファイル拡張子とプログラミング言語}{363}{chapter.25}%
+\contentsline {section}{\numberline {25.1}この章で学ぶこと}{363}{section.25.1}%
+\contentsline {section}{\numberline {25.2}拡張子とは何か}{363}{section.25.2}%
+\contentsline {subsection}{\numberline {25.2.1}ファイル名の末尾の .xxx の役割}{363}{subsection.25.2.1}%
+\contentsline {subsection}{\numberline {25.2.2}GitHubでのシンタックスハイライト}{364}{subsection.25.2.2}%
+\contentsline {section}{\numberline {25.3}プログラミング言語と拡張子}{364}{section.25.3}%
+\contentsline {subsection}{\numberline {25.3.1}Web開発の拡張子}{364}{subsection.25.3.1}%
+\contentsline {subsection}{\numberline {25.3.2}汎用プログラミング言語の拡張子}{366}{subsection.25.3.2}%
+\contentsline {subsection}{\numberline {25.3.3}データサイエンス・科学計算の拡張子}{366}{subsection.25.3.3}%
+\contentsline {subsection}{\numberline {25.3.4}シェルスクリプトの拡張子}{366}{subsection.25.3.4}%
+\contentsline {section}{\numberline {25.4}データ・設定ファイルの拡張子}{367}{section.25.4}%
+\contentsline {section}{\numberline {25.5}ドキュメントファイルの拡張子}{368}{section.25.5}%
+\contentsline {section}{\numberline {25.6}ビルド・パッケージ管理ファイル}{368}{section.25.6}%
+\contentsline {section}{\numberline {25.7}GitHub特有のファイルとフォルダ}{369}{section.25.7}%
+\contentsline {subsection}{\numberline {25.7.1}リポジトリルートの特別なファイル}{369}{subsection.25.7.1}%
+\contentsline {subsection}{\numberline {25.7.2}.github/ ディレクトリ内の各種ファイル}{370}{subsection.25.7.2}%
+\contentsline {section}{\numberline {25.8}GitHubの言語判定の仕組み}{370}{section.25.8}%
+\contentsline {subsection}{\numberline {25.8.1}linguistによる自動判定}{370}{subsection.25.8.1}%
+\contentsline {subsection}{\numberline {25.8.2}.gitattributesでのカスタマイズ}{370}{subsection.25.8.2}%
+\contentsline {section}{\numberline {25.9}ファイルの文字コード}{372}{section.25.9}%
+\contentsline {subsection}{\numberline {25.9.1}UTF-8が標準}{372}{subsection.25.9.1}%
+\contentsline {subsection}{\numberline {25.9.2}.editorconfig}{372}{subsection.25.9.2}%
+\contentsline {section}{\numberline {25.10}拡張子のないファイル}{373}{section.25.10}%
+\contentsline {section}{\numberline {25.11}まとめ}{373}{section.25.11}%
+\contentsline {chapter}{\numberline {26}GitHubアプリの比較 --- Web・Desktop・CLI・Mobile・IDE}{375}{chapter.26}%
+\contentsline {section}{\numberline {26.1}この章で学ぶこと}{375}{section.26.1}%
+\contentsline {section}{\numberline {26.2}GitHubを操作する5つの方法の概観}{375}{section.26.2}%
+\contentsline {section}{\numberline {26.3}GitHub Web UI}{376}{section.26.3}%
+\contentsline {subsection}{\numberline {26.3.1}できること（全機能）}{376}{subsection.26.3.1}%
+\contentsline {subsection}{\numberline {26.3.2}Web上でのコード編集}{376}{subsection.26.3.2}%
+\contentsline {subsection}{\numberline {26.3.3}向いている人}{377}{subsection.26.3.3}%
+\contentsline {section}{\numberline {26.4}GitHub Desktop}{377}{section.26.4}%
+\contentsline {subsection}{\numberline {26.4.1}インストール}{377}{subsection.26.4.1}%
+\contentsline {subsection}{\numberline {26.4.2}特徴（GUIでGit操作）}{377}{subsection.26.4.2}%
+\contentsline {subsection}{\numberline {26.4.3}画面の見方}{379}{subsection.26.4.3}%
+\contentsline {subsection}{\numberline {26.4.4}他のGit GUIツールとの比較}{379}{subsection.26.4.4}%
+\contentsline {subsection}{\numberline {26.4.5}向いている人}{380}{subsection.26.4.5}%
+\contentsline {section}{\numberline {26.5}GitHub CLI (gh)}{380}{section.26.5}%
+\contentsline {subsection}{\numberline {26.5.1}gitコマンドとghコマンドの違い}{380}{subsection.26.5.1}%
+\contentsline {subsection}{\numberline {26.5.2}インストール}{381}{subsection.26.5.2}%
+\contentsline {subsection}{\numberline {26.5.3}よく使うコマンド集}{381}{subsection.26.5.3}%
+\contentsline {subsection}{\numberline {26.5.4}エイリアス}{382}{subsection.26.5.4}%
+\contentsline {subsection}{\numberline {26.5.5}向いている人}{383}{subsection.26.5.5}%
+\contentsline {section}{\numberline {26.6}GitHub Mobile}{383}{section.26.6}%
+\contentsline {subsection}{\numberline {26.6.1}インストール}{383}{subsection.26.6.1}%
+\contentsline {subsection}{\numberline {26.6.2}できること（通知/Issue/PR/コード閲覧）}{384}{subsection.26.6.2}%
+\contentsline {subsection}{\numberline {26.6.3}できないこと（編集/設定）}{384}{subsection.26.6.3}%
+\contentsline {subsection}{\numberline {26.6.4}向いている人}{384}{subsection.26.6.4}%
+\contentsline {section}{\numberline {26.7}IDE拡張機能}{384}{section.26.7}%
+\contentsline {subsection}{\numberline {26.7.1}VS Code標準Git機能の解説}{384}{subsection.26.7.1}%
+\contentsline {subsection}{\numberline {26.7.2}おすすめ拡張機能}{385}{subsection.26.7.2}%
+\contentsline {subsection}{\numberline {26.7.3}Claude Code}{386}{subsection.26.7.3}%
+\contentsline {subsection}{\numberline {26.7.4}JetBrains IDEのGit連携}{386}{subsection.26.7.4}%
+\contentsline {subsection}{\numberline {26.7.5}向いている人}{387}{subsection.26.7.5}%
+\contentsline {section}{\numberline {26.8}どれを使うべきか}{387}{section.26.8}%
+\contentsline {subsection}{\numberline {26.8.1}初心者の場合}{387}{subsection.26.8.1}%
+\contentsline {subsection}{\numberline {26.8.2}開発者の日常}{387}{subsection.26.8.2}%
+\contentsline {subsection}{\numberline {26.8.3}レベル別おすすめ組み合わせ}{388}{subsection.26.8.3}%
+\contentsline {section}{\numberline {26.9}まとめ}{388}{section.26.9}%
+\contentsline {chapter}{\numberline {A}Gitコマンド早見表}{390}{appendix.A}%
+\contentsline {section}{この付録の使い方}{390}{section*.134}%
+\contentsline {section}{\numberline {A.1}初期設定（→ 第2章）}{390}{section.A.1}%
+\contentsline {section}{\numberline {A.2}リポジトリの作成と取得（→ 第5章）}{390}{section.A.2}%
+\contentsline {section}{\numberline {A.3}基本操作（→ 第6章）}{391}{section.A.3}%
+\contentsline {section}{\numberline {A.4}差分と履歴の確認（→ 第6章、第9章）}{392}{section.A.4}%
+\contentsline {section}{\numberline {A.5}ブランチ操作（→ 第7章）}{393}{section.A.5}%
+\contentsline {section}{\numberline {A.6}リモート操作（→ 第5章、第6章）}{394}{section.A.6}%
+\contentsline {section}{\numberline {A.7}変更の取り消しと復元（→ 第9章）}{395}{section.A.7}%
+\contentsline {section}{\numberline {A.8}一時退避（→ 第9章）}{396}{section.A.8}%
+\contentsline {section}{\numberline {A.9}タグ（→ 第14章）}{396}{section.A.9}%
+\contentsline {section}{\numberline {A.10}ファイル操作（→ 第6章）}{397}{section.A.10}%
+\contentsline {section}{\numberline {A.11}GitHub CLI（gh）コマンド（→ 第23章）}{397}{section.A.11}%
+\contentsline {section}{\numberline {A.12}逆引きリファレンス --- 「やりたいこと」から探す}{398}{section.A.12}%
+\contentsline {chapter}{\numberline {B}用語集}{400}{appendix.B}%
+\contentsline {section}{この付録の使い方}{400}{section*.136}%
+\contentsline {section}{A}{400}{section*.136}%
+\contentsline {section}{B}{400}{section*.136}%
+\contentsline {section}{C}{401}{section*.136}%
+\contentsline {section}{D}{402}{section*.136}%
+\contentsline {section}{F}{403}{section*.136}%
+\contentsline {section}{G}{403}{section*.136}%
+\contentsline {section}{H}{404}{section*.136}%
+\contentsline {section}{I}{404}{section*.136}%
+\contentsline {section}{L}{404}{section*.136}%
+\contentsline {section}{M}{405}{section*.136}%
+\contentsline {section}{O}{405}{section*.136}%
+\contentsline {section}{P}{406}{section*.136}%
+\contentsline {section}{R}{406}{section*.136}%
+\contentsline {section}{S}{408}{section*.136}%
+\contentsline {section}{T}{409}{section*.136}%
+\contentsline {section}{U}{409}{section*.136}%
+\contentsline {section}{V}{409}{section*.136}%
+\contentsline {section}{W}{409}{section*.136}%
 \contentsfinish 

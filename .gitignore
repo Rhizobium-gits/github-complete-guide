@@ -1,0 +1,6 @@
+latex/screenshots/
+latex/node_modules/
+latex/*.log
+latex/*.aux
+latex/*.toc
+latex/*.out
