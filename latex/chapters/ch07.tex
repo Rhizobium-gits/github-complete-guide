@@ -546,7 +546,11 @@ git pull
 git branch -d feature/dark-mode
 \end{lstlisting}
 
-\screenshot{プルリクエスト作成後のGitHub画面}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{images/pr-create.png}
+\caption{プルリクエスト作成後のGitHub画面}
+\end{figure}
 
 このフローのポイントは、ステップ7の \cmd{git fetch} + \cmd{git rebase} です。自分の作業ブランチを定期的に \cmd{main} の最新に追従させておくことで、プルリクエスト作成時のコンフリクトを最小限に抑えることができます。
 

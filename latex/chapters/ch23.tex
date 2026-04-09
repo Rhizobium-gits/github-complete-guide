@@ -83,7 +83,11 @@ https://github.com/owner/repo → https://github.dev/owner/repo
 
 github.devはブラウザ上で動作するため、何もインストールする必要がありません。軽い編集やコードレビューに非常に便利です。ただし、ターミナルは使えず、ビルドやテストの実行はできません。本格的な開発にはCodespaces（クラウド上の完全な開発環境）が適していますが、ちょっとしたtypoの修正やドキュメントの編集にはgithub.devで十分です。
 
-\screenshot{github.devの画面（ブラウザ内にVS Codeが表示されている様子）}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{images/github-dev.png}
+\caption{github.devの画面（ブラウザ内にVS Codeが表示されている様子）}
+\end{figure}
 
 \section{Claude Codeとの連携}
 
@@ -210,7 +214,11 @@ GitHub Appのインストール手順は以下のとおりです。
   \item \textbf{Organization}: Organization Settings → Installed GitHub Apps
 \end{itemize}
 
-\screenshot{インストール済みアプリの管理画面}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{images/marketplace.png}
+\caption{インストール済みアプリの管理画面}
+\end{figure}
 
 この画面から、アプリの権限変更、対象リポジトリの変更、アプリのアンインストールが行えます。使わなくなったアプリは、セキュリティの観点からもこまめにアンインストールすることをおすすめします。
 
@@ -288,7 +296,11 @@ Webhookの設定は、リポジトリの Settings → \textbf{Webhooks} → 「A
 \end{tabular}
 \end{table}
 
-\screenshot{Webhook設定画面}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{images/webhook-settings.png}
+\caption{Webhook設定画面}
+\end{figure}
 
 Secretの設定は非常に重要です。Secretを設定すると、GitHubはリクエストのヘッダーに \cmd{X-Hub-Signature-256} というフィールドを追加します。受信側のサーバーはこの署名を検証することで、リクエストが本当にGitHubから送られたものであることを確認できます。Secretを設定しないと、悪意のある第三者がWebhook URLにリクエストを送りつける攻撃（リプレイ攻撃）に対して脆弱になります。
 
