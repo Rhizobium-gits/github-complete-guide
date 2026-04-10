@@ -285,11 +285,10 @@ PRの内容に問題がなく、レビューが承認されたら、いよいよ
 
 これはGitの標準的なマージ方法です。featureブランチの全コミットを保持しつつ、マージコミットと呼ばれる特別なコミットを作成してmainブランチに統合します。
 
-\begin{lstlisting}[language={}]
-main:    A → B → C ──────────→ M (マージコミット)
-                  \            /
-feature:           D → E → F →
-\end{lstlisting}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{images/diagram-merge-commit.png}
+\end{figure}
 
 \textbf{特徴}：ブランチの分岐・統合の歴史がそのまま残るため、「このfeatureブランチではどんな作業が行われたか」を後から追跡しやすくなります。一方で、featureブランチが多い大規模プロジェクトでは、履歴のグラフが複雑になりがちです。
 

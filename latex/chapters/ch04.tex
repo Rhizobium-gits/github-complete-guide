@@ -75,14 +75,10 @@ SSH鍵もこれと同じ原理です。
   \item \textbf{秘密鍵}（\cmd{id\_ed25519}）：自分のパソコンに保管します。「南京錠を開ける鍵」に相当します。\textbf{絶対に他人に渡してはいけません}
 \end{itemize}
 
-\begin{lstlisting}[language={}]
-あなたのPC                          GitHub
-┌────────────────┐                ┌────────────────┐
-│ 秘密鍵          │ ←── 認証 ──→  │ 公開鍵          │
-│ (~/.ssh/       │                │ (Settings →    │
-│  id_ed25519)   │                │  SSH keys)     │
-└────────────────┘                └────────────────┘
-\end{lstlisting}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{images/diagram-ssh-auth.png}
+\end{figure}
 
 GitHubにアクセスするとき、GitHubは「この公開鍵に対応する秘密鍵を持っていますか？」と確認します。あなたのパソコンが秘密鍵を使って正しく応答できれば、「本人である」と認められます。秘密鍵そのものがネットワーク上を流れることはないため、非常に安全です。
 

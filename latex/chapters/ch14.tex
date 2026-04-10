@@ -100,13 +100,10 @@ git push origin --delete v1.0.0
 
 ソフトウェアのバージョン番号は、自由に付けることもできますが、多くのプロジェクトでは\textbf{セマンティックバージョニング（Semantic Versioning、略称SemVer）}という標準的な規約に従っています。SemVerでは、バージョン番号を \cmd{MAJOR.MINOR.PATCH} の3つの数字で構成します。
 
-\begin{lstlisting}[language={}]
-v 2 . 3 . 1
-  ↓   ↓   ↓
-  |   |   └── PATCH: バグ修正（後方互換性あり）
-  |   └────── MINOR: 新機能追加（後方互換性あり）
-  └────────── MAJOR: 破壊的変更（後方互換性なし）
-\end{lstlisting}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{images/diagram-semver.png}
+\end{figure}
 
 この3つの数字には明確な意味があり、バージョン番号を見るだけで「このアップデートは安全に適用できるか」を判断できるようになっています。
 

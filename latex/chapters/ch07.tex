@@ -417,11 +417,10 @@ git rebase --abort
 
 GitHub Flowは、GitHubが提唱するシンプルなブランチ戦略で、多くのWebアプリケーション開発で採用されています。ルールは非常に明快です。
 
-\begin{lstlisting}[language={}]
-main ─────────────────────────────────────→ （常にデプロイ可能な状態）
-       \           /    \            /
-        feature-A ─      feature-B ─
-\end{lstlisting}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{images/diagram-github-flow.png}
+\end{figure}
 
 \textbf{ルール:}
 
@@ -440,15 +439,10 @@ GitHub Flowの最大の利点はそのシンプルさです。ルールが少な
 
 Git Flowは、Vincent Driessen氏が2010年に提唱した、より体系的なブランチ戦略です。リリースサイクルが明確に定義されているプロジェクト（モバイルアプリ、デスクトップソフトウェアなど）に適しています。
 
-\begin{lstlisting}[language={}]
-main    ──────●──────────────●──────→   （リリース済みコードのみ）
-              ↑              ↑
-release ──────┤   release/v2 ┤          （リリース準備）
-              ↑              ↑
-develop ──────●──────────────●──────→   （開発の中心）
-          \       /    \        /
-           feat-A       feat-B          （個別の機能開発）
-\end{lstlisting}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{images/diagram-trunk-based.png}
+\end{figure}
 
 \textbf{ブランチの構成:}
 
@@ -466,11 +460,10 @@ Git Flowはルールが多く運用コストが高いため、継続的デプロ
 
 Trunk-based Development（トランクベース開発）は、Google や Facebook などの大規模テック企業で採用されている戦略です。「trunk（幹）」とは \cmd{main} ブランチのことを指します。
 
-\begin{lstlisting}[language={}]
-main ────●────●────●────●────→  （頻繁に小さな変更がマージされる）
-         ↑    ↑    ↑    ↑
-    短命ブランチ（数時間〜1-2日で完了）
-\end{lstlisting}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{images/diagram-trunk-based.png}
+\end{figure}
 
 \textbf{特徴:}
 

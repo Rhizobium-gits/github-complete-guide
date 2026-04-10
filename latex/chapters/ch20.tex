@@ -28,27 +28,10 @@ READMEという名前は文字通り \textbf{"Read Me"（私を読んで）} と
 
 GitHubでは、リポジトリのルートディレクトリに \cmd{README.md} ファイルがあると、ファイル一覧の下にその内容がHTMLに変換されて自動表示されます。つまり、リポジトリにアクセスした人が\textbf{スクロールせずに}最初に読める情報になります。
 
-\begin{lstlisting}[language={}]
-github.com/owner/repo にアクセスすると...
-
-┌──────────────────────────────────────────────┐
-│  owner / repo                     ⭐ Star    │
-│                                               │
-│  📁 src/                                      │
-│  📁 tests/                                    │
-│  📄 .gitignore                                │
-│  📄 LICENSE                                   │
-│  📄 README.md                                 │
-│                                               │
-│  ──────────────────────────────────────────── │
-│  ↓ README.md の中身がここに描画される ↓        │
-│                                               │
-│  # My Project                                 │
-│  This is an awesome project that...           │
-│  ## Installation                              │
-│  ...                                          │
-└──────────────────────────────────────────────┘
-\end{lstlisting}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{images/diagram-file-tree.png}
+\end{figure}
 
 \begin{figure}[htbp]
 \centering

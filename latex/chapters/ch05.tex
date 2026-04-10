@@ -23,21 +23,10 @@
 
 まず、「リポジトリ」と「普通のフォルダ」の違いを理解しましょう。たとえば、あなたが \cmd{my-project} というフォルダを作り、その中にソースコードやドキュメントを置いたとします。この段階では、それはただのフォルダです。ここで \cmd{git init} コマンドを実行すると、フォルダの中に \cmd{.git} という隠しディレクトリが作成されます。この \cmd{.git} ディレクトリが存在することで、普通のフォルダが「リポジトリ」に変わるのです。
 
-\begin{lstlisting}[language={}]
-my-project/                ← プロジェクトフォルダ全体がリポジトリ
-├── .git/                  ← Gitの管理データ（この中にすべての履歴が格納される）
-│   ├── HEAD               ← 現在チェックアウトしているブランチへの参照
-│   ├── config             ← このリポジトリ固有の設定
-│   ├── objects/           ← コミット、ファイル内容などのオブジェクトデータベース
-│   ├── refs/              ← ブランチやタグのポインタ
-│   └── hooks/             ← コミット前後に実行されるスクリプト
-├── .gitignore             ← Gitに無視させるファイルの指定
-├── README.md              ← プロジェクト説明
-├── src/                   ← ソースコード
-│   └── main.py
-└── tests/                 ← テスト
-    └── test_main.py
-\end{lstlisting}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{images/diagram-repo-structure.png}
+\end{figure}
 
 \subsection{.gitフォルダの中身}
 

@@ -23,18 +23,10 @@ Gitの基本ワークフローは、突き詰めると「編集する → 記録
 
 Gitを使いこなすうえで最も重要な概念が、\textbf{3つのエリア}の理解です。Gitでは、ファイルの変更が最終的にリポジトリに記録されるまでに、3つの段階を経ます。
 
-\begin{lstlisting}[language={}]
-ワーキングディレクトリ    ステージングエリア      ローカルリポジトリ      リモートリポジトリ
-(Working Directory)     (Staging Area)       (Local Repository)    (GitHub)
-┌───────────────┐      ┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│               │      │               │    │               │    │               │
-│  ファイルを     │ add  │  記録対象を     │commit│  履歴として    │push │  チームと      │
-│  自由に編集     │ ──→  │  選択する      │ ──→  │  確定する     │ ──→ │  共有する      │
-│               │      │               │    │               │    │               │
-│               │      │               │    │               │pull │               │
-│               │      │               │    │               │ ←── │               │
-└───────────────┘      └───────────────┘    └───────────────┘    └───────────────┘
-\end{lstlisting}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{images/diagram-4areas.png}
+\end{figure}
 
 \subsection{買い物にたとえて理解する}
 

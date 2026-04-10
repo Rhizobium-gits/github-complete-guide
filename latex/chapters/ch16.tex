@@ -33,17 +33,10 @@ Organizationの主な特徴は以下の通りです。
   \item \textbf{監査ログ}: 誰がいつ何をしたかの記録が残る（有料プランの場合）
 \end{itemize}
 
-\begin{lstlisting}[language={}]
-Organization: my-company
-├── Team: frontend (Alice, Bob)
-│   ├── repo: web-app (Write権限)
-│   └── repo: design-system (Write権限)
-├── Team: backend (Charlie, Dave)
-│   ├── repo: api-server (Write権限)
-│   └── repo: database (Admin権限)
-└── Team: everyone (全メンバー)
-    └── repo: docs (Write権限)
-\end{lstlisting}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{images/diagram-org-structure.png}
+\end{figure}
 
 \subsection{チーム管理の必要性}
 
@@ -203,12 +196,10 @@ Push・ブランチ操作 & - & - & o & o & o \\
 
 Teamsには\textbf{親子関係（ネスト）}を設定できます。これにより、組織の階層構造をTeamsの構造に反映できます。
 
-\begin{lstlisting}[language={}]
-Engineering（親チーム）
-├── Frontend（子チーム）
-├── Backend（子チーム）
-└── DevOps（子チーム）
-\end{lstlisting}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{images/diagram-org-structure.png}
+\end{figure}
 
 子チームは\textbf{親チームの権限を自動的に継承}します。たとえば、EngineeringチームにdocsリポジトリへのRead権限を付与すると、Frontend、Backend、DevOpsの各子チームのメンバーも自動的にdocsリポジトリを閲覧できるようになります。
 
